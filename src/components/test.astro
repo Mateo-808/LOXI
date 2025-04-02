@@ -1,0 +1,26 @@
+<div id="quiz-container">
+    <h2>Test de Razonamiento Lógico</h2>
+    <p>Completa la secuencia: 2, 6, 12, 20, 30, ?</p>
+    
+    <div class="form-group">
+      <label for="answer-input">Tu respuesta:</label>
+      <input type="number" id="answer-input" placeholder="Escribe tu respuesta aquí">
+    </div>
+    
+    <p id="error-message" style="color: red; display: none;"></p>
+    
+    <button id="submit-btn">Enviar respuesta</button>
+  </div>
+  
+  <div id="result-container" style="display: none;">
+    <h2>Resultado</h2>
+    <p id="result-level"></p>
+    <p id="result-description"></p>
+    <button id="restart-btn">Realizar test nuevamente</button>
+  </div>
+  
+  <script>
+    // Importar el script en Astro
+    import handleTest from '../logic/test.js';
+    handleTest();
+  </script>
