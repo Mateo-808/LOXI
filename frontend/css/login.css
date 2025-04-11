@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+}
+
+body {
+    background-repeat: no-repeat;
+    background: linear-gradient(180deg, rgba(1,46,64,1) 10%, rgba(1,28,38,1) 50%, rgba(0,8,13,1) 100%);
+    height: 100vh;
+    overflow: hidden;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 20px 30px auto 20px;
+}
+
+main {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+form {
+    background-color: #011C26;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    height: 50%;
+    padding: 30px 75px;
+    border-radius: 50px;
+    box-shadow: 0px 0px 7px rgba(55, 60, 79, 0.59);
+}
+
+.regresar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2px;
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.80);
+    border: none;
+    text-decoration: none;
+}
+
+svg {
+    height: 20px;
+}
+
+.registrarse {
+    border-radius: 15px;
+    padding: 8px;
+    background-color: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    font-weight: 200;
+    text-decoration: none;
+}
+
+input {
+    background-color: transparent;
+    border: 0 solid transparent;
+    border-bottom: 1px solid #aaa;
+    color: rgba(255, 255, 255, 0.38);;
+    outline: none;
+    font-size: 0.9em;
+}
+
+.iniciar_sesion {
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.38);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    padding: 10px;
+}
+
+.iniciar_sesion:hover {
+    cursor: pointer;
+}
