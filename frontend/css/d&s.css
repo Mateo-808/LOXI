@@ -271,12 +271,12 @@ main {
     margin-bottom: 50px;
     text-transform: uppercase;
     color: #fff;
-    text-align: center;
+    text-align: left;
 }
 
 .faq-container {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);    /* Dividimos en 4 columnas para que las small ocupen 1 y las normales 2 */
+    grid-template-columns: repeat(5, 1fr);    
     gap: 25px;
     margin-bottom: 50px;
 }
