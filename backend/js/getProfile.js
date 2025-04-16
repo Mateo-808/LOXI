@@ -1,36 +1,66 @@
-import { supabase } from "./db/supabase"
+import { supabase } from "../db/supabase.js";
 
-async function getProfile() {
+export async function createUserProfile(userId, nombre, correo) {
     try {
-        const {data: {session}, error: sessionError } = await supabase.auth.getSession
+        const { data, error } = await supabase
+            .from('usuarios')
+            .insert([
+                { 
+                    id: userId,
+                    nombre: nombre,
+                    correo: correo,
+                    // La contraseña no se incluye aquí porque ya está gestionada por Supabase Auth
+                    // fecha_registro se establece automáticamente
+                }
+            ]);
 
-        if (session || !session){
-            console.error('Error al obtener el perfil del usuario:', sessionError?.message)
-            return {success: false, error: 'no hay sesión activa'}
+        if (error) {
+            console.error('Error al crear perfil de usuario:', error.message);
+            return { success: false, error: error.message };
         }
 
-        const userId = session.user.id
+        return { success: true, data: data };
+    } catch (error) {
+        console.error('Error inesperado:', error.message);
+        return { success: false, error: error.message };
+    }
+}
 
-        const {data: perfil, error: perfilError} = await supabase
-        .from('usuarios')
-        .select('*')
-        .eq('id', userId)
-        .single()
+export async function getUserProfile(userId) {
+    try {
+        const { data, error } = await supabase
+            .from('usuarios')
+            .select('*')
+            .eq('id', userId)
+            .single();
 
-        if (perfilError){
-            console.error('Error al obtener el perfil:', perfilError.message)
-            return { success: false, error: perfilError.message}
+        if (error) {
+            console.error('Error al obtener perfil de usuario:', error.message);
+            return { success: false, error: error.message };
         }
 
-        const datesComplets = {
-            ...session.user,
-            perfil: perfil
+        return { success: true, data: data };
+    } catch (error) {
+        console.error('Error inesperado:', error.message);
+        return { success: false, error: error.message };
+    }
+}
+
+export async function updateUserProfile(userId, updateData) {
+    try {
+        const { data, error } = await supabase
+            .from('usuarios')
+            .update(updateData)
+            .eq('id', userId);
+
+        if (error) {
+            console.error('Error al actualizar perfil de usuario:', error.message);
+            return { success: false, error: error.message };
         }
 
-        console.log('Perfil del usuario:', datesComplets)
-        return { success: true, data: datesComplets}
-    } catch (error){
-        console.log('Error al obtener el perfil:', error)
-        return { success: false, error: 'Error al obtener el perfil'}
+        return { success: true, data: data };
+    } catch (error) {
+        console.error('Error inesperado:', error.message);
+        return { success: false, error: error.message };
     }
 }
