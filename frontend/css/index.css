@@ -154,19 +154,17 @@ nav ul li .submenu li a:hover {
     transform: translate(100px);
     margin-top: 200px;
     max-width: 800px;
-    white-space:0;
+    white-space: 0;
     word-wrap: break-word;
     font-size: 50px;
     font-family: po;
-    
-
 }
+
 .text{
 transform: translate(105px);
 max-width: 550px;
 white-space:0;
 word-wrap: break-word;
-margin-top: -30px;
 }
 .boton2{
     transform: translate(345px);
@@ -195,6 +193,4 @@ margin-top: -30px;
     position: relative;
     left:150px;
     top: 50px;
-
-
 }
