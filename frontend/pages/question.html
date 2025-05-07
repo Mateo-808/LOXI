@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>LOXI -  QUESTION</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/question.css">
+    <link rel="shortcut icon" href="../assets/logo.svg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+    <div class="background-layers">
+        <div class="grid-overlay"></div>
+    </div>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fa-solid fa-code"></i>
+                <h1><a href="index.html">LOXI</a></h1>
+            </div>
+            <ul>
+                <li class="has-submenu">
+                    <a href="#">Servicios</a>
+                    <ul class="submenu">
+                        <li><a href="#">Niveles</a></li>
+                        <li><a href="#">Nosotros</a></li>
+                        <li><a href="#">Ayuda</a></li>
+                    </ul>
+                </li>
+                <li><a href="../pages/d&s.html">D&S</a></li>
+                <li><a href="../pages/practica.html">Practica</a></li>
+            </ul>
+            <button class="profile">Ver perfil</button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="exercise">
+            <div class="description">
+                <h2>RESPONDE ESTO PARA MEDIR TU NIVEL LÓGICO</h2>
+                <div class="text">
+                    <span>></span>
+                    <p>Escribe el número que sigue en la secuencia: 2, 6, 12, 20, 30...</p>
+                </div>
+            </div>
+            <div class="write">
+                <input type="text" id="write" placeholder="Escriba aqui...">
+                <button class="send" id="send"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+            <div class="result" id="result"></div>
+        </section>
+    </main>
+
+    <script src="../js/question.js"></script>
+</body>
+</html>
