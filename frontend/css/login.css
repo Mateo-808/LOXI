@@ -79,8 +79,33 @@ input {
     border-radius: 15px;
     border: 1px solid rgba(255, 255, 255, 0.38);
     padding: 10px;
+    cursor: pointer;
 }
 
-.iniciar_sesion:hover {
+.div__contrasena {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+#contrasena {
+    width: 100%;
+}
+
+.visualizar {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 25px;
+    width: 25px;
+    background-color: transparent;
+    border: none;
     cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

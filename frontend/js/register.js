@@ -24,3 +24,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+const inputContrasena = document.getElementById('contrasena');
+
+const botonVisualizar = document.querySelector('.visualizar');
+botonVisualizar.addEventListener('click', () => {
+    if (inputContrasena.type == "password") {
+        inputContrasena.type = "text";
+    } else {
+        inputContrasena.type = "password";
+    }
+});
