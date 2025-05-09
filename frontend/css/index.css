@@ -147,7 +147,7 @@ nav ul li .submenu li a:hover {
 }
 
 .profile:hover {
-    opacity: 0.5;
+    border: 1px solid #ffffff;
 }
 
 .titul2{

@@ -315,7 +315,6 @@ main {
     font-weight: 600;
 }
 
-/* Opciones para continuar */
 .continue-options {
     display: flex;
     gap: 10px;
@@ -364,9 +363,6 @@ main {
     background: #3a3a3a63;
 }
 
-
-
-/* Media Queries */
 @media (max-width: 992px) {
     .description {
         margin-top: 60px;
