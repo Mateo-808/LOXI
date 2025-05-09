@@ -1,52 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LOXI - Inicio</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="../css/index.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOXI - Inicio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../css/index.css">
 </head>
 <body>
     <div class="background-layers">
         <div class="grid-overlay"></div>
     </div>
-    <header>
-        <nav>
-            <div class="logo">
-                <i class="fa-solid fa-code"></i>
-                <h1>LOXI</h1>
-            </div>
-            <ul>
-                <li class="has-submenu">
-                    <a href="#">Servicios</a>
-                    <ul class="submenu">
-                        <li><a href="#">Niveles</a></li>
-                        <li><a href="#">Nosotros</a></li>
-                        <li><a href="#">Ayuda</a></li>
-                    </ul>
-                </li>
-                <li><a href="../pages/d&s.html">D&S</a></li>
-                <li><a href="../pages/practica.html">Practica</a></li>
-            </ul>
-            <button class="profile">Ver perfil</button>
-        </nav>
-    </header>
-
-    <main>
-        <section class="central_start">
+    
+    <div class="hero-section">
+        <header>
+            <nav>
+                <div class="logo">
+                    <i class="fa-solid fa-code"></i>
+                    <h1>LOXI</h1>
+                </div>
+                <ul>
+                    <li class="has-submenu">
+                        <a href="#">Servicios</a>
+                        <ul class="submenu">
+                            <li><a href="#">Niveles</a></li>
+                            <li><a href="#">Nosotros</a></li>
+                            <li><a href="#">Ayuda</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../pages/d&s.html">D&S</a></li>
+                    <li><a href="../pages/practica.html">Practica</a></li>
+                </ul>
+                <button class="profile">Ver perfil</button>
+            </nav>
+        </header>
+        
+        <main>
+            <section class="central_start">
             <h2 class="developers">Creando Desarrolladores.
             Impulsando la excelencia.
             </h2>
             <p class="text">Ayudamos a las personas a fortalecer su pensamiento lógico matemático a partir de ejercicios y juegos, generando en ellos una experiencia agradable.</p>
             <div>
-            <button class="button_start">
-                <a href="">Iniciar ahora</a>
-            </button>
-            <a class="services">Nuestros servicios 🡕</a>
+                <button class="button_start">
+                    <a href="#">Iniciar ahora</a>
+                </button>
+                <a href="#" class="services">Nuestros servicios 🡕</a>
+            </div>
+        </section>
+    </div>
+    
+    <section class="terminal">
+            <div class="container">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <div class="terminal-button close"></div>
+                        <div class="terminal-button minimize"></div>
+                        <div class="terminal-button maximize"></div>
+                    </div>
+                    <div class="terminal-title">loxi@terminal:~</div>
+                </div>
+                <div id="terminal-output" class="terminal-output">
+                    <div class="welcome-message">
+                        <p>Bienvenido a la terminal de Loxi</p>
+                        <p>Escribe 'help' para ver la lista de comandos disponibles.</p>
+                    </div>
+                </div>
+                <div class="terminal-input-line">
+                    <span class="prompt">loxi@terminal:~$</span>
+                    <input type="text" id="terminal-input" autofocus>
+                </div>
             </div>
         </section>
     </main>
+    
+    <script src="../js/script.js"></script>
 </body>
 </html>
-
