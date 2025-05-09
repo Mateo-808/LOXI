@@ -13,6 +13,7 @@ body {
     background: linear-gradient(180deg, #012e40 10%, #011c26 50%, #00080d 100%);
     min-height: 100vh;
     width: 100%;
+    background-image: url('../assets/code.jpg');
 }
 
 .background-layers {
@@ -147,10 +148,10 @@ nav ul li .submenu li a:hover {
 }
 
 .profile:hover {
-    border: 1px solid #ffffff;
+    opacity: 0.5;
 }
 
-.titul2{
+.developers{
     transform: translate(100px);
     margin-top: 200px;
     max-width: 800px;
@@ -166,7 +167,7 @@ max-width: 550px;
 white-space:0;
 word-wrap: break-word;
 }
-.boton2{
+.button_start{
     transform: translate(345px);
     position: relative;
     top: 5px;
@@ -189,7 +190,7 @@ word-wrap: break-word;
     background-color: rgba(255, 255, 255, 0.05);
     border-color: #fff;
 }
-.pl{
+.services{
     position: relative;
     left:150px;
     top: 50px;
