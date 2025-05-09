@@ -5,131 +5,171 @@ const title = document.querySelector(".description h2");
 const question = document.querySelector(".text");
 const description = document.querySelector(".description");
 
-// Crear un contenedor de chat desde el inicio
+// Función para inicializar el contenedor de chat
 function initializeChatContainer() {
-    // No modificamos la estructura original, solo preparamos para añadir el chat
     const chatContainer = document.createElement('div');
     chatContainer.className = 'chat-container';
     chatContainer.id = 'chatContainer';
     
-    // Añadir el contenedor de chat después de la pregunta, sin reemplazar nada
     description.appendChild(chatContainer);
 }
 
-// Inicializar al cargar la página
+// Inicializar el contenedor cuando se carga la página
 window.addEventListener('DOMContentLoaded', function() {
     initializeChatContainer();
+    
+    // Enfocar automáticamente el campo de entrada al cargar
+    input.focus();
 });
 
-sendBtn.addEventListener("click", () => {
+// Función para enviar el mensaje
+function sendMessage() {
     const answer = input.value.trim();
     const chatContainer = document.getElementById("chatContainer");
+    const writeContainer = document.querySelector('.write');
 
     if (answer === "") return;
     
-    // Agregar mensaje del usuario
     chatContainer.innerHTML += `
         <div class="user-msg">Tú: ${answer}</div>
     `;
     
-    // Limpiar el campo de entrada
     input.value = "";
     
     const numAnswer = parseInt(answer);
     let level = "";
     let redirectURL = "";
+    let isValidAnswer = false;
 
     if (numAnswer === 42) {
         level = "Avanzado";
         redirectURL = "../pages/nivel-avanzado.html";
+        isValidAnswer = true;
     } else if (numAnswer === 36) {
         level = "Intermedio";
         redirectURL = "../pages/nivel-intermedio.html";
+        isValidAnswer = true;
     } else if (numAnswer === 30 || numAnswer === 40) {
         level = "Básico";
         redirectURL = "../pages/nivel-basico.html";
+        isValidAnswer = true;
     } else {
-        level = "Sin clasificar";
-        redirectURL = "../pages/intentalo-nuevamente.html";
+        level = "No identificado";
+        isValidAnswer = false;
     }
 
-    // Mostrar nivel dentro del mismo bloque
-    setTimeout(() => {
-        chatContainer.innerHTML += `
-            <div class="bot-msg">LOXI: Su nivel de lógica es <strong>${level}</strong></div>
-        `;
-        
-        // Hacer scroll hacia abajo automáticamente
-        chatContainer.scrollTop = chatContainer.scrollHeight;
-    }, 1000);
+    // Ocultar el área de entrada después de recibir una respuesta
+    writeContainer.classList.add('write-hidden');
     
-    // Mostrar explicación del ejercicio
+    // Mostrar respuesta según si es válida o no
     setTimeout(() => {
-        let explanation = "";
-        
-        if (numAnswer === 42) {
-            explanation = `La secuencia sigue un patrón de diferencias cuadráticas. La diferencia entre cada número aumenta siguiendo n²: 
-            <br>2 → +4 → 6 → +6 → 12 → +8 → 20 → +10 → 30 → <strong>+12</strong> → 42
-            <br>Las diferencias son: 4, 6, 8, 10, 12 (que corresponden a 2², 2×3, 2×4, 2×5, 2×6)
-            <br>¡Has identificado correctamente el patrón avanzado!`;
-        } else if (numAnswer === 36) {
-            explanation = `Muchas personas identifican un patrón donde cada diferencia aumenta de forma constante:
-            <br>2 → +4 → 6 → +6 → 12 → +8 → 20 → +10 → 30 → <strong>+6</strong> → 36
-            <br>Este es un patrón intermedio común, aunque la secuencia completa sigue otro patrón.`;
-        } else if (numAnswer === 40) {
-            explanation = `Has identificado un patrón de suma: 2 + (4+6+8+10+10) = 40
-            <br>Este enfoque es creativo, pero la secuencia completa sigue otro patrón.`;
-        } else if (numAnswer === 30) {
-            explanation = `Has identificado probablemente un patrón repetitivo.
-            <br>Este es un error común, ya que busca repetir el último número.`;
+        if (isValidAnswer) {
+            chatContainer.innerHTML += `
+                <div class="bot-msg">LOXI: Su nivel de lógica es <strong>${level}</strong></div>
+            `;
         } else {
-            explanation = `La secuencia 2, 6, 12, 20, 30... sigue un patrón donde las diferencias entre números consecutivos aumentan en 2.
-            <br>Las diferencias son: +4, +6, +8, +10, y luego +12, lo que nos lleva a 42 como siguiente número.`;
+            chatContainer.innerHTML += `
+                <div class="bot-msg error-msg">LOXI: <strong>Respuesta incorrecta.</strong> Necesita intentarlo de nuevo para obtener un nivel de lógica válido.</div>
+            `;
         }
         
-        chatContainer.innerHTML += `
-            <div class="bot-msg">LOXI: <strong>Explicación:</strong><br>${explanation}</div>
-        `;
-        
-        // Hacer scroll hacia abajo automáticamente para mostrar la explicación
-        chatContainer.scrollTop = chatContainer.scrollHeight;
-    }, 2000);
-
-    // Preguntar si quiere continuar
+        // Hacer scroll hacia abajo automáticamente
+        scrollToBottom(result);
+    }, 1000);
+    
+    // Mostrar explicación del ejercicio o instrucciones para volver a intentar
     setTimeout(() => {
-        chatContainer.innerHTML += `
-            <div class="bot-msg">LOXI: ¿Quiere continuar con su experiencia? 
-                <div class="continue-options">
-                    <button class="continue-btn yes">Sí, continuar</button>
-                    <button class="continue-btn no">No, gracias</button>
-                </div>
-            </div>
-        `;
+        if (isValidAnswer) {
+            let explanation = "";
+            
+            if (numAnswer === 42) {
+                explanation = `La secuencia sigue un patrón de diferencias cuadráticas. La diferencia entre cada número aumenta siguiendo n²: 
+                <br>2 → +4 → 6 → +6 → 12 → +8 → 20 → +10 → 30 → <strong>+12</strong> → 42
+                <br>Las diferencias son: 4, 6, 8, 10, 12 (que corresponden a 2², 2×3, 2×4, 2×5, 2×6)
+                <br>¡Has identificado correctamente el patrón avanzado!`;
+            } else if (numAnswer === 36) {
+                explanation = `Muchas personas identifican un patrón donde cada diferencia aumenta de forma constante:
+                <br>2 → +4 → 6 → +6 → 12 → +8 → 20 → +10 → 30 → <strong>+6</strong> → 36
+                <br>Este es un patrón intermedio común, aunque la secuencia completa sigue otro patrón.`;
+            } else if (numAnswer === 40) {
+                explanation = `Has identificado un patrón de suma: 2 + (4+6+8+10+10) = 40
+                <br>Este enfoque es creativo, pero la secuencia completa sigue otro patrón.`;
+            } else if (numAnswer === 30) {
+                explanation = `Has identificado probablemente un patrón repetitivo.
+                <br>Este es un error común, ya que busca repetir el último número.`;
+            }
+            
+            chatContainer.innerHTML += `
+                <div class="bot-msg">LOXI: <strong>Explicación:</strong><br>${explanation}</div>
+            `;
+        } else {
+            chatContainer.innerHTML += `
+                <div class="bot-msg">LOXI: La secuencia 2, 6, 12, 20, 30... sigue un patrón específico. Analice cuidadosamente cómo aumentan los números.</div>
+            `;
+            // Mostrar de nuevo el área de entrada después de un momento
+            setTimeout(() => {
+                writeContainer.classList.remove('write-hidden');
+                input.focus();
+            }, 1500);
+        }
         
         // Hacer scroll hacia abajo automáticamente
-        chatContainer.scrollTop = chatContainer.scrollHeight;
-        
-        // Agregar eventos a los botones
-        document.querySelectorAll('.continue-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                if (this.classList.contains('yes')) {
-                    // Si es "Sí", redirigir según nivel
-                    if (redirectURL) {
-                        window.location.href = redirectURL;
+        scrollToBottom(result);
+    }, 2000);
+
+    // Si la respuesta es válida, preguntar si quiere continuar
+    if (isValidAnswer) {
+        setTimeout(() => {
+            chatContainer.innerHTML += `
+                <div class="bot-msg">LOXI: ¿Quiere continuar con su experiencia? 
+                    <div class="continue-options">
+                        <button class="continue-btn yes">Sí, continuar</button>
+                        <button class="continue-btn no">No, gracias</button>
+                    </div>
+                </div>
+            `;
+            
+            // Hacer scroll hacia abajo automáticamente
+            scrollToBottom(result);
+            
+            // Agregar eventos a los botones
+            document.querySelectorAll('.continue-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (this.classList.contains('yes')) {
+                        // Si es "Sí", redirigir según nivel
+                        if (redirectURL) {
+                            window.location.href = redirectURL;
+                        } else {
+                            chatContainer.innerHTML += `
+                                <div class="bot-msg">LOXI: Preparando su experiencia personalizada...</div>
+                            `;
+                            scrollToBottom(result);
+                        }
                     } else {
+                        // Si es "No", agradecer
                         chatContainer.innerHTML += `
-                            <div class="bot-msg">LOXI: Preparando su experiencia personalizada...</div>
+                            <div class="bot-msg">LOXI: Gracias por participar. ¡Vuelva pronto!</div>
                         `;
-                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                        scrollToBottom(result);
                     }
-                } else {
-                    // Si es "No", agradecer
-                    chatContainer.innerHTML += `
-                        <div class="bot-msg">LOXI: Gracias por participar. ¡Vuelva pronto!</div>
-                    `;
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
-                }
+                });
             });
-        });
-    }, 3000);
+        }, 3000);
+    }
+}
+
+// Función para desplazar al final del chat
+function scrollToBottom(element) {
+    element.scrollTop = element.scrollHeight;
+}
+
+// Agregar evento de click al botón de enviar
+sendBtn.addEventListener("click", sendMessage);
+
+// Agregar evento de tecla Enter al campo de entrada
+input.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        sendMessage();
+    }
 });
