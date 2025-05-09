@@ -487,3 +487,22 @@ nav ul li .submenu li a:hover {
 .error-message {
     color: #FF6B6B;
 }
+
+.thought_info{
+    transform: translate(190px);
+    margin-top: 40px;
+    max-width: 900px;
+    white-space: 0;
+    word-wrap: break-word;
+    font-size: 45px;
+    font-family: poppins, sans-serif;
+    text-align: center;
+}
+
+.thought_developed{
+    font-size: 20px;
+    transform: translate(530px);
+    color: #9CA3AF;
+    font-family: poppins, sans-serif;
+    margin-top: 20px;
+}
