@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/nivels.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        <link rel="shortcut icon" href="../assets/logo.svg" type="image/x-icon">
+        <title>Niveles - LOXI</title>
+    </head>
+    <body>
+        <div class="background-layers">
+            <div class="grid-overlay"></div>
+        </div>
+        <header>
+            <nav>
+                <div class="logo">
+                    <i class="fa-solid fa-code"></i>
+                    <h1><a href="index.html">LOXI</a></h1>
+                </div>
+                <ul>
+                    <li class="has-submenu">
+                        <a href="#">Servicios</a>
+                        <ul class="submenu">
+                            <li><a href="#">Niveles</a></li>
+                            <li><a href="#">Nosotros</a></li>
+                            <li><a href="#">Ayuda</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../pages/d&s.html">D&S</a></li>
+                    <li><a href="../pages/practica.html">Practica</a></li>
+                </ul>
+                <button class="profile">Ver perfil</button>
+            </nav>
+        </header>
+        <section class="hero">
+            <h2>Desarrolla tu lógica de programación con LOXI...</h2>
+            <p>¿Cuál es tu nivel de lógica de programación con el que te sientes más cómodo?</p>
+            
+            <div class="level-selector">
+                <button class="level-card">
+                    <div class="code-sample">
+                        <span class="method">console.log</span>(<span class="string">"Hola"</span>);
+                    </div>
+                    <h3 class="level-title">Principiante:</h3>
+                    <p class="level-description">Quiero empezar desde lo básico</p>
+                </button>
+                
+                <button class="level-card">
+                    <div class="code-sample">
+                        <span class="keyword">if</span> (<span class="variable">a</span> > <span class="variable">b</span>) {<br>
+                        &nbsp;&nbsp;<span class="method">console.log</span>(<span class="variable">a</span>);<br>
+                        }
+                    </div>
+                    <h3 class="level-title">Novato:</h3>
+                    <p class="level-description">He visto código, pero no lo he tocado antes.</p>
+                </button>
+                
+                <button class="level-card">
+                    <div class="code-sample">
+                        <span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">i</span> = 0; <span class="variable">i</span> <= <span class="variable">11</span>; <span class="variable">i</span>++) {...}
+                    </div>
+                    <h3 class="level-title">Intermedio:</h3>
+                    <p class="level-description">Puedo escribir programas simples con bucles.</p>
+                </button>
+                
+                <button class="level-card">
+                    <div class="code-sample">
+                        <span class="function">function</span> <span class="variable">sumar</span>(<span class="variable">a</span>,<span class="variable">b</span>) {...}
+                    </div>
+                    <h3 class="level-title">Avanzado:</h3>
+                    <p class="level-description">He escrito programas más avanzados.</p>
+                </button>
+            </div>
+        </section>
+    </body>
+</html>
