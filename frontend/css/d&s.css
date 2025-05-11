@@ -61,7 +61,6 @@ nav {
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
 }
 
 .logo i {
@@ -72,6 +71,14 @@ nav {
     font-size: 24px;
     font-weight: bold;
     letter-spacing: 1px;
+}
+
+.logo a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
 }
 
 nav ul {

@@ -116,6 +116,3 @@ terminalInput.addEventListener('keydown', function (event) {
 
 // Mantiene el foco en el input al hacer clic
 document.addEventListener('click', () => terminalInput.focus());
-
-// Asegura el foco en el input al cargar la página
-window.addEventListener('load', () => terminalInput.focus());

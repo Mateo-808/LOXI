@@ -1,65 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>LOXI - Inicio</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../assets/logo.svg" type="image/x-icon">
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LOXI - Inicio</title>
+        <link rel="shortcut icon" href="../assets/logo.svg" type="image/svg+xml">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="../css/index.css">
+    </head>
+    <body>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="../css/index.css">
-</head>
-<body>
-    <div class="background-layers">
-        <div class="grid-overlay"></div>
-    </div>
-    
-    <div class="hero-section">
-        <header>
-            <nav>
-                <div class="logo">
-                    <i class="fa-solid fa-code"></i>
-                    <h1>LOXI</h1>
-                </div>
-                <ul>
-                    <li class="has-submenu">
-                        <a href="#">Servicios</a>
-                        <ul class="submenu">
-                            <li><a href="#">Niveles</a></li>
-                            <li><a href="#">Nosotros</a></li>
-                            <li><a href="#">Ayuda</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="../pages/d&s.html">D&S</a></li>
-                    <li><a href="../pages/practica.html">Practica</a></li>
-                </ul>
-                <button class="profile" id="sing-up">Registrarse</button>
-            </nav>
-        </header>
-        
-        <main>
-            <section class="central_start">
-            <h2 class="developers">Creando Desarrolladores.
-            Impulsando la excelencia.
-            </h2>
-            <p class="text">Ayudamos a las personas a fortalecer su pensamiento lógico matemático a partir de ejercicios y juegos, generando en ellos una experiencia agradable.</p>
-            <div>
-                <button class="button_start">
-                    <a href="#">Iniciar ahora</a>
-                </button>
-                <a href="#" class="services">Nuestros servicios 🡕</a>
-            </div>
-        </section>
-    </div>
-    
-    <section class="terminal">
-        <div class="description">
-            <h2>
-                <span>La plataforma que nos gustaría tener,</span><br>
-                <span>así que la construimos para ti</span>
-              </h2>              
-            <p>Creado y desarrollado por estudiantes de media técnica, nuestra web le brinda acceso a los estudiantes a ejercicios y juegos para fortalecer su pensamiento lógico. Estudia y mejora cada día más.</p>
+        <div class="background-layers">
+            <div class="grid-overlay"></div>
         </div>
+
+        <div class="hero-section">
+            <header>
+                <nav>
+                    <div class="logo">
+                        <a href="index.html">
+                            <i class="fa-solid fa-code"></i><h1>LOXI</h1>
+                        </a>
+                    </div>
+                    <ul>
+                        <li class="has-submenu">
+                            <a href="#">Servicios</a>
+                            <ul class="submenu">
+                                <li><a href="#">Niveles</a></li>
+                                <li><a href="#">Nosotros</a></li>
+                                <li><a href="#">Ayuda</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="d&s.html">D&S</a></li>
+                        <li><a href="practica.html">Practica</a></li>
+                    </ul>
+                    <button class="profile">Ver perfil</button>
+                </nav>
+            </header>
+
+            <main>
+                <section class="central_start">
+                    <h2 class="developers">
+                        Creando Desarrolladores.<br>
+                        Impulsando la excelencia.
+                    </h2>
+                    <p class="text">
+                        Ayudamos a las personas a fortalecer su pensamiento lógico matemático a partir de ejercicios y juegos, generando en ellos una experiencia agradable.
+                    </p>
+                    <div>
+                        <button class="button_start">
+                            <a href="#">Iniciar ahora</a>
+                        </button>
+                        <a href="#" class="services">Nuestros servicios 🡕</a>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <section class="terminal">
+            <div class="description">
+                <h2>La plataforma que nos gustaría tener,<br> así que la construimos para ti</h2>
+                <p>Creado y desarrollado por estudiantes de media técnica, nuestra web le brinda acceso a los estudiantes a ejercicios y juegos para fortalecer su pensamiento lógico. Estudia y mejora cada día más.</p>
+            </div>
+
             <div class="container">
                 <div class="terminal-header">
                     <div class="terminal-buttons">
@@ -69,42 +72,47 @@
                     </div>
                     <div class="terminal-title">loxi@terminal:~</div>
                 </div>
+
                 <div id="terminal-output" class="terminal-output">
                     <div class="welcome-message">
                         <p>Bienvenido a la terminal de Loxi</p>
                         <p>Escribe 'help' para ver la lista de comandos disponibles.</p>
                     </div>
                 </div>
+
                 <div class="terminal-input-line">
                     <span class="prompt">loxi@terminal:~$</span>
-                    <input type="text" id="terminal-input" autofocus>
+                    <input type="text" id="terminal-input">
                 </div>
             </div>
         </section>
+
         <section class="thought">
             <div class="info">
-                <h2 class="thought_info">Creamos LOXI para ayudar
-                    a los estudiantes a fortalecer su pensamiento lógico matemático.</h2>
-                <p class="thought_developed">Desarrollado por :</p>
+                <h2 class="thought_info">
+                    Creamos LOXI para ayudar a los estudiantes a fortalecer su pensamiento lógico matemático.
+                </h2>
+                <p class="thought_developed">Desarrollado por:</p>
             </div>
-            
+
             <div class="circles">
-                
-    
+
             </div>
         </section>
+
         <section class="promotion">
-            <img class="background-image" src="../assets/promotion.png" alt="Código de programación" />
             <div class="content">
-                <h2>LOXI nació para fortalecer el pensamiento<br>lógico matemático en los estudiantes.</h2>
+                <h2>
+                    LOXI nació para fortalecer el pensamiento<br>
+                    lógico matemático en los estudiantes.
+                </h2>
                 <div class="buttons">
                     <a href="./registrer.html" class="btn btn-primary">Empieza ahora</a>
                     <a href="./more.html" class="btn btn-secondary">Ver más</a>
                 </div>
             </div>
         </section>
-    </main>
-    
-    <script src="../js/script.js"></script>
-</body>
+
+        <script src="../js/script.js"></script>
+    </body>
 </html>

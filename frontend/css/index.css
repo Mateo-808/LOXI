@@ -11,8 +11,9 @@
 body {
     background-repeat: no-repeat;
     background: linear-gradient(180deg, #012e40 10%, #011c26 50%, #00080d 100%);
-    min-height: 100vh;
+    height: 100%;
     width: 100%;
+    overflow-x: hidden;
 }
 
 .background-layers {
@@ -66,8 +67,6 @@ body {
 
 header {
     padding: 20px 0;
-    position: relative;
-    z-index: 2;
 }
 
 nav {
@@ -77,12 +76,12 @@ nav {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    flex-wrap: wrap;
 }
 
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
 }
 
 .logo i {
@@ -95,12 +94,19 @@ nav {
     letter-spacing: 1px;
 }
 
+.logo a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 nav ul {
     display: flex;
     list-style: none;
-    gap: 30px;
+    gap: 20px;
     align-items: center;
     position: relative;
+    flex-wrap: wrap;
 }
 
 nav ul li {
@@ -214,13 +220,12 @@ nav ul li .submenu li a:hover {
 }
 
 .developers {
-    transform: translate(100px);
     margin-top: 100px;
+    margin-bottom: 30px;
+    line-height: 1;
     max-width: 800px;
-    white-space: 0;
     word-wrap: break-word;
     font-size: 50px;
-    font-family: poppins, sans-serif;
     background: linear-gradient(to bottom, #ffffff, #B5B7BA, #6B7280);
     -webkit-background-clip: text;
     background-clip: text;
@@ -230,30 +235,33 @@ nav ul li .submenu li a:hover {
 }
 
 .text{
-    transform: translate(105px);
-    max-width: 550px;
-    white-space:0;
-    word-wrap: break-word;
+    font-size: 1.1rem;
+    color: #fafafa;
+    max-width: 600px;
+    margin-bottom: 40px;
+    color: #9CA3AF;
 }
 
 .button_start {
-    transform: translate(345px);
-    position: relative;
     background: transparent;
     color: #fff;
     border: 1px solid #ffffff61;
     border-radius: 15px;
     box-shadow: 0px 0px 7px #a5a8b496;
-    font-family: 'Poppins', sans-serif;
     font-weight: 500;
     font-style: italic;
-    font-size: 25px;
+    font-size: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
     height: 50px;
     width: 240px;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
+    margin-top: 20px;
+    text-decoration: none;
 }
 
 .button_start::before {
@@ -273,7 +281,7 @@ nav ul li .submenu li a:hover {
 }
 
 .button_start:hover {
-    border: 1px solid #ffffff;
+    border-color: #fff;
     background-color: rgba(255, 255, 255, 0.05);
 }
 
@@ -286,25 +294,25 @@ nav ul li .submenu li a:hover {
     box-shadow: 0px 0px 5px #a5a8b496;
 }
 
-.button_start a{
+.button_start a {
     text-decoration: none;
-    text-align: center;
-    justify-content: center;
+    color: inherit;
+    width: 100%;
+    height: 100%;
+    display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .services{
     position: relative;
-    left:150px;
-    top: 50px;
+    top: 5px;
     color: #fafafa;
-    text-decoration: none;
     display: inline-block;
 }
 
 
 .terminal {
-    padding: 50px 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -313,15 +321,10 @@ nav ul li .submenu li a:hover {
 }
 
 .description{
-    margin: 60px 40px 30px 30px;
-    width: 100%;
     color: #fafafa;
     position: relative;
-    text-align: justify; 
     margin: 40px auto;
-    max-width: 999px;
     text-align: center;
-    
 }
 
 .description h2 {
@@ -330,12 +333,7 @@ nav ul li .submenu li a:hover {
     font-style: italic;
     color: #fafafa;
     text-align: center;
-    line-height: 0.5;
     margin-bottom: 25px;
-}
-
-.description h2 span {
-    display: block;
 }
 
 .description p {
@@ -345,7 +343,6 @@ nav ul li .submenu li a:hover {
     color: #9CA3AF;
     text-align: center;
 }
-
 
 .container {
     width: 800px;
@@ -439,7 +436,6 @@ nav ul li .submenu li a:hover {
     border: none;
     outline: none;
     color: #B5B7BA;
-    font-family: 'Poppins', monospace;
     font-size: 14px;
 }
 
@@ -488,58 +484,38 @@ nav ul li .submenu li a:hover {
     color: #FF6B6B;
 }
 
+.thought {
+    text-align: center;
+}
+
 .thought_info{
-    transform: translate(190px);
     margin-top: 40px;
-    max-width: 900px;
-    white-space: 0;
     word-wrap: break-word;
     font-size: 45px;
-    font-family: poppins, sans-serif;
-    text-align: center;
 }
 
 .thought_developed{
     font-size: 20px;
     color: #9CA3AF;
-    font-family: poppins, sans-serif;
     margin-top: 20px;
-}
-
-.promotion {
-    width: 100%;
-    height: 800px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     text-align: center;
 }
 
-.promotion::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.background-image {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.7);
-}
-
-.content {
+.promotion {
     position: relative;
-    z-index: 2;
-    color: white;
-    padding: 0 20px;
-    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    text-align: center;
+    background-image: url('../assets/promotion.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fafafa;
+    width: 100%;
 }
 
 .promotion h2 {
@@ -553,34 +529,29 @@ nav ul li .submenu li a:hover {
 .buttons {
     display: flex;
     gap: 15px;
+    flex-wrap: wrap;
     justify-content: center;
-    margin-top: 10px;
-    position: relative;
 }
 
 .btn {
-    transform: translate(30px);
-    position: relative;
     background: transparent;
     color: #fff;
     border: 1px solid #ffffff61;
     border-radius: 15px;
-    box-shadow: 0px 0px 7px #a5a8b496;
-    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 0 7px #a5a8b496;
     font-weight: 500;
     font-style: italic;
-    font-size: 25px;
+    font-size: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
     height: 50px;
-    width: 240px;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
+    width: 200px;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
 }
 
 .btn::before {
@@ -590,17 +561,12 @@ nav ul li .submenu li a:hover {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-        90deg, 
-        transparent, 
-        rgba(255, 255, 255, 0.1), 
-        transparent
-    );
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
     transition: 0.6s;
 }
 
 .btn:hover {
-    border: 1px solid #ffffff;
+    border-color: #fff;
     background-color: rgba(255, 255, 255, 0.05);
 }
 
@@ -610,7 +576,7 @@ nav ul li .submenu li a:hover {
 
 .btn:active {
     transform: translateY(1px);
-    box-shadow: 0px 0px 5px #a5a8b496;
+    box-shadow: 0 0 5px #a5a8b496;
 }
 
 .btn-primary {

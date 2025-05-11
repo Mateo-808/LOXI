@@ -72,10 +72,14 @@ nav {
     letter-spacing: 1px;
 }
 
-.logo a{
+.logo a {
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     color: #fff;
 }
+
 nav ul {
     display: flex;
     list-style: none;
