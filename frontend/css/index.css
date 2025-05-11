@@ -5,7 +5,6 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-    color: #fafafa;
 }
 
 body {
@@ -55,16 +54,6 @@ body {
     position: relative;
 }
 
-.hero-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
 header {
     padding: 20px 0;
 }
@@ -99,6 +88,7 @@ nav {
     display: flex;
     align-items: center;
     gap: 10px;
+    color: #fff;
 }
 nav ul {
     display: flex;
@@ -219,6 +209,14 @@ nav ul li .submenu li a:hover {
     z-index: 2;
 }
 
+.particles {
+    position: absolute;
+    right: 80px;
+    top: 10%;
+    max-width: 35%;
+    z-index: 1;
+}
+
 .developers {
     margin-top: 100px;
     margin-bottom: 30px;
@@ -226,7 +224,7 @@ nav ul li .submenu li a:hover {
     max-width: 800px;
     word-wrap: break-word;
     font-size: 50px;
-    background: linear-gradient(to bottom, #ffffff, #B5B7BA, #6B7280);
+    background: linear-gradient(to top, #ffffff, #B5B7BA, #6B7280);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -253,8 +251,6 @@ nav ul li .submenu li a:hover {
     font-size: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
-    height: 50px;
-    width: 240px;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -262,6 +258,8 @@ nav ul li .submenu li a:hover {
     position: relative;
     margin-top: 20px;
     text-decoration: none;
+    padding: 10px 50px;
+    left: 25%;
 }
 
 .button_start::before {
@@ -307,10 +305,10 @@ nav ul li .submenu li a:hover {
 .services{
     position: relative;
     top: 5px;
-    color: #fafafa;
+    left: 30%;
+    color: #9CA3AF;
     display: inline-block;
 }
-
 
 .terminal {
     display: flex;
@@ -489,9 +487,10 @@ nav ul li .submenu li a:hover {
 }
 
 .thought_info{
-    margin-top: 40px;
+    margin: 40px;
     word-wrap: break-word;
     font-size: 45px;
+    color: #fff;
 }
 
 .thought_developed{
@@ -523,7 +522,6 @@ nav ul li .submenu li a:hover {
     line-height: 1.3;
     margin-bottom: 30px;
     letter-spacing: -0.5px;
-    text-transform: uppercase;
 }
 
 .buttons {
@@ -585,4 +583,30 @@ nav ul li .submenu li a:hover {
 
 .btn-secondary {
     color: white;
+}
+
+
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: linear-gradient(180deg, #011C26 0%, #00080D 100%);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #012E40;
+    border-radius: 10px;
+    border: 2px solid #00080D;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #01475F;
+}
+
+* {
+    scrollbar-color: #012E40 #00080D;
 }

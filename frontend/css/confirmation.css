@@ -326,3 +326,27 @@ footer p{
     color: rgba(255, 255, 255, 0.603);
     text-align: center;
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: linear-gradient(180deg, #011C26 0%, #00080D 100%);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #012E40;
+    border-radius: 10px;
+    border: 2px solid #00080D;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #01475F;
+}
+
+* {
+    scrollbar-color: #012E40 #00080D;
+}
