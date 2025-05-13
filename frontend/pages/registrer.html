@@ -1,35 +1,95 @@
 <!DOCTYPE html>
-<html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" href="../assets/logo.svg" type="image/svg+xml">
-        <link rel="stylesheet" href="../css/registrer.css">
-        <title>LOXI - Registrarse</title>
-    </head>
-    <body>
-        <header>
-            <a href="index.html" class="regresar">
-                <svg class="regresar__svg"viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="0.00024000000000000003" transform="matrix(1, 0, 0, 1, 0, 0)rotate(0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.24000000000000005"></g><g id="SVGRepo_iconCarrier"> <path d="M16.1795 3.26875C15.7889 2.87823 15.1558 2.87823 14.7652 3.26875L8.12078 9.91322C6.94952 11.0845 6.94916 12.9833 8.11996 14.155L14.6903 20.7304C15.0808 21.121 15.714 21.121 16.1045 20.7304C16.495 20.3399 16.495 19.7067 16.1045 19.3162L9.53246 12.7442C9.14194 12.3536 9.14194 11.7205 9.53246 11.33L16.1795 4.68297C16.57 4.29244 16.57 3.65928 16.1795 3.26875Z" fill="#FFFFFF"></path> </g></svg>
-                Regresar
-            </a>
-            <a href="./login.html" class="iniciar_sesion">Iniciar sesión</a>
-        </header>
-        <main>
-            <form id="registroForm">
-                <input type="text" id="nombre" placeholder="Nombre" required/>
-                <input type="email" id="correo" placeholder="Correo" required/>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrate - LOXI</title>
+    <link rel="stylesheet" href="../css/registrer.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="shortcut icon" href="../assets/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />  
+</head>
+<body>
+    <div class="browser-frame">
 
-                <div class="div__contrasena">
-                    <input type="password" id="contrasena" placeholder="Contraseña" required/>
-                    <button class="visualizar">
-                        <svg class="visualizar__boton" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="12" cy="12" r="3.8" stroke="#FFFFFF"></circle> <path d="M20.188 10.9343C20.5762 11.4056 20.7703 11.6412 20.7703 12C20.7703 12.3588 20.5762 12.5944 20.188 13.0657C18.7679 14.7899 15.6357 18 12 18C8.36427 18 5.23206 14.7899 3.81197 13.0657C3.42381 12.5944 3.22973 12.3588 3.22973 12C3.22973 11.6412 3.42381 11.4056 3.81197 10.9343C5.23206 9.21014 8.36427 6 12 6C15.6357 6 18.7679 9.21014 20.188 10.9343Z" stroke="#FFFFFF"></path> </g></svg>
-                    </button>
+        <div class="container">
+            <div class="left-panel">
+                <div class="gradient-bg"></div>
+                <div class="left-content">
+                    <div class="get-started">
+                        <h1>Empiece con nosotros</h1>
+                        <p>Complete estos sencillos pasos para registrar su cuenta.</p>
+                    </div>
+                    <div class="steps">
+                        <button class="step-btn active">
+                            <span class="step-number">1</span>
+                            Registre su cuenta
+                        </button>
+                        <button class="step-btn">
+                            <span class="step-number">2</span>
+                            Configure su espacio de trabajo
+                        </button>
+                        <button class="step-btn">
+                            <span class="step-number">3</span>
+                            Configure su perfil
+                        </button>
+                    </div>
                 </div>
+            </div>
+            <div class="right-panel">
+                <div class="signup-form">
+                    <h2>Registrar Cuenta</h2>
+                    <p class="form-subtitle">Ingrese sus datos personales para crear su cuenta.</p>
+                    
+                    <div class="social-login">
+                        <button class="social-btn google">
+                            <i class="fab fa-google"></i>
+                            Google
+                        </button>
+                        <button class="social-btn github">
+                            <i class="fab fa-github"></i>
+                            Github
+                        </button>
+                    </div>
+                    
+                    <div class="divider">
+                        <span>o</span>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="firstName">Primer Nombre</label>
+                            <input type="text" id="firstName">
+                        </div>
+                        <div class="form-group half">
+                            <label for="lastName">Primer Apellido</label>
+                            <input type="text" id="lastName">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico</label>
+                        <input type="email" id="email" >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <div class="password-input">
+                            <input type="password" id="password" >
+                        </div>
+                        <p class="password-hint">Debe tener al menos 8 caracteres.</p>
+                    </div>
+                    
+                    <button class="signup-btn">Registrarse</button>
+                    
+                    <p class="login-link">
+                        ¿Ya tienes Cuenta? <a href="./login.html">Inicia Sesión</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                <button type="submit" class="registrar">Registrarme</button>
-            </form>
-        </main>
-        <script type="module" src="../js/register.js"></script>
-    </body>
+    <script src="../js/register.js"></script>
+</body>
 </html>
