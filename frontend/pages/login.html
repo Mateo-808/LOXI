@@ -1,32 +1,100 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión - LOXI</title>
     <link rel="stylesheet" href="../css/login.css">
     <link rel="shortcut icon" href="../assets/logo.svg" type="image/svg+xml">
-    <title>LOXI - Iniciar sesión</title>
-  </head>
-  <body>
-    <header>
-      <a href="index.html" class="regresar">
-          <svg viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="0.00024000000000000003" transform="matrix(1, 0, 0, 1, 0, 0)rotate(0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.24000000000000005"></g><g id="SVGRepo_iconCarrier"> <path d="M16.1795 3.26875C15.7889 2.87823 15.1558 2.87823 14.7652 3.26875L8.12078 9.91322C6.94952 11.0845 6.94916 12.9833 8.11996 14.155L14.6903 20.7304C15.0808 21.121 15.714 21.121 16.1045 20.7304C16.495 20.3399 16.495 19.7067 16.1045 19.3162L9.53246 12.7442C9.14194 12.3536 9.14194 11.7205 9.53246 11.33L16.1795 4.68297C16.57 4.29244 16.57 3.65928 16.1795 3.26875Z" fill="#FFFFFF"></path> </g></svg>
-          Regresar
-      </a>
-      <a href="registrer.html" class="registrarse">Regístrate</a>
-  </header>
-  <main>
-      <form id="loginForm">
-          <input type="email" id="correo" placeholder="Correo electrónico" required>
-          <div class="div__contrasena">
-          		<input type="password" id="contrasena" placeholder="Contraseña" required/>
-            	<button class="visualizar">
-            		<svg class="visualizar__boton" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="12" cy="12" r="3.8" stroke="#FFFFFF"></circle> <path d="M20.188 10.9343C20.5762 11.4056 20.7703 11.6412 20.7703 12C20.7703 12.3588 20.5762 12.5944 20.188 13.0657C18.7679 14.7899 15.6357 18 12 18C8.36427 18 5.23206 14.7899 3.81197 13.0657C3.42381 12.5944 3.22973 12.3588 3.22973 12C3.22973 11.6412 3.42381 11.4056 3.81197 10.9343C5.23206 9.21014 8.36427 6 12 6C15.6357 6 18.7679 9.21014 20.188 10.9343Z" stroke="#FFFFFF"></path> </g></svg>
-            	</button>
-        	</div>
-          <button type="submit" class="iniciar_sesion">Iniciar sesión</button>
-      </form>
-  </main>
-  <script type="module" src="../js/login.js"></script>
-  </body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
+<body>
+    <div class="browser-frame">
+        <div class="container">
+            <div class="left-panel">
+                <div class="gradient-bg"></div>
+                <div class="left-content">
+                  <div class="logo">
+                    <a href="index.html">
+                        <i class="fa-solid fa-code"></i><h1>LOXI</h1>
+                    </a>
+                </div>
+                    <div class="welcome">
+                        <h1>Bienvenido de Nuevo</h1>
+                        <p>Inicia sesión para continuar con tu experiencia.</p>
+                    </div>
+                    <div class="features">
+                        <div class="feature">
+                            <div class="feature-icon">✓</div>
+                            <div class="feature-text">Acceso a todas tus herramientas</div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">✓</div>
+                            <div class="feature-text">Sincronización entre dispositivos</div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">✓</div>
+                            <div class="feature-text">Soporte técnico personalizado</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-panel">
+                <div class="login-form">
+                    <h2>Iniciar Sesión</h2>
+                    <p class="form-subtitle">Ingresa tus credenciales para acceder a tu cuenta.</p>
+                    
+                    <div class="social-login">
+                        <button class="social-btn google">
+                            <span class="icon">G</span>
+                            Google
+                        </button>
+                        <button class="social-btn github">
+                            <span class="icon">G</span>
+                            Github
+                        </button>
+                    </div>
+                    
+                    <div class="divider">
+                        <span>o</span>
+                    </div>
+                    
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="email">Correo Electrónico</label>
+                            <input type="email" id="email" required>
+                            <span class="error-message" id="emailError"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Contraseña</label>
+                            <div class="password-input">
+                                <input type="password" id="password" required>
+                                <button type="button" class="toggle-password" id="togglePassword">
+                                    <span class="eye-icon">👁</span>
+                                </button>
+                            </div>
+                            <span class="error-message" id="passwordError"></span>
+                        </div>
+                        
+                        <div class="form-options">
+                            <div class="remember-me">
+                                <input type="checkbox" id="remember">
+                                <label for="remember">Recordarme</label>
+                            </div>
+                            <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+                        </div>
+                        
+                        <button type="submit" class="login-btn">Iniciar Sesión</button>
+                    </form>
+                    
+                    <p class="signup-link">
+                        ¿No tienes una cuenta? <a href="./registrer.html">Regístrate</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/login.js"></script>
+</body>
 </html>
