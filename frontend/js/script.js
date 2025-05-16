@@ -113,3 +113,9 @@ terminalInput.addEventListener('keydown', function (event) {
         }
     }
 });
+
+const profileButton = document.getElementById('profile-button');
+
+profileButton.addEventListener('click', function () {
+    window.location.href = '../pages/registrer.html'; 
+});
