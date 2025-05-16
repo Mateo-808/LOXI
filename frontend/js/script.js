@@ -44,7 +44,7 @@ const comandos = {
         const infoContent = `
             <div class="info-header">Información de Loxi</div>
             <div class="info-section">
-                <div><strong>¿Quiénes somos?:</strong>Loxi es una plataforma web inteligente enfocada en evaluar y potenciar las habilidades lógico-matemáticas de estudiantes que desean ingresar o que ya cursan la media técnica. A través de análisis personalizados, retroalimentación precisa y rutas de mejora, Loxi acompaña a cada estudiante en su camino para ingresar con confianza, avanzar con solidez y destacar en su proceso formativo.
+                <div><strong>¿Quiénes somos?: </strong>Loxi es una plataforma web inteligente enfocada en evaluar y potenciar las habilidades lógico-matemáticas de estudiantes que desean ingresar o que ya cursan la media técnica. A través de análisis personalizados, retroalimentación precisa y rutas de mejora, Loxi acompaña a cada estudiante en su camino para ingresar con confianza, avanzar con solidez y destacar en su proceso formativo.
                 </div>
             </div>`;
         addOutputLine(infoContent, 'user-info');
