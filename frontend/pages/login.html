@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="../css/login.css">
     <link rel="shortcut icon" href="../assets/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+        
+        const supabaseUrl = 'https://bllvqufahggmbhhfqidk.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl0a2llaHFic29qandueGx0bm5lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ2ODY1MjEsImV4cCI6MjA2MDI2MjUyMX0.D24UX-L6d0woheBtKpauamnScCm3BlSeAnCwaOixOik';
+        window.supabase = createClient(supabaseUrl, supabaseKey);
+    </script>
 </head>
 <body>
     <div class="browser-frame">
@@ -95,6 +102,7 @@
             </div>
         </div>
     </div>
-    <script src="../js/login.js"></script>
+    <!-- Ahora usamos script de tipo module pero modificado para usar el objeto window.supabase -->
+    <script type="module" src="../js/login.js"></script>
 </body>
 </html>

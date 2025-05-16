@@ -1,16 +1,14 @@
 import { supabase } from '../db/supabase.js';
 
 export async function loginUser(correo, contrasena) {
-  const { data: user, error } = await supabase
-    .from('usuarios')
-    .select('*')
-    .eq('correo', correo)
-    .eq('contrasena', contrasena)
-    .single();
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: correo,
+    password: contrasena
+  });
 
-  if (error || !user) {
-    return { ok: false, error: 'Correo o contraseña incorrectos' };
+  if (error) {
+    return { ok: false, error: error.message };
   }
 
-  return { ok: true, user };
+  return { ok: true, user: data.user };
 }
