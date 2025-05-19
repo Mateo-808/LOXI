@@ -610,3 +610,31 @@ nav ul li .submenu li a:hover {
 * {
     scrollbar-color: #012E40 #00080D;
 }
+.footer{
+    font-family: 'Poppins';
+    color: rgba(181, 183, 186, 0.81);
+}
+.title-footer{
+    font-size: 200px;
+    
+
+}
+
+h4{
+    color:white;
+    text-align: right;
+}
+ 
+p{
+    text-align: right;
+    justify-content: right;
+    
+}
+
+h5{
+    text-align: center;
+    justify-content: center;
+    color: #B5B7BA;
+    font-size: 14px;
+    margin-top: 40px;
+}
