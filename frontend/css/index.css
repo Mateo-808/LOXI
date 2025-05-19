@@ -491,13 +491,50 @@ nav ul li .submenu li a:hover {
     word-wrap: break-word;
     font-size: 45px;
     color: #fff;
+    
 }
 
 .thought_developed{
     font-size: 20px;
     color: #9CA3AF;
-    margin-top: 20px;
+    margin-top: -30px;
     text-align: center;
+}
+.circle {
+    height: 30px;
+    width: 30px;
+    background-color: #D9D9D9;
+    border-radius: 50%;
+    margin: 1px;
+    box-shadow: 0 0 10px rgba(0, 182, 255, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.circle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(0, 182, 255, 0.8);
+}
+
+.circles {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 40px;
+    width: 200px;
+    background-color: #073F56;
+    border-radius: 50px;
+    transform: translateX(540px);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    margin-top: 20px;
+
+}
+
+
+.palo{
+    font-size: 30px;
+    color: #D9D9D9;
+
 }
 
 .promotion {
@@ -515,6 +552,7 @@ nav ul li .submenu li a:hover {
     background-repeat: no-repeat;
     color: #fafafa;
     width: 100%;
+    margin-top: 30px;
 }
 
 .promotion h2 {
