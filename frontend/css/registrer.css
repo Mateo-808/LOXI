@@ -23,6 +23,43 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
+.back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    z-index: 10;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.back-button:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.back-button:active {
+    transform: translateY(0);
+}
+
+.back-button i {
+    font-size: 12px;
+}
+
+.fas.fa-arrow-left:before { 
+    content: "←"; 
+}
+
 .browser-header {
     background-color: #1a1a1a;
     padding: 8px 12px;
@@ -376,6 +413,13 @@ input::placeholder {
 .fas.fa-lock:before { content: "🔒"; }
 
 @media (max-width: 768px) {
+    .back-button {
+        top: 10px;
+        left: 10px;
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
     .container {
         flex-direction: column;
         height: auto;
