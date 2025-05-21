@@ -94,8 +94,6 @@ body {
     height: 100%;
     background: linear-gradient(180deg, rgba(1,46,64,1) 10%, rgba(1,28,38,1) 50%, rgba(0,8,13,1) 100%);
     opacity: 0.8;
-    border-radius: 20px;
-    margin: 20px;
 }
 
 .left-content {
@@ -302,6 +300,7 @@ input::placeholder {
 
 .remember-me {
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 8px;
 }
@@ -311,8 +310,12 @@ input::placeholder {
     margin: 0;
 }
 
+.recordarme {
+    margin: auto;
+}
+
 .forgot-password {
-    color: #9370DB;
+    color: #fff;
     text-decoration: none;
 }
 
@@ -374,7 +377,7 @@ input::placeholder {
 }
 
 .signup-link a {
-    color: #9370DB;
+    color: #fff;
     text-decoration: none;
 }
 
