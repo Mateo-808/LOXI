@@ -185,3 +185,52 @@ nav ul li .submenu li a:hover {
     transform: translateY(1px);
     box-shadow: 0px 0px 5px #a5a8b496;
 }
+
+main{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#home{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    text-align: center;
+
+    h2{
+        font-size: 50px;
+        margin-bottom: 20px;
+    }
+
+    p{
+        font-size: 30px;
+        color: #B5B7BA;
+    }
+}
+
+#info-loxi{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+
+    h3{
+        font-size: 44px;
+        margin-bottom: 20px;
+    }
+
+    p{
+        font-size: 20px;
+        color: #B5B7BA;
+        max-width: 550px;
+    }
+}
+
+.description{
+    display: flex;
+flex-direction: column;
+}
