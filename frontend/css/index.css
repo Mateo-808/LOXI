@@ -310,6 +310,10 @@ nav ul li .submenu li a:hover {
     display: inline-block;
 }
 
+.services:hover{
+    color: #fafafa;
+}
+
 .terminal {
     display: flex;
     flex-direction: column;
@@ -645,31 +649,28 @@ nav ul li .submenu li a:hover {
     background-color: #01475F;
 }
 
-* {
-    scrollbar-color: #012E40 #00080D;
-}
+
 .footer{
     font-family: 'Poppins';
     color: rgba(181, 183, 186, 0.81);
 }
 .title-footer{
     font-size: 200px;
-    
 
 }
 
-h4{
+.items h4{
     color:white;
     text-align: right;
 }
  
-p{
+.items p{
     text-align: right;
     justify-content: right;
     
 }
 
-h5{
+.items h5{
     text-align: center;
     justify-content: center;
     color: #B5B7BA;
