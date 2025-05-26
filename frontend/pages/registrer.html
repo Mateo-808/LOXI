@@ -12,6 +12,11 @@
 <body>
     <div class="browser-frame">
 
+        <a href="index.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            <span>Volver</span>
+        </a>
+
         <div class="container">
             <div class="left-panel">
                 <div class="gradient-bg"></div>
@@ -37,7 +42,7 @@
                 </div>
             </div>
             <div class="right-panel">
-                <div class="signup-form">
+                <form class="signup-form">
                     <h2>Registrar Cuenta</h2>
                     <p class="form-subtitle">Ingrese sus datos personales para crear su cuenta.</p>
                     
@@ -47,7 +52,7 @@
                             Google
                         </button>
                         <button class="social-btn github">
-                            <i class="fab fa-github"></i>
+                            <i class="fa-brands fa-github"></i>
                             Github
                         </button>
                     </div>
@@ -59,33 +64,33 @@
                     <div class="form-row">
                         <div class="form-group half">
                             <label for="firstName">Primer Nombre</label>
-                            <input type="text" id="firstName">
+                            <input type="text" id="firstName" required>
                         </div>
                         <div class="form-group half">
                             <label for="lastName">Primer Apellido</label>
-                            <input type="text" id="lastName">
+                            <input type="text" id="lastName" required>
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="email">Correo Electrónico</label>
-                        <input type="email" id="email" >
+                        <input type="email" id="email" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="password">Contraseña</label>
                         <div class="password-input">
-                            <input type="password" id="password" >
+                            <input type="password" id="password" required>
                         </div>
                         <p class="password-hint">Debe tener al menos 8 caracteres.</p>
                     </div>
                     
-                    <button class="signup-btn">Registrarse</button>
+                    <button type="submit" class="signup-btn">Registrarse</button>
                     
                     <p class="login-link">
-                        ¿Ya tienes Cuenta? <a href="./login.html">Inicia Sesión</a>
+                        ¿Ya tienes Cuenta? <a href="./login.html">Inicia sesión aquí</a>
                     </p>
-                </div>
+                </form>
             </div>
         </div>
     </div>
