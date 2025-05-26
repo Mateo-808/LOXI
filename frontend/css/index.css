@@ -648,32 +648,32 @@ nav ul li .submenu li a:hover {
 ::-webkit-scrollbar-thumb:hover {
     background-color: #01475F;
 }
-
-
-.footer{
-    font-family: 'Poppins';
-    color: rgba(181, 183, 186, 0.81);
-}
-.title-footer{
-    font-size: 200px;
-
-}
-
-.items h4{
-    color:white;
-    text-align: right;
-}
- 
-.items p{
-    text-align: right;
-    justify-content: right;
-    
-}
-
-.items h5{
+.suggestions{
+    padding-bottom: 15%;
+    padding-top: 8%;
+    color: white;
+    font-size: 40px;
     text-align: center;
-    justify-content: center;
-    color: #B5B7BA;
-    font-size: 14px;
-    margin-top: 40px;
 }
+summary{
+    font-size: 25px;
+}
+details{
+    background: rgba(21, 86, 113, 0.7);
+    color: #fff;
+    width: 50%;
+    border: 1px solid transparent;
+    border-radius: 15px;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 20px;
+    cursor: pointer;
+    overflow: hidden;
+    justify-content: center;
+    position: relative;
+    margin-top: 25px;
+    text-decoration: none;
+    padding: 0px 30px;
+    left: 25%;
+}
+
