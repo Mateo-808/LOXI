@@ -729,7 +729,51 @@ details{
     position: relative;
     margin-top: 25px;
     text-decoration: none;
-    padding: 0px 30px;
     left: 25%;
 }
+
+.foooter{
+    font-family: 'Poppins' ;
+    font-style: italic;
+}
+
+.title-foooter{
+    font-size: 250px;
+    text-align: left;
+    color:#B5B7BA ;
+    margin-left: 10%;
+}
+.foooter-links{
+    font-size: 25px;
+    text-align: right;
+    margin-right: 20%;
+    margin-top: -280px;
+    margin-bottom: 380px;   
+}
+.foooter-links h4{
+    color: white;
+    font-size: 30px;
+}
+.foooter-links ul li a{
+    list-style: none;
+    text-decoration: none;
+    color: #B5B7BA;
+    font-size: 20px;
+}
+
+.foooter p{
+    text-align: center;
+    justify-content: center;
+    color: #B5B7BA;
+    font-size: 14px;
+    margin-bottom: 40px;
+  
+}
+@media (min-width: 768px) {
+  .footer-content {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
 
