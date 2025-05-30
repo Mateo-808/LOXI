@@ -156,3 +156,6 @@ nav ul li .submenu li a:hover {
 .profile:hover {
     opacity: 0.5;
 }
+.button-set{
+    list-style-type: none;
+}
