@@ -1,68 +1,264 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>LOXI - Inicio</title>
-        <link rel="shortcut icon" href="../assets/logo.svg" type="image/svg+xml">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="../css/us.css">
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOXI - Sobre Nosotros</title>
+    <link rel="shortcut icon" href="../assets/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/us.css">
+</head>
+<body>
+    <div class="background-layers">
+        <div class="grid-overlay"></div>
+    </div>
 
-        <div class="background-layers">
-            <div class="grid-overlay"></div>
-        </div>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html">
+                    <i class="fa-solid fa-code"></i>
+                    <h1>LOXI</h1>
+                </a>
+            </div>
+            <ul>
+                <li><a href="services.html">Servicios</a></li>
+                <li><a href="d&s.html">D&S</a></li>
+                <li><a href="practica.html">Práctica</a></li>
+            </ul>
+            <button class="profile">Registrarse</button>
+        </nav>
+    </header>
 
-        <header>
-            <nav>
-                <div class="logo">
-                    <a href="index.html">
-                        <i class="fa-solid fa-code"></i><h1>LOXI</h1>
-                    </a>
-                </div>
-                <ul>
-                    <li class="has-submenu">
-                        <a href="services.html">Servicios</a>
-                        <ul class="submenu">
-                            <li><a href="services.html">Niveles</a></li>
-                            <li><a href="us.html">Nosotros</a></li>
-                            <li><a href="#">Ayuda</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="d&s.html">D&S</a></li>
-                    <li><a href="practica.html">Practica</a></li>
-                </ul>
-                <button class="profile" id="profile-button">Registrarse</button>
-            </nav>
-        </header>
+    <main>
+        <section id="home">
+            <h2>SOBRE NOSOTROS</h2>
+            <p>Transformando el aprendizaje lógico-<br>matemático desde la Media Técnica</p>
+        </section>
 
-        <main>
-            <section class="home" id="home">
-                <h2>SOBRE NOSOTROS</h2>
-                <p>Transformando el aprendizaje lógico-<br>matemático desde la Media Técnica</p>
-            </section>
-            <section class="info-loxi" id="info-loxi">
-                <img src="" alt="imagen del desarrollo de loxi">
-                <div class="description">
-                    <h3>¿QUÉ ES LOXI?</h3>
-                    <p>Loxi es una aplicación web creada especialmente para los estudiantes de la Media Técnica en Desarrollo de Software y para quienes están próximos a ingresar. Su objetivo es fortalecer el pensamiento lógico-matemático mediante desafíos interactivos que estimulan el razonamiento y la resolución de problemas. Desarrollada como proyecto final por estudiantes de la misma formación, Loxi refleja el compromiso, la creatividad y las habilidades adquiridas a lo largo del proceso educativo.</p>
-                    <a href="">Ver más</a>
-                </div>
-            </section>
-            <section class="developers" id="developers">
-                <h4>DESARROLLADORES</h4>
-                <p>Conoce al equipo detrás de la magia.</p>
-                <img src="../assets/us.jpeg" alt="Imagen de los desarrolladores">
-            </section>
-            <section class="developer">
-                <div class="developers-card">
-                    <div class="developer-card">
+        <section id="info-loxi">
+            <img src="../assets/collage-loxi.png" alt="Desarrollo de LOXI">
+            <div class="description">
+                <h3>¿QUÉ ES LOXI?</h3>
+                <p>Loxi es una aplicación web creada especialmente para los estudiantes de la Media Técnica en Desarrollo de Software y para quienes están próximos a ingresar. Su objetivo es fortalecer el pensamiento lógico-matemático mediante desafíos interactivos que estimulan el razonamiento y la resolución de problemas. Desarrollada como proyecto final por estudiantes de la misma formación, Loxi refleja el compromiso, la creatividad y las habilidades adquiridas a lo largo del proceso educativo.</p>
+                <a href="#developers-container">Conoce al equipo</a>
+            </div>
+        </section>
 
+        <section id="developers">
+            <h4>NUESTRO EQUIPO</h4>
+            <p>Los desarrolladores detrás de la magia de LOXI</p>
+            <img src="../assets/us.jpeg" alt="Equipo de desarrolladores" class="team-image">
+        </section>
+
+        <section class="developers-container" id="developers-container">
+            <div class="developers-scroll" id="developers-scroll">
+                <!-- Team Member 1 -->
+                <div class="team-card" data-index="0">
+                    <div class="card-header"></div>
+                    <div class="profile-image">
+                        <img src="../assets/c5c09e66-44e4-4554-9e4d-a4c83749b3a8.jpeg" alt="Lina Sofía">
+                    </div>
+                    <div class="card-body">
+                        <h2 class="member-name">Lina Sofía</h2>
+                        <p class="member-position">Frontend Developer</p>
+                        <p class="member-description">
+                            Especialista en desarrollo frontend, aportando con habilidades creativas y de diseño para crear interfaces intuitivas y atractivas.
+                        </p>
+                        <div class="social-links">
+                            <a href="https://github.com/Sofia-2414" class="social-link github" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                ver más
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </section>
-        </main>
-    
-</body>
-</html>
+
+                <!-- Team Member 2 -->
+                <div class="team-card" data-index="1">
+                    <div class="card-header"></div>
+                    <div class="profile-image">
+                        <img src="../assets/99a5f502-2ceb-4574-ae98-5465b4ca7c23.jpeg" alt="Santiago Cifuentes">
+                    </div>
+                    <div class="card-body">
+                        <h2 class="member-name">Santiago Cifuentes</h2>
+                        <p class="member-position">Frontend Developer</p>
+                        <p class="member-description">
+                            Especialista en el desarrollo frontend, creando experiencias de usuario fluidas y atractivas con un enfoque en la usabilidad y el diseño.
+                        </p>
+                        <div class="social-links">
+                            <a href="https://github.com/king-eclipse1" class="social-link github" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                Ver más
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Member 3 -->
+                <div class="team-card" data-index="2">
+                    <div class="card-header"></div>
+                    <div class="profile-image">
+                        <img src="../assets/647b80b0-155e-4cce-8778-0b7bc93ea867.jpeg" alt="Mateo Restrepo">
+                    </div>
+                    <div class="card-body">
+                        <h2 class="member-name">Mateo Restrepo</h2>
+                        <p class="member-position">Full Stack Developer</p>
+                        <p class="member-description">
+                            Desarrollador full stack con experiencia en múltiples tecnologías, coordinando la integración entre frontend y backend.
+                        </p>
+                        <div class="social-links">
+                            <a href="https://github.com/Mateo-808" class="social-link github" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                Ver más
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Member 4 -->
+                <div class="team-card" data-index="3">
+                    <div class="card-header"></div>
+                    <div class="profile-image">
+                        <img src="../assets/3dfd13db-37d7-4da3-879d-f309f61c98d8.jpeg" alt="Andrés Gómez">
+                    </div>
+                    <div class="card-body">
+                        <h2 class="member-name">Andrés Gómez</h2>
+                        <p class="member-position">Full Stack Developer</p>
+                        <p class="member-description">
+                            Experto en desarrollo backend y arquitectura de sistemas, garantizando la robustez y escalabilidad de la aplicación.
+                        </p>
+                        <div class="social-links">
+                            <a href="https://github.com/Andrez18" class="social-link github" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                Ver más
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Variables para controlar el scroll y las animaciones
+        let currentCardIndex = 0;
+        const totalCards = document.querySelectorAll('.team-card').length;
+        let isScrolling = false;
+
+        // Función para mostrar cards progresivamente
+        function showCardByIndex(index) {
+            const cards = document.querySelectorAll('.team-card');
+            
+            if (index >= 0 && index < cards.length) {
+                cards[index].classList.add('animate-in');
+                
+                // Scroll automático hacia la nueva card
+                const scrollContainer = document.getElementById('developers-scroll');
+                const cardWidth = cards[index].offsetWidth + 30; // width + gap
+                scrollContainer.scrollTo({
+                    left: index * cardWidth,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Función para ocultar cards posteriores al índice actual
+        function hideCardsAfterIndex(index) {
+            const cards = document.querySelectorAll('.team-card');
+            
+            for (let i = index + 1; i < cards.length; i++) {
+                cards[i].classList.remove('animate-in');
+            }
+        }
+
+        // Intersection Observer para detectar cuando la sección está visible
+        const observerOptions = {
+            threshold: [0, 0.25, 0.5, 0.75, 1],
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const rect = entry.boundingClientRect;
+                    const windowHeight = window.innerHeight;
+                    
+                    // Calcular el progreso del scroll en la sección (0 a 1)
+                    const sectionTop = rect.top;
+                    const sectionHeight = rect.height;
+                    const visibleHeight = Math.min(windowHeight - sectionTop, sectionHeight);
+                    const scrollProgress = Math.max(0, Math.min(1, visibleHeight / (windowHeight * 0.8)));
+                    
+                    // Determinar qué card mostrar basado en el progreso
+                    const targetIndex = Math.floor(scrollProgress * totalCards);
+                    
+                    if (targetIndex !== currentCardIndex) {
+                        currentCardIndex = targetIndex;
+                        
+                        // Mostrar cards hasta el índice actual
+                        for (let i = 0; i <= currentCardIndex; i++) {
+                            setTimeout(() => {
+                                showCardByIndex(i);
+                            }, i * 200);
+                        }
+                        
+                        // Ocultar cards posteriores
+                        hideCardsAfterIndex(currentCardIndex);
+                        
+                        // Actualizar indicador
+                        updateScrollIndicator();
+                    }
+                } else {
+                    // Si la sección no está visible, resetear
+                    currentCardIndex = 0;
+                    hideCardsAfterIndex(-1);
+                    updateScrollIndicator();
+                }
+            });
+        }, observerOptions);
+
+        // Función para actualizar el indicador de scroll
+        function updateScrollIndicator() {
+            const indicator = document.querySelector('.scroll-indicator');
+            if (indicator) {
+                // Siempre mostrar el indicador para scroll horizontal
+                indicator.style.opacity = '1';
+                const span = indicator.querySelector('span');
+                if (span) {
+                    span.textContent = `Desliza horizontalmente para ver más`;
+                }
+            }
+        }
+
+        function showCardByIndex(index) {
+        const cards = document.querySelectorAll('.team-card');
+        
+        if (index >= 0 && index < cards.length) {
+            cards[index].classList.add('animate-in');
+            
+            // Scroll automático hacia la nueva tarjeta centrada
+            centrarTarjeta(index);
+        }
+        }
+
+        function centrarTarjeta(index) {
+        const contenedor = document.getElementById('developers-scroll');
+        const tarjetas = document.querySelectorAll('.team-card');
+        const tarjetaObjetivo = tarjetas[index];
+
+        const desplazamiento = tarjetaObjetivo.offsetLeft - (contenedor.offsetWidth / 2) + (tarjetaObjetivo.offsetWidth / 2);
+        contenedor.scrollTo({
+            left: desplazamiento,
+            behavior: 'smooth'
+        });
+        }
+</script>
