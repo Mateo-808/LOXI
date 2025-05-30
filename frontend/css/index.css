@@ -495,17 +495,16 @@ nav ul li .submenu li a:hover {
     word-wrap: break-word;
     font-size: 45px;
     color: #fff;
-    
 }
 
 .thought_developed{
     font-size: 20px;
     color: #9CA3AF;
-    margin-top: -30px;
     text-align: center;
 }
 
 .circles {
+    margin: auto;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -513,10 +512,8 @@ nav ul li .submenu li a:hover {
     width: 200px;
     background-color: #073F56;
     border-radius: 50px;
-    transform: translateX(540px);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     padding: 10px;
-    margin-top: 20px;
 }
 
 .circle1,
@@ -560,19 +557,9 @@ nav ul li .submenu li a:hover {
     box-shadow: 0 0 15px rgba(0, 182, 255, 0.8);
 }
 
-.circles {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 40px;
-    width: 200px;
-    background-color: #073F56;
-    border-radius: 50px;
-    transform: translateX(540px);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    margin-top: 20px;
-
+.us {
+    color: #FFF;
+    text-decoration: none;
 }
 
 .promotion {
