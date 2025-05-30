@@ -597,6 +597,15 @@ nav ul li .submenu li a:hover {
 
 }
 
+.us{
+    font-size: 30px;
+    text-decoration: none;
+    color: #fff;
+    
+}
+
+
+
 .promotion {
     position: relative;
     display: flex;
