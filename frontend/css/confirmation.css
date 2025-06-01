@@ -14,6 +14,8 @@ body {
     min-height: 100vh;
     width: 100%;
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .background-layers {
@@ -192,8 +194,8 @@ main {
     position: relative;
     padding: 0 20px;
     max-width: 1200px;
-    margin: 0 auto;
-    min-height: calc(100vh - 80px); /* Ajustado para tener en cuenta el header */
+    margin: 50px 200px;
+    flex: 1 0 auto;
 }
 
 section {
@@ -221,10 +223,6 @@ section {
 .options {
     display: flex;
     gap: 20px;
-    position: absolute;
-    bottom: 50px; 
-    left: 40px;
-    right: 20px;
     flex-wrap: wrap; 
     justify-content: flex-start; 
 }
@@ -287,10 +285,6 @@ section {
     color: #fafafa;
     font-weight: 500;
     letter-spacing: 0.5px;
-}
-
-section {
-    padding-bottom: 120px; 
 }
 
 @media (max-width: 768px) {

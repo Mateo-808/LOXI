@@ -22,7 +22,7 @@
                 <ul>
                     <li><a href="index.html">Inicio</a></li>
                     <li class="has-submenu">
-                        <a href="#">Servicios</a>
+                        <a href="confirmation.html">Servicios</a>
                         <ul class="submenu">
                             <li><a href="#">Niveles</a></li>
                             <li><a href="practice.html">Pratica</a></li>
@@ -39,7 +39,7 @@
             <p>¿Cuál es tu nivel de lógica de programación con el que te sientes más cómodo?</p>
             
             <div class="level-selector" id="level-selector">
-                <button class="level-card">
+                <button class="level-card" onclick="window.location.href = 'practice.html'">
                     <div class="code-sample">
                         <span class="method">console.log</span>(<span class="string">"Hola"</span>);
                     </div>
@@ -47,7 +47,7 @@
                     <p class="level-description">Quiero empezar desde lo básico</p>
                 </button>
                 
-                <button class="level-card">
+                <button class="level-card" onclick="window.location.href = 'practice.html'">
                     <div class="code-sample">
                         <span class="keyword">if</span> (<span class="variable">a</span> > <span class="variable">b</span>) {<br>
                         &nbsp;&nbsp;<span class="method">console.log</span>(<span class="variable">a</span>);<br>
@@ -57,7 +57,7 @@
                     <p class="level-description">He visto código, pero no lo he tocado antes.</p>
                 </button>
                 
-                <button class="level-card">
+                <button class="level-card" onclick="window.location.href = 'practice.html'">
                     <div class="code-sample">
                         <span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">i</span> = 0; <span class="variable">i</span> <= <span class="variable">11</span>; <span class="variable">i</span>++) {...}
                     </div>
@@ -65,7 +65,7 @@
                     <p class="level-description">Puedo escribir programas simples con bucles.</p>
                 </button>
                 
-                <button class="level-card">
+                <button class="level-card" onclick="window.location.href = 'practice.html'">
                     <div class="code-sample">
                         <span class="function">function</span> <span class="variable">sumar</span>(<span class="variable">a</span>,<span class="variable">b</span>) {...}
                     </div>
@@ -74,5 +74,8 @@
                 </button>
             </div>
         </section>
+        <footer>
+            <p>LOXI © 2025. TODOS LOS DERECHOS RESERVADOS</p>
+        </footer>
     </body>
 </html>

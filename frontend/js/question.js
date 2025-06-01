@@ -43,15 +43,15 @@ function sendMessage() {
 
     if (numAnswer === 42) {
         level = "Avanzado";
-        redirectURL = "../pages/nivel-avanzado.html";
+        redirectURL = "../pages/services.html";
         isValidAnswer = true;
     } else if (numAnswer === 36) {
         level = "Intermedio";
-        redirectURL = "../pages/nivel-intermedio.html";
+        redirectURL = "../pages/services.html";
         isValidAnswer = true;
     } else if (numAnswer === 30 || numAnswer === 40) {
         level = "Básico";
-        redirectURL = "../pages/nivel-basico.html";
+        redirectURL = "../pages/services.html";
         isValidAnswer = true;
     } else {
         level = "No identificado";

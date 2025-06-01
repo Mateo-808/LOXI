@@ -274,6 +274,13 @@ nav ul li .submenu li a:hover {
     margin-left: 5px;
 }
 
+footer {
+    text-align: center;
+    color: #B5B7BA;
+    font-size: 14px;
+    padding: 20px;
+}
+
 ::-webkit-scrollbar {
     width: 10px;
     height: 10px;

@@ -453,8 +453,9 @@ footer {
     justify-content: center;
     color: #B5B7BA;
     font-size: 14px;
-    margin-top: 40px;
+    padding: 20px;
 }
+
 @media (max-width: 1100px) {
     .faq-container {
         grid-template-columns: 1fr 1fr;

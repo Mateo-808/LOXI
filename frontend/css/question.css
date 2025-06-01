@@ -13,6 +13,7 @@ body {
     background: linear-gradient(180deg, #012e40 10%, #011c26 50%, #00080d 100%);
     min-height: 100vh;
     width: 100%;
+    overflow-x: hidden;
 }
 
 .background-layers {
@@ -152,10 +153,38 @@ nav ul li .submenu li a:hover {
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.1), 
+        transparent
+    );
+    transition: 0.6s;
 }
 
 .profile:hover {
     border: 1px solid #ffffff;
+    box-shadow: 0px 0px 10px #a5a8b4cc;
+}
+
+.profile:hover::before {
+    left: 100%;
+}
+
+.profile:active {
+    transform: translateY(1px);
+    box-shadow: 0px 0px 5px #a5a8b496;
 }
 
 main {
@@ -175,7 +204,7 @@ main {
 }
 
 .description {
-    margin: 60px 40px 30px 30px;
+    margin: 60px 40px 10px 30px;
     width: 100%;
     max-width: 1100px;
     color: #fafafa;
@@ -186,7 +215,7 @@ main {
 
 .text {
     display: flex;
-    margin: 0 0 -90px 0;
+    margin: 0 0 20px 0;
     flex-wrap: wrap;
     justify-content: flex-start;
     margin-bottom: 20px;
@@ -221,19 +250,16 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 12rem auto 0;
+    margin: 0 auto 2rem;
     color: #B5B7BA;
     background: transparent;
     width: 100%;
-    height: 100%;
+    height: auto;
     max-width: 800px;
-    margin-top: 20px;
-    position: sticky;
-    bottom: 0;
-    background-color: inherit;
+    position: static;
     padding: 10px 0;
-    z-index: 10;
     transition: transform 0.5s ease, opacity 0.5s ease;
+    position: relative;
 }
 
 .write-hidden {
@@ -250,21 +276,22 @@ main {
     border-radius: 70px;
     width: 100%;
     font-size: clamp(18px, 3vw, 30px);
-    padding: 10px 20px; 
+     padding: 10px 50px 10px 20px; 
     outline: none;
-    padding-right: 50px;
 }
 
 .write .send {
-    position: absolute;
-    right: 20px;
     background: transparent;
     border: none;
     color: #B5B7BA;
     font-size: clamp(20px, 3vw, 30px);
-    transform: rotate(0deg);
     transition: transform 0.3s ease;
     cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 25%;
+    transform: translateY(- 50%);
+    z-index: 1;
 }
 
 .send:active {
@@ -278,8 +305,7 @@ main {
 .result {
     overflow-y: auto;
     scroll-behavior: smooth; 
-    padding-bottom: 15px;    
-    height: 300px;
+    padding-bottom: 15px;
 }
 
 .chat-container {
@@ -287,12 +313,12 @@ main {
     flex-direction: column;
     gap: 15px;
     width: 100%;
-    height: 100%;
+    height: auto;
     overflow-y: auto;
     padding: 15px;
     border-radius: 10px;
-    margin-top: 30px;
-    margin-bottom: 40px;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .user-msg, .bot-msg {
@@ -370,6 +396,24 @@ main {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    color: #615e5e44;
+    font-size: 14px;
+    z-index: 10;
+}
+
+footer p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.603);
+    text-align: center;
+    bottom: 0;
+    padding: 20px;
+}
+
 .chat-container::-webkit-scrollbar {
     width: 10px;
 }
@@ -387,14 +431,14 @@ main {
     background: #3a3a3a63;
 }
 
-
 @media (max-width: 992px) {
     .description {
         margin-top: 60px;
+        margin-bottom: 10px;
     }
     
     .write {
-        margin: 8rem auto 0;
+        margin: 0 auto 2rem;
     }
 }
 
@@ -427,14 +471,18 @@ main {
     }
     
     .write {
-        margin: 6rem auto 0;
+        margin: 0rem auto 2rem;
         width: 90%;
     }
     
     .write input {
         padding: 8px 15px 8px 20px;
     }
-    
+
+    .description {
+        margin-bottom: 10px
+    }
+        
     .description h2 {
         text-align: left;
     }

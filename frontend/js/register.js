@@ -1,37 +1,33 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("registroForm");
+// frontend/js/register.js
 
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('registroForm');
 
-    const nombre = document.getElementById("nombre").value;
-    const correo = document.getElementById("correo").value;
-    const contrasena = document.getElementById("contrasena").value;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-    const res = await fetch("http://localhost:3001/api/registro", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nombre, correo, contrasena }),
-    });
+    const nombre = document.getElementById('primerNombre').value.trim() + ' ' +
+                   document.getElementById('primerApellido').value.trim();
+    const correo = document.getElementById('correo').value.trim();
+    const contrasena = document.getElementById('contrasena').value;
 
-    const result = await res.json();
+    try {
+      const res = await fetch('http://localhost:3000/api/registro', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, correo, contrasena })
+      });
 
-    if (result.ok) {
-      alert("Registro exitoso. Redirigiendo al login...");
-      window.location.href = "./login.html";
-    } else {
-      alert("Error al registrarse.");
+      const data = await res.json();
+      if (data.ok) {
+        alert('Registrado con éxito');
+        window.location.href = 'login.html';
+      } else {
+        alert('Error: ' + data.error);
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Error al conectar con el servidor: ' + error.message);
     }
   });
-});
-
-const inputContrasena = document.getElementById('contrasena');
-
-const botonVisualizar = document.querySelector('.visualizar');
-botonVisualizar.addEventListener('click', () => {
-    if (inputContrasena.type == "password") {
-        inputContrasena.type = "text";
-    } else {
-        inputContrasena.type = "password";
-    }
 });

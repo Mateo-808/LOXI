@@ -1,14 +1,21 @@
 import { supabase } from '../db/supabase.js';
+import bcrypt from 'bcryptjs';
 
-export async function loginUser(correo, contrasena) {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email: correo,
-    password: contrasena
-  });
+export async function loginUsuario(correo, contrasena) {
+  try {
+    const { data, error } = await supabase
+      .from('usuarios')
+      .select('*')
+      .eq('correo', correo)
+      .single();
 
-  if (error) {
-    return { ok: false, error: error.message };
+    if (error || !data) throw new Error('Correo no registrado');
+
+    const contrasenaValida = await bcrypt.compare(contrasena, data.contrasena);
+    if (!contrasenaValida) throw new Error('Contraseña incorrecta');
+
+    return { ok: true, usuario: data };
+  } catch (err) {
+    return { ok: false, error: err.message };
   }
-
-  return { ok: true, user: data.user };
 }
