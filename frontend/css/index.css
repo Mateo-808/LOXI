@@ -166,6 +166,10 @@ nav ul li .submenu li a:hover {
     overflow: hidden;
 }
 
+header a{
+    text-decoration: none;
+}
+
 .profile::before {
     content: '';
     position: absolute;
