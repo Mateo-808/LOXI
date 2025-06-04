@@ -689,6 +689,21 @@ header a{
 
 summary{
     font-size: 25px;
+    list-style: none;
+}
+
+summary::before{
+    content: '▼';
+    padding-right: 2rem;
+    float: right;
+    right: 1rem;
+    transform: rotate(0);
+    transition:.25s
+}
+details[open] summary::before {
+    transform: rotate(180deg);
+    padding-left: 2rem;
+    float: right;
 }
 
 details{
