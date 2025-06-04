@@ -701,7 +701,7 @@ summary::before{
 }
 details[open] summary::before {
     transform: rotate(180deg);
-    padding-left: 2rem;
+    padding-left: 1rem;
     float: right;
 }
 
@@ -722,7 +722,7 @@ details{
     left: 25%;
 }
 summary:hover{
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 .foooter{
     font-family: 'Poppins' ;
