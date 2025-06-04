@@ -24,4 +24,17 @@ let inputContrasena = document.getElementById('contrasena');
 
 togglePassword.addEventListener('click', () => {
     inputContrasena.type = inputContrasena.type === "password" ? "text" : "password";
-})
+});
+
+document.getElementById('loginGoogle').addEventListener('click', async () => {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: 'http://127.0.0.1:5500/frontend/pages/callback.html'
+    }
+  });
+
+  if (error) {
+    alert('Error al iniciar con Google: ' + error.message);
+  }
+});
