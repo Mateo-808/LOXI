@@ -53,6 +53,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
+    height: 100vh;
 }
 
 header {
@@ -72,6 +73,7 @@ nav {
 .logo {
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
 .logo i {
@@ -112,6 +114,7 @@ nav ul li a {
     padding: 0.5rem 0.8rem;
     display: block;
     transition: 0.3s ease;
+    text-align: center;
 }
 
 nav ul li a:hover {
@@ -167,10 +170,6 @@ nav ul li .submenu li a:hover {
     overflow: hidden;
 }
 
-header a{
-    text-decoration: none;
-}
-
 .profile::before {
     content: '';
     position: absolute;
@@ -203,7 +202,7 @@ header a{
 
 .central_start {
     position: relative;
-    padding: 100px 50px;
+    padding: 0 50px;
     z-index: 2;
     height: 100vh;
 }
@@ -218,7 +217,7 @@ header a{
 .particles {
     position: absolute;
     right: 80px;
-    top: 10%;
+    top: -20%;
     max-width: 35%;
     z-index: 1;
 }
@@ -788,12 +787,53 @@ footer p{
     text-align: center;
 }
 
-
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .footer-content {
     flex-direction: row;
     align-items: center;
   }
+
+  .central_start h2 {
+    font-size: 2em;
+  }
+
+  .central_start p {
+    margin: auto auto 20px auto;
+  }
+
+  .particles {
+    opacity: 0;
+  }
+
+  .developers {
+    margin: 75px auto 0 auto;
+  }
+
+    nav {
+        justify-content: center;
+        gap: 20px;
+    }
+
+    nav ul {
+        justify-content: center;
+        padding: 10px 0;
+    }
 }
 
-
+@media (max-width: 576px) {
+    nav ul {
+        gap: 10px;
+    }
+    
+    nav ul li a {
+        font-size: 16px;
+        padding: 0.5rem;
+        text-align: center;
+    }
+    
+    .profile {
+        width: 120px;
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+}

@@ -28,6 +28,7 @@ body {
 }
     
 .grid-overlay {
+    position: absolute;
     inset: 0;
     background-image: 
         linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
@@ -63,6 +64,7 @@ nav {
 .logo {
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
 .logo i {
@@ -103,6 +105,7 @@ nav ul li a {
     padding: 0.5rem 0.8rem;
     display: block;
     transition: 0.3s ease;
+    text-align: center;
 }
 
 nav ul li a:hover {
@@ -142,7 +145,7 @@ nav ul li .submenu li a:hover {
 }
 
 .profile {
-    width: 150px;
+    width: 160px;
     height: auto;
     display: block;
     background: transparent;
@@ -301,6 +304,34 @@ section {
     .title {
         font-size: 42px;
         margin-bottom: 40px;
+    }
+
+    nav {
+        justify-content: center;
+        gap: 20px;
+    }
+  
+    nav ul {
+        justify-content: center;
+        padding: 10px 0;
+    }
+}
+
+@media (max-width: 576px) {
+    nav ul {
+        gap: 10px;
+    }
+      
+    nav ul li a {
+        font-size: 16px;
+        padding: 0.5rem;
+        text-align: center;
+    }
+      
+    .profile {
+        width: 120px;
+        padding: 8px 15px;
+        font-size: 14px;
     }
 }
 

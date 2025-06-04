@@ -26,6 +26,7 @@ body {
 }
     
 .grid-overlay {
+    position: absolute;
     inset: 0;
     background-image: 
         linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
@@ -102,6 +103,7 @@ nav ul li a {
     padding: 0.5rem 0.8rem;
     display: block;
     transition: 0.3s ease;
+    text-align: center;
 }
 
 nav ul li a:hover {
@@ -141,7 +143,7 @@ nav ul li .submenu li a:hover {
 }
 
 .profile {
-    width: 150px;
+    width: 160px;
     height: auto;
     display: block;
     background: transparent;
@@ -462,6 +464,7 @@ footer p {
     nav ul li a {
         font-size: 16px;
         padding: 0.5rem;
+        text-align: center;
     }
     
     .profile {

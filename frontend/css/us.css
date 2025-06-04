@@ -23,7 +23,7 @@ body {
     overflow: hidden;
     z-index: -1;
 }
-  
+    
 .grid-overlay {
     position: absolute;
     inset: 0;
@@ -44,16 +44,6 @@ body {
     }
 }
 
-.hero-section {
-    background-image: 
-        url('../assets/code.jpg'),
-        linear-gradient(to bottom, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0.8) 100%);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
 header {
     padding: 20px 0;
 }
@@ -71,6 +61,7 @@ nav {
 .logo {
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
 .logo i {
@@ -90,109 +81,111 @@ nav {
     gap: 10px;
     color: #fff;
 }
+
 nav ul {
-  display: flex;
-  list-style: none;
-  gap: 20px;
-  align-items: center;
-  position: relative;
-  flex-wrap: wrap;
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    align-items: center;
+    position: relative;
+    flex-wrap: wrap;
 }
 
 nav ul li {
-  position: relative;
+    position: relative;
 }
 
 nav ul li a {
-  color: white;
-  text-decoration: none;
-  font-size: 18px;
-  padding: 0.5rem 0.8rem;
-  display: block;
-  transition: 0.3s ease;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 0.5rem 0.8rem;
+    display: block;
+    transition: 0.3s ease;
+    text-align: center;
 }
 
 nav ul li a:hover {
-  opacity: 0.5;
+    opacity: 0.5;
 }
 
 nav ul li .submenu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: rgba(20, 20, 40, 0.9);
-  padding: 0.5rem 0;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  min-width: 160px;
-  z-index: 100;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(20, 20, 40, 0.9);
+    padding: 0.5rem 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    min-width: 160px;
+    z-index: 100;
 }
 
 nav ul li.has-submenu:hover .submenu {
-  display: block;
+    display: block;
 }
 
 nav ul li .submenu li {
-  display: block;
-  width: 100%;
+    display: block;
+    width: 100%;
 }
 
 nav ul li .submenu li a {
-  padding: 0.5rem 1rem;
-  color: white;
-  white-space: nowrap;
+    padding: 0.5rem 1rem;
+    color: white;
+    white-space: nowrap;
 }
 
 nav ul li .submenu li a:hover {
-  opacity: 0.5;
+    opacity: 0.5;
 }
 
 .profile {
-  width: 150px;
-  height: auto;
-  display: block;
-  background: transparent;
-  color: #fff;
-  border: 1px solid #ffffff61;
-  border-radius: 15px;
-  box-shadow: 0px 0px 7px #a5a8b496;
-  padding: 10px 25px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
+    width: 160px;
+    height: auto;
+    display: block;
+    background: transparent;
+    color: #fff;
+    border: 1px solid #ffffff61;
+    border-radius: 15px;
+    box-shadow: 0px 0px 7px #a5a8b496;
+    padding: 10px 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
 }
 
 .profile::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-      90deg, 
-      transparent, 
-      rgba(255, 255, 255, 0.1), 
-      transparent
-  );
-  transition: 0.6s;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.1), 
+        transparent
+    );
+    transition: 0.6s;
 }
 
 .profile:hover {
-  border: 1px solid #ffffff;
-  box-shadow: 0px 0px 10px #a5a8b4cc;
+    border: 1px solid #ffffff;
+    box-shadow: 0px 0px 10px #a5a8b4cc;
 }
 
 .profile:hover::before {
-  left: 100%;
+    left: 100%;
 }
 
 .profile:active {
-  transform: translateY(1px);
-  box-shadow: 0px 0px 5px #a5a8b496;
+    transform: translateY(1px);
+    box-shadow: 0px 0px 5px #a5a8b496;
 }
 
 main {
@@ -517,8 +510,13 @@ main {
 
 @media (max-width: 768px) {
     nav {
-        flex-direction: column;
-        gap: 15px;
+        justify-content: center;
+        gap: 20px;
+    }
+  
+    nav ul {
+        justify-content: center;
+        padding: 10px 0;
     }
 
     #info-loxi {
@@ -545,6 +543,24 @@ main {
 
     .scroll-indicator span {
         display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    nav ul {
+        gap: 10px;
+    }
+      
+    nav ul li a {
+        font-size: 16px;
+        padding: 0.5rem;
+        text-align: center;
+    }
+      
+    .profile {
+        width: 120px;
+        padding: 8px 15px;
+        font-size: 14px;
     }
 }
 

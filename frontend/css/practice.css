@@ -100,6 +100,7 @@ nav ul li a {
     padding: 0.5rem 0.8rem;
     display: block;
     transition: 0.3s ease;
+    text-align: center;
 }
 
 nav ul li a:hover {
@@ -156,6 +157,37 @@ nav ul li .submenu li a:hover {
 .profile:hover {
     opacity: 0.5;
 }
+
 .button-set{
     list-style-type: none;
 }
+
+@media (max-width: 768px) {
+        nav {
+            justify-content: center;
+            gap: 20px;
+        }
+  
+        nav ul {
+            justify-content: center;
+            padding: 10px 0;
+        }
+}
+
+@media (max-width: 576px) {
+    nav ul {
+        gap: 10px;
+    }
+      
+    nav ul li a {
+        font-size: 16px;
+        padding: 0.5rem;
+        text-align: center;
+    }
+      
+    .profile {
+        width: 120px;
+        padding: 8px 15px;  
+        font-size: 14px;
+        }
+  }
