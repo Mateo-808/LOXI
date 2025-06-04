@@ -1,5 +1,3 @@
-// frontend/js/register.js
-
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('registroForm');
 
@@ -30,4 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Error al conectar con el servidor: ' + error.message);
     }
   });
+});
+
+let togglePassword = document.getElementById('togglePassword');
+let inputContrasena = document.getElementById('contrasena');
+
+togglePassword.addEventListener('click', () => {
+  inputContrasena.type = inputContrasena.type === "password" ? "text" : "password";
 });

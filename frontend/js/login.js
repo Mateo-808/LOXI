@@ -18,3 +18,10 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     alert('Error: ' + data.error);
   }
 });
+
+let togglePassword = document.getElementById('togglePassword');
+let inputContrasena = document.getElementById('contrasena');
+
+togglePassword.addEventListener('click', () => {
+    inputContrasena.type = inputContrasena.type === "password" ? "text" : "password";
+})

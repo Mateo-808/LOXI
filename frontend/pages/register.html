@@ -42,55 +42,61 @@
                 </div>
             </div>
             <div class="right-panel">
-                <form class="registroForm" id="registroForm">
-                    <h2>Registrar Cuenta</h2>
-                    <p class="form-subtitle">Ingrese sus datos personales para crear su cuenta.</p>
-                    
-                    <div class="social-login">
-                        <button class="social-btn google">
-                            <i class="fab fa-google"></i>
-                            Google
-                        </button>
-                        <button class="social-btn github">
-                            <i class="fa-brands fa-github"></i>
-                            Github
-                        </button>
-                    </div>
-                    
-                    <div class="divider">
-                        <span>o</span>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group half">
-                            <label for="primerNombre">Primer Nombre</label>
-                            <input type="text" id="primerNombre" required>
+                <div class="register-form">
+                    <form class="registroForm" id="registroForm">
+                        <h2>Registrar Cuenta</h2>
+                        <p class="form-subtitle">Ingrese sus datos personales para crear su cuenta.</p>
+                        
+                        <div class="social-login">
+                            <button class="social-btn google">
+                                <i class="fab fa-google"></i>
+                                Google
+                            </button>
+                            <button class="social-btn github">
+                                <i class="fa-brands fa-github"></i>
+                                Github
+                            </button>
                         </div>
-                        <div class="form-group half">
-                            <label for="primerApellido">Primer Apellido</label>
-                            <input type="text" id="primerApellido" required>
+                        
+                        <div class="divider">
+                            <span>o</span>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="correo">Correo Electrónico</label>
-                        <input type="email" id="correo" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="contrasena">Contraseña</label>
-                        <div class="password-input">
-                            <input type="password" id="contrasena" required minlength="8">
+                        
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label for="primerNombre">Primer Nombre</label>
+                                <input type="text" id="primerNombre" required>
+                            </div>
+                            <div class="form-group half">
+                                <label for="primerApellido">Primer Apellido</label>
+                                <input type="text" id="primerApellido" required>
+                            </div>
                         </div>
-                        <p class="password-hint">Debe tener al menos 8 caracteres.</p>
-                    </div>
-                    
-                    <button type="submit" class="signup-btn">Registrarse</button>
-                    
-                    <p class="login-link">
-                        ¿Ya tienes Cuenta? <a href="./login.html">Inicia sesión aquí</a>
-                    </p>
-                </form>
+                        
+                        <div class="form-group">
+                            <label for="correo">Correo Electrónico</label>
+                            <input type="email" id="correo" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contrasena">Contraseña</label>
+                            <div class="password-input">
+                                <input type="password" id="contrasena" required minlength="8">
+                                <button type="button" class="toggle-password" id="togglePassword" title="Ver/Ocultar contraseña">
+                                    <span class="eye-icon">👁</span>
+                                </button>
+                            </div>
+                            <p class="password-hint">Debe tener al menos 8 caracteres.</p>
+                        </div>
+                        
+                        <button type="submit" class="signup-btn">Registrarse</button>
+                        
+                        <p class="login-link">
+                            ¿Ya tienes Cuenta? <a href="./login.html">Inicia sesión aquí</a>
+                        </p>
+                    </form>
+                </div>
+                
             </div>
         </div>
     </div>

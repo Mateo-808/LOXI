@@ -225,9 +225,20 @@ body {
     align-items: center;
 }
 
+.register-form {
+    width: 100%;
+    max-width: 400px;
+}
+
+.register-form h2 {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+
 .signup-form {
     width: 100%;
-    max-width: 450px;
+    max-width: 400px;
 }
 
 .signup-form h2 {
@@ -334,6 +345,10 @@ input::placeholder {
     border: none;
     color: #666;
     cursor: pointer;
+}
+
+.eye-icon {
+    font-size: 16px;
 }
 
 .password-hint {
