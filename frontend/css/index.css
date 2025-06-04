@@ -722,6 +722,9 @@ details{
     text-decoration: none;
     left: 25%;
 }
+summary:hover{
+    transform: scale(1.05);
+}
 .foooter{
     font-family: 'Poppins' ;
     font-style: italic;
