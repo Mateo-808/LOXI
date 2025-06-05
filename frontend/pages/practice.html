@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="../css/d&s.css">
+        <link rel="stylesheet" href="../css/practice.css">
         <link rel="shortcut icon" href="../assets/logo.svg" type="image/svg+xml">
         <title>LOXI - D&S</title>
     </head>
@@ -34,15 +34,95 @@
                 <button class="profile">Ver perfil</button>
             </nav>
         </header>
+        <section>
             <h1>¡ES HORA DE PRACTICAR!</h1>
-            <p>A continuación encontrarás las actividades separados por niveles que te ayudarán a mejorar tu pensaiento lógico. </p>
-        <section  class="menu">
-                <h1>MENÚ</h1>
-                <ul class="button-set"></ul>
-                    <li><button>Actividad 1</button></li>
-                    <li><button>Actividad 2</button></li>
-                    <li><button>Actividad 3</button></li>
-                    <li><button>Actividad 4</button></li>
-                    <li><button>Actividad 5</button></li>
-                </ul>
-        </section>
+        <div class="container">
+        <!-- Menú lateral -->
+        <div class="sidebar">
+            <div class="menu-title">MENÚ</div>
+            <div class="menu-item">
+                <input type="radio" id="game1" name="game" value="game1">
+                <label for="game1">Nombre juego</label>
+            </div>
+            <div class="menu-item">
+                <input type="radio" id="game2" name="game" value="game2">
+                <label for="game2">Nombre juego</label>
+            </div>
+            <div class="menu-item">
+                <input type="radio" id="game3" name="game" value="game3" checked>
+                <label for="game3">Nombre juego</label>
+            </div>
+            <div class="menu-item">
+                <input type="radio" id="game4" name="game" value="game4">
+                <label for="game4">Nombre juego</label>
+            </div>
+            <div class="menu-item">
+                <input type="radio" id="game5" name="game" value="game5">
+                <label for="game5">Nombre juego</label>
+            </div>
+            <div class="menu-item">
+                <input type="radio" id="game6" name="game" value="game6">
+                <label for="game6">Nombre juego</label>
+            </div>
+            <div class="menu-item">
+                <input type="radio" id="game7" name="game" value="game7">
+                <label for="game7">Nombre juego</label>
+            </div>
+        </div>
+
+        <!-- Área de niveles -->
+        <div class="levels-area">
+            <div class="header-text">
+               <p> A continuación encontrarás los juegos separados por niveles que te ayudarán con tu pensamiento lógico.</p>
+            </div>
+                <!-- Niveles -->
+                <div class="level level-1" onclick="selectLevel(1)">1</div>
+                <div class="level level-2" onclick="selectLevel(2)">2</div>
+                <div class="level level-3" onclick="selectLevel(3)">3</div>
+                <div class="level level-4" onclick="selectLevel(4)">4</div>
+                <div class="level level-5" onclick="selectLevel(5)">5</div>
+                <div class="level level-6" onclick="selectLevel(6)">6</div>
+                <div class="level level-7" onclick="selectLevel(7)">7</div>
+                <div class="level level-8" onclick="selectLevel(8)">8</div>
+                <div class="level level-9" onclick="selectLevel(9)">9</div>
+                <div class="level level-10" onclick="selectLevel(10)">10</div>
+            </div>
+    <script>
+        function selectLevel(levelNumber) {
+            // Remover clase current de todos los niveles
+            document.querySelectorAll('.level').forEach(level => {
+                level.classList.remove('current');
+            });
+            
+            // Agregar clase current al nivel seleccionado
+            document.querySelector(`.level-${levelNumber}`).classList.add('current');
+            
+            console.log(`Nivel ${levelNumber} seleccionado`);
+            
+            // Aquí puedes agregar la lógica para cargar el juego del nivel seleccionado
+            alert(`Has seleccionado el Nivel ${levelNumber}`);
+        }
+
+        // Funcionalidad para cambiar entre juegos
+        document.querySelectorAll('input[name="game"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                console.log(`Juego cambiado a: ${this.value}`);
+                // Aquí puedes agregar lógica para cambiar el conjunto de niveles según el juego seleccionado
+            });
+        });
+
+        // Efectos de sonido (opcional - requiere archivos de audio)
+        function playSound(soundType) {
+            // Implementar sonidos si tienes archivos de audio
+            console.log(`Reproduciendo sonido: ${soundType}`);
+        }
+
+        // Agregar efectos de sonido a los niveles
+        document.querySelectorAll('.level').forEach(level => {
+            level.addEventListener('mouseenter', () => playSound('hover'));
+            level.addEventListener('click', () => playSound('click'));
+        });
+    </script>
+    </section>
+
+    </body>
