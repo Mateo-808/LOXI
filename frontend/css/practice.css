@@ -299,16 +299,16 @@ nav ul li .submenu li a:hover {
 
 
 /* Posicionamiento de niveles */
-.level-1 { top: 90px; left: 500px; }
-.level-2 { top: 90px; left: 590px; }
-.level-3 { top: 90px; left: 690px; }
+.level-1 { top: 100px; left: 500px; }
+.level-2 { top: 100px; left: 590px; }
+.level-3 { top: 100px; left: 690px; }
 .level-4 { top: 100px; right: 240px; }
 .level-5 { top: 220px; left: 800px; }
 .level-6 { top: 220px; left: 700px; }
 .level-7 { top: 220px; left: 600px; }
 .level-8 { top: 220px; left: 500px; }
-.level-9 { top: 320px; left: 500px; }
-.level-10 { top: 320px; left: 600px; }
+.level-9 { top: 340px; left: 500px; }
+.level-10 { top: 340px; left: 600px; }
 
 /* Efectos adicionales */
 .level::after {
