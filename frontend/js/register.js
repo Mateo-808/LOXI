@@ -1,3 +1,5 @@
+import { supabase } from './supabaseClient.js';
+
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('registroForm');
 
@@ -35,4 +37,31 @@ let inputContrasena = document.getElementById('contrasena');
 
 togglePassword.addEventListener('click', () => {
   inputContrasena.type = inputContrasena.type === "password" ? "text" : "password";
+});
+
+document.getElementById('registerGoogle').addEventListener('click', async () => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: 'http://127.0.0.1:5500/frontend/pages/callback.html'
+    }
+  });
+
+  if (error) {
+    alert('Error al registrarse con Google: ' + error.message);
+  }
+});
+
+// Registro con GitHub
+document.getElementById('registerGitHub').addEventListener('click', async () => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'github',
+    options: {
+      redirectTo: 'http://127.0.0.1:5500/frontend/pages/callback.html'
+    }
+  });
+
+  if (error) {
+    alert('Error al registrarse con GitHub: ' + error.message);
+  }
 });

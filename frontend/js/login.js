@@ -1,3 +1,6 @@
+// frontend/js/login.js
+import { supabase } from './supabaseClient.js';
+
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -19,12 +22,20 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   }
 });
 
+// Mostrar/ocultar contraseña
+let togglePassword = document.getElementById('togglePassword');
+let inputContrasena = document.getElementById('contrasena');
 
+togglePassword.addEventListener('click', () => {
+  inputContrasena.type = inputContrasena.type === "password" ? "text" : "password";
+});
+
+// Login con Google
 document.getElementById('loginGoogle').addEventListener('click', async () => {
-  const { data, error } = await supabase.auth.signInWithOAuth({
+  const { error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: 'http://127.0.0.1:5500/frontend/pages/callback.html'
+      redirectTo: 'http://127.0.0.1:5500/frontend/pages/callback.html' 
     }
   });
   
@@ -33,9 +44,17 @@ document.getElementById('loginGoogle').addEventListener('click', async () => {
   }
 });
 
-let togglePassword = document.getElementById('togglePassword');
-let inputContrasena = document.getElementById('contrasena');
+// Login con GitHub
 
-togglePassword.addEventListener('click', () => {
-    inputContrasena.type = inputContrasena.type === "password" ? "text" : "password";
+document.getElementById('loginGitHub').addEventListener('click', async () => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'github',
+    options: {
+      redirectTo: 'http://127.0.0.1:5500/frontend/pages/callback.html'
+    }
+  });
+
+  if (error) {
+    alert('Error al iniciar con GitHub: ' + error.message);
+  }
 });

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Autenticando...</title>
+</head>
+<body>
+  <p>Autenticando, espera un momento...</p>
+
+  <script>
+    async function verificarToken() {
+      const hash = window.location.hash.substring(1);
+      const params = new URLSearchParams(hash);
+      const token = params.get('access_token');
+
+      if (!token) {
+        document.body.innerHTML = `<p style="color:red;">Token no encontrado. ¿Redireccionaste bien desde Supabase?</p>`;
+        console.error('No se encontró access_token en la URL');
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:3000/api/verificar-token', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          localStorage.setItem('usuario', JSON.stringify(data));
+          window.location.href = '/frontend/pages/login.html';
+        } else {
+          console.error('Error de verificación:', data);
+          document.body.innerHTML = `<p>Error de autenticación: ${data.error}</p>`;
+        }
+      } catch (err) {
+        console.error('Error de red:', err);
+        document.body.innerHTML = `<p>Error de red al verificar el token.</p>`;
+      }
+    }
+
+    verificarToken();
+  </script>
+</body>
+</html>
