@@ -237,6 +237,7 @@ nav ul li .submenu li a:hover {
     margin-bottom: 1rem;
     display: inline-block;
     color: #fff;
+    white-space: pre-line;
 }
 
 .keyword {
