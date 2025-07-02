@@ -218,7 +218,7 @@ main {
     display: flex;
     gap: 20px;
     justify-content: flex-start; 
-    margin-left: 250px;
+    margin: auto;
 }
 
 .option {
@@ -286,9 +286,15 @@ main {
         gap: 15px;
         margin: auto;
     }
+
+    .option {
+        width: 200px;
+        padding: 0.8rem 1.8rem;
+        font-size: 0.9rem;
+    }
     
     .title {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
         margin-bottom: 40px;
     }
 

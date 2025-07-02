@@ -293,6 +293,18 @@ footer {
         justify-content: center;
         padding: 10px 0;
     }
+
+    .hero h2 {
+        font-size: 2rem;
+    }
+
+    .level-title {
+        font-size: 1.1rem;
+    }
+
+    p.level-description {
+        font-size: 1rem;
+    }
 }
   
 @media (max-width: 576px) {

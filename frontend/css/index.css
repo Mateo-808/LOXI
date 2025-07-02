@@ -226,14 +226,13 @@ nav ul li .submenu li a:hover {
     margin-bottom: 30px;
     line-height: 1;
     max-width: 800px;
-    word-wrap: break-word;
+    text-wrap: balance;
     font-size: 50px;
     background: linear-gradient(to top, #ffffff, #B5B7BA, #6B7280);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    color: transparent; 
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.1); 
+    color: transparent;
 }
 
 .text{
@@ -497,12 +496,11 @@ nav ul li .submenu li a:hover {
 
 .thought_info{
     margin: 40px;
-    word-wrap: break-word;
     font-size: 45px;
     color: #fff;
 }
 
-.thought_developed{
+.thought_developed {
     font-size: 20px;
     color: #9CA3AF;
     text-align: center;
@@ -574,15 +572,13 @@ nav ul li .submenu li a:hover {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 40px 20px;
-    text-align: center;
     background-image: url('../assets/promotion.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     color: #fafafa;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 50px;
 }
 
 .promotion h2 {
@@ -591,17 +587,18 @@ nav ul li .submenu li a:hover {
     margin-bottom: 30px;
     letter-spacing: -0.5px;
     text-wrap: balance;
+    text-align: center;
 }
 
 .buttons {
     display: flex;
     gap: 15px;
-    flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
 }
 
 .btn {
-    background: transparent;
+    background: #0003;
     color: #fff;
     border: 1px solid #ffffff61;
     border-radius: 15px;
@@ -654,7 +651,6 @@ nav ul li .submenu li a:hover {
     color: white;
 }
 
-
 ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -685,6 +681,10 @@ nav ul li .submenu li a:hover {
     color: white;
     font-size: 40px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 summary{
@@ -700,16 +700,15 @@ summary::before{
     transform: rotate(0);
     transition:.25s
 }
-details[open] summary::before {
-    transform: rotate(180deg);
-    padding-left: 1rem;
-    float: right;
+
+summary:hover{
+    transform: scale(1.03);
 }
 
 details{
     background: rgba(21, 86, 113, 0.7);
     color: #fff;
-    width: 50%;
+    width: 80%;
     border: 1px solid transparent;
     border-radius: 20px;
     font-style: italic;
@@ -720,55 +719,58 @@ details{
     position: relative;
     margin-top: 25px;
     text-decoration: none;
-    left: 25%;
 }
-summary:hover{
-    transform: scale(1.03);
+
+details[open] summary::before {
+    transform: rotate(180deg);
+    padding-left: 1rem;
+    float: right;
 }
+
 .foooter{
     font-family: 'Poppins' ;
     font-style: italic;
 }
 
-.content-footer{
+.content-footer {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
+    align-items: center;
 }
 
-.title-foooter{
-    font-size: 250px;
-    color:#B5B7BA ;
+.title-footer{
+    font-size: 14rem;
+    color:#B5B7BA;
 }
-.foooter-links{
-    font-size: 25px;
-    margin-top: 5rem;
-    text-align: left;
-}
-.foooter-links h4{
+
+.footer-links h4{
     color: white;
     font-size: 30px;
 }
 
-.foooter-links ul{
+.footer-links ul{
     display: flex;
     flex-direction: column;
     list-style: none;
 }
-.foooter-links ul li a{
+
+.footer-links ul li a{
     text-decoration: none;
     color: #B5B7BA;
     font-size: 20px;
 }
 
-.foooter p{
+.footer p{
     text-align: center;
     justify-content: center;
     color: #B5B7BA;
     font-size: 14px;
 }
 
-.foooter-links ul li a:hover {
+.footer-links ul li a:hover {
     text-decoration: underline;
+    color: #fff;
 }
 
 footer{
@@ -789,8 +791,8 @@ footer p{
 }
 
 @media (max-width: 768px) {
-  .footer-content {
-    flex-direction: row;
+  .content-footer {
+    flex-direction: column;
     align-items: center;
   }
 
@@ -807,7 +809,7 @@ footer p{
   }
 
   .developers {
-    margin: 75px auto 0 auto;
+    margin: 125px auto 0 auto;
   }
 
     nav {
@@ -818,6 +820,54 @@ footer p{
     nav ul {
         justify-content: center;
         padding: 10px 0;
+    }
+
+    .button_start {
+        margin-top: 50px;
+    }
+
+    .button_start {
+        left: 0;
+    }
+
+    .services {
+        left: 0;
+    }
+
+    .description h2 {
+        font-size: 2rem;
+    }
+
+    .container {
+        width: 100%;
+    }
+
+    .title-footer {
+        font-size: 8rem;
+    }
+
+    .thought_info {
+        font-size: 2rem;
+    }
+
+    .thought_developed {
+        font-size: 1.2rem;
+    }
+
+    .promotion h2 {
+        font-size: 2rem;
+    }
+
+    details {
+        font-size: 1rem;
+    }
+
+    summary {
+        font-size: 1.2rem;
+    }
+
+    .footer-links {
+        margin-bottom: 5rem;
     }
 }
 
@@ -836,5 +886,42 @@ footer p{
         width: 120px;
         padding: 8px 15px;
         font-size: 14px;
+    }
+
+    .developers {
+        margin-top: 50px;
+    }
+
+    .button_start {
+        width: 150px;
+        padding: 10px 25px;
+        font-size: 15px;
+        margin-top: 30px;
+    }
+
+    .btn {
+        font-size: 1rem;
+        width: 150px;
+    }
+
+    .services {
+        left: 0;
+        font-size: 0.8rem;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+
+    .title-footer {
+        font-size: 7rem;
+    }
+
+    .footer-links h4 {
+        font-size: 1.4rem;
+    }
+
+    .footer-links ul li a {
+        font-size: 1.2rem;
     }
 }
