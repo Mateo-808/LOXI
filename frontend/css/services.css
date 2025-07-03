@@ -80,7 +80,7 @@ nav {
     color: #fff;
 }
 
-nav ul {
+.desktop-menu {
     display: flex;
     list-style: none;
     gap: 20px;
@@ -89,11 +89,11 @@ nav ul {
     flex-wrap: wrap;
 }
 
-nav ul li {
+.desktop-menu li {
     position: relative;
 }
 
-nav ul li a {
+.desktop-menu li a {
     color: white;
     text-decoration: none;
     font-size: 18px;
@@ -103,11 +103,11 @@ nav ul li a {
     text-align: center;
 }
 
-nav ul li a:hover {
+.desktop-menu li a:hover {
     opacity: 0.5;
 }
 
-nav ul li .submenu {
+.desktop-menu li .submenu {
     display: none;
     position: absolute;
     top: 100%;
@@ -120,22 +120,169 @@ nav ul li .submenu {
     z-index: 100;
 }
 
-nav ul li.has-submenu:hover .submenu {
+.desktop-menu li.has-submenu:hover .submenu {
     display: block;
 }
 
-nav ul li .submenu li {
+.desktop-menu li .submenu li {
     display: block;
     width: 100%;
 }
 
-nav ul li .submenu li a {
+.desktop-menu li .submenu li a {
     padding: 0.5rem 1rem;
     color: white;
     white-space: nowrap;
 }
 
-nav ul li .submenu li a:hover {
+desktop-menu li .submenu li a:hover {
+    opacity: 0.5;
+}
+
+.burger-menu {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 1001;
+}
+
+.burger-line {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
+.burger-menu.active .burger-line:nth-child(1) {
+    transform: rotate(-45deg) translate(-6px, 6px);
+}
+
+.burger-menu.active .burger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-menu.active .burger-line:nth-child(3) {
+    transform: rotate(45deg) translate(-6px, -6px);
+}
+
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #011c26;
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    display: none;
+    padding: 80px 20px 20px;
+}
+
+.mobile-menu-overlay.active {
+    display: block;
+}
+
+.mobile-menu-overlay.active .logo {
+    position: absolute;
+    top: 24px;
+    left: 20px;
+    z-index: 1001;
+}
+
+.mobile-menu-overlay.active .logo a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+}
+
+.mobile-menu-overlay .logo i {
+    font-size: 24px;
+}
+
+.mobile-menu-overlay .logo h1 {
+    font-size: 24px;
+}
+
+.mobile-menu-content {
+    margin: 0 auto;
+}
+
+.mobile-menu-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.mobile-menu-section h3 {
+    color: white;
+    font-size: 18px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: normal;
+}
+
+.mobile-menu-section h3 i {
+    transition: transform 0.3s ease;
+    padding: 10px;
+}
+
+.mobile-menu-section.expanded h3 i {
+    transform: rotate(180deg);
+}
+
+.mobile-menu-items {
+    display: none;
+    padding-top: 10px;
+    list-style: none;
+}
+
+.mobile-menu-section.expanded .mobile-menu-items {
+    display: block;
+}
+
+.mobile-menu-items a {
+    display: block;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    padding: 12px 0;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-items a:hover,
+.mobile-menu-section h3:hover {
+    color: white;
+    padding-left: 5px;
+    opacity: 0.5;
+}
+
+.mobile-menu-single a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 15px 0;
+    font-size: 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-single a:hover {
+    padding-left: 5px;
     opacity: 0.5;
 }
 
@@ -157,16 +304,16 @@ nav ul li .submenu li a:hover {
 }
 
 .profile::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: -100%;
     width: 100%;
     height: 100%;
     background: linear-gradient(
-        90deg, 
-        transparent, 
-        rgba(255, 255, 255, 0.1), 
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
         transparent
     );
     transition: 0.6s;
@@ -184,6 +331,16 @@ nav ul li .submenu li a:hover {
 .profile:active {
     transform: translateY(1px);
     box-shadow: 0px 0px 5px #a5a8b496;
+}
+
+.mobile-profile {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.mobile-profile .profile {
+    width: 100%;
+    max-width: 300px;
 }
 
 .hero {
@@ -284,9 +441,20 @@ footer {
 }
 
 @media (max-width: 768px) {
+    .desktop-menu {
+        display: none;
+    }
+
+    .burger-menu {
+        display: flex;
+    }
+
+    .profile {
+        display: none;
+    }
+
     nav {
-        justify-content: center;
-        gap: 20px;
+        justify-content: space-between;
     }
   
     nav ul {

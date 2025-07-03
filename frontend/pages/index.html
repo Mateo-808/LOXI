@@ -21,7 +21,8 @@
                             <i class="fa-solid fa-code"></i><h1>LOXI</h1>
                         </a>
                     </div>
-                    <ul>
+
+                    <ul class="desktop-menu">
                         <li><a href="#">Inicio</a></li>
                         <li class="has-submenu">
                             <a href="confirmation.html">Servicios</a>
@@ -33,9 +34,59 @@
                         <li><a href="us.html">Conócenos</a></li>
                         <li><a href="d&s.html">D&S</a></li>
                     </ul>
+
+                    <div class="burger-menu" onclick="toggleMobileMenu()">
+                        <div class="burger-line"></div>
+                        <div class="burger-line"></div>
+                        <div class="burger-line"></div>
+                    </div>
+
                     <button class="profile">Ver perfil</button>
                 </nav>
             </header>
+
+            <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+                <div class="logo">
+                    <a href="#">
+                        <i class="fa-solid fa-code"></i><h1>LOXI</h1>
+                    </a>
+                </div>
+                <div class="mobile-menu-content">
+                    <div class="mobile-menu-single fade-slide">
+                        <a href="#">Inicio</a>
+                    </div>
+                </div>
+
+                <div class="mobile-menu-section fade-slide" onclick="toggleMenuSection(this)">
+                    <h3>
+                        Servicios
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </h3>
+                    <ul class="mobile-menu-items">
+                        <li>
+                            <a href="confirmation.html">Servicios</a>
+                        </li>
+                        <li>
+                            <a href="services.html#level-selector">Niveles</a>
+                        </li>
+                        <li>
+                            <a href="practice.html">Practica</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mobile-menu-single fade-slide">
+                    <a href="us.html">Conócenos</a>
+                </div>
+
+                <div class="mobile-menu-single fade-slide">
+                    <a href="d&s.html">D&S</a>
+                </div>
+
+                <div class="mobile-profile">
+                    <button class="profile" onclick="closeMobileMenu()">Ver perfil</button>
+                </div>
+            </div>
 
             <main>
                 <section class="central_start">

@@ -1,13 +1,13 @@
-const terminalOutput = document.getElementById('terminal-output');
-const terminalInput = document.getElementById('terminal-input');
+const terminalOutput = document.getElementById("terminal-output");
+const terminalInput = document.getElementById("terminal-input");
 
 let commandHistory = [];
 let historyIndex = -1;
 
 // Añade una nueva línea de comando al terminal
 function addCommandLine(command) {
-    const commandLine = document.createElement('div');
-    commandLine.className = 'command-line';
+    const commandLine = document.createElement("div");
+    commandLine.className = "command-line";
     commandLine.innerHTML = `
         <span class="command-prompt">loxi@terminal:~$</span>
         <span class="command-text">${command}</span>`;
@@ -15,8 +15,8 @@ function addCommandLine(command) {
 }
 
 // Añade una línea de salida al terminal
-function addOutputLine(content, className = '') {
-    const outputLine = document.createElement('div');
+function addOutputLine(content, className = "") {
+    const outputLine = document.createElement("div");
     outputLine.className = `output-line ${className}`;
     outputLine.innerHTML = content;
     terminalOutput.appendChild(outputLine);
@@ -47,11 +47,11 @@ const comandos = {
                 <div><strong>¿Quiénes somos?: </strong>Loxi es una plataforma web inteligente enfocada en evaluar y potenciar las habilidades lógico-matemáticas de estudiantes que desean ingresar o que ya cursan la media técnica. A través de análisis personalizados, retroalimentación precisa y rutas de mejora, Loxi acompaña a cada estudiante en su camino para ingresar con confianza, avanzar con solidez y destacar en su proceso formativo.
                 </div>
             </div>`;
-        addOutputLine(infoContent, 'user-info');
+        addOutputLine(infoContent, "user-info");
     },
 
     clear: function () {
-        terminalOutput.innerHTML = '';
+        terminalOutput.innerHTML = "";
     },
 
     date: function () {
@@ -60,25 +60,25 @@ const comandos = {
 
     // RECORDATORIO: cambiar cuando tengamos la base de datos
     whoami: function () {
-        addOutputLine('loxi');
-    }
+        addOutputLine("loxi");
+    },
 };
 
 // Procesa el comando ingresado
 function procesarComando(commandLine) {
-    const parts = commandLine.trim().split(' ');
+    const parts = commandLine.trim().split(" ");
     const command = parts[0].toLowerCase();
-    const args = parts.slice(1).join(' ');
+    const args = parts.slice(1).join(" ");
 
     if (command && comandos.hasOwnProperty(command)) {
         comandos[command](args);
     } else if (command) {
-        addOutputLine(`comando no encontrado: ${command}`, 'error-message');
+        addOutputLine(`comando no encontrado: ${command}`, "error-message");
     }
 }
 
-terminalInput.addEventListener('keydown', function (event) {
-    if (event.key === 'Enter') {
+terminalInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
         event.preventDefault();
 
         const command = terminalInput.value;
@@ -91,8 +91,8 @@ terminalInput.addEventListener('keydown', function (event) {
             procesarComando(command);
         }
 
-        terminalInput.value = '';
-    } else if (event.key === 'ArrowUp') {
+        terminalInput.value = "";
+    } else if (event.key === "ArrowUp") {
         if (historyIndex > 0) {
             historyIndex--;
             terminalInput.value = commandHistory[historyIndex];
@@ -103,19 +103,65 @@ terminalInput.addEventListener('keydown', function (event) {
             terminalInput.selectionStart = terminalInput.value.length;
             terminalInput.selectionEnd = terminalInput.value.length;
         }, 0);
-    } else if (event.key === 'ArrowDown') {
+    } else if (event.key === "ArrowDown") {
         if (historyIndex < commandHistory.length - 1) {
             historyIndex++;
             terminalInput.value = commandHistory[historyIndex];
         } else if (historyIndex === commandHistory.length - 1) {
             historyIndex++;
-            terminalInput.value = '';
+            terminalInput.value = "";
         }
     }
 });
 
-const profileButton = document.getElementById('profile-button');
+const profileButton = document.getElementById("profile-button");
 
-profileButton.addEventListener('click', function () {
-    window.location.href = '../pages/registrer.html'; 
+profileButton.addEventListener("click", function () {
+    window.location.href = "../pages/registrer.html";
+});
+
+function toggleMobileMenu() {
+    const overlay = document.getElementById("mobileMenuOverlay");
+    const burgerMenu = document.querySelector(".burger-menu");
+
+    overlay.classList.toggle("active");
+    burgerMenu.classList.toggle("active");
+
+    if (overlay.classList.contains("active")) {
+        document.body.style.overflow = "hidden";
+    } else {
+        document.body.style.overflow = "auto";
+    }
+}
+
+function closeMobileMenu() {
+    const overlay = document.getElementById("mobileMenuOverlay");
+    const burgerMenu = document.querySelector(".burger-menu");
+
+    overlay.classList.remove("active");
+    burgerMenu.classList.remove("active");
+    document.body.style.overflow = "auto";
+}
+
+function toggleMenuSection(section) {
+    section.classList.toggle("expanded");
+}
+
+document.addEventListener("click", function (event) {
+    const overlay = document.getElementById("mobileMenuOverlay");
+    const burgerMenu = document.querySelector(".burger-menu");
+
+    if (
+        overlay.classList.contains("active") &&
+        !overlay.contains(event.target) &&
+        !burgerMenu.contains(event.target)
+    ) {
+        closeMobileMenu();
+    }
+});
+
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+        closeMobileMenu();
+    }
 });
