@@ -307,6 +307,8 @@ desktop-menu li .submenu li a:hover {
     transition: all 0.3s;
     position: relative;
     overflow: hidden;
+    text-decoration: none;
+    text-align: center;
 }
 
 .profile::before {
@@ -681,6 +683,11 @@ main {
 
     .profile {
         display: none;
+    }
+
+    .mobile-profile > .profile {
+        display: block;
+        margin: auto;
     }
 
     nav {

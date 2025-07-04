@@ -16,7 +16,9 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   const data = await res.json();
 
   if (data.ok) {
-    window.location.href = 'confirmation.html';
+    console.log('Usuario:', data.usuario);
+    localStorage.setItem('usuario', JSON.stringify(data.usuario));
+    window.location.href = 'index.html'
   } else {
     alert('Error: ' + data.error);
   }

@@ -155,3 +155,24 @@ document.addEventListener("keydown", function (event) {
         closeMobileMenu();
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const btnSesion = document.getElementById('btnSesion');
+  const btnSesionMobile = document.getElementById('btnSesionMobile');
+
+  const usuarioGuardado = localStorage.getItem('usuario');
+
+  if (usuarioGuardado) {
+    btnSesion.textContent = 'Ver perfil';
+    btnSesion.href = '../pages/profile.html';
+
+    btnSesionMobile.textContent = 'Ver perfil';
+    btnSesionMobile.href = '../pages/profile.html';
+  } else {
+    btnSesion.textContent = 'Iniciar sesión';
+    btnSesion.href = '../pages/login.html';
+
+    btnSesionMobile.textContent = 'Iniciar sesión';
+    btnSesionMobile.href = '../pages/login.html';
+  }
+});
