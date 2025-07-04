@@ -854,44 +854,68 @@ desktop-menu li .submenu li a:hover {
     align-items: center;
 }
 
-summary {
-    font-size: 25px;
-    list-style: none;
-}
-
-summary::before {
-    content: "▼";
-    padding-right: 2rem;
-    float: right;
-    right: 1rem;
-    transform: rotate(0);
-    transition: 0.25s;
-}
-
-summary:hover {
-    transform: scale(1.03);
-}
-
 details {
     background: rgba(21, 86, 113, 0.7);
     color: #fff;
-    width: 80%;
-    border: 1px solid transparent;
+    width: 85%;
     border-radius: 20px;
-    font-style: italic;
     font-size: 20px;
     cursor: pointer;
-    overflow: hidden;
-    justify-content: center;
     position: relative;
     margin-top: 25px;
-    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    transition: all 0.3s ease;
 }
 
-details[open] summary::before {
+details:hover {
+    background-color: rgba(21, 86, 113, 0.9);
+    transform: translateY(-2px);
+}
+
+summary {
+    list-style: none;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    font-size: 1.1em;
+}
+
+.summary-text {
+    flex: 1;
+    text-align: center;
+    padding: 0 20px;
+}
+
+summary span {
+    transition: transform 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+}
+
+details[open] summary span {
     transform: rotate(180deg);
-    padding-left: 1rem;
-    float: right;
+}
+
+details p {
+    padding: 0 20px 20px 20px;
+    margin: 0;
+    font-style: normal;
+    line-height: 1.5;
+    opacity: 0;
+    transition: all 0.3s ease;
+    font-style: italic;
+}
+
+details[open] p {
+    opacity: 1;
+    padding: 10px 20px 20px 20px;
 }
 
 .foooter {
