@@ -1,12 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <button id="cerrarSesion">Cerrar sesión</button>
-    <script src="../js/profile.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../css/profile.css" />
+        <link
+            rel="shortcut icon"
+            href="../assets/logo.svg"
+            type="image/svg+xml"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+            integrity="sha512-..."
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <title>Perfil - LOXI</title>
+    </head>
+    <body>
+        <div class="background-layers">
+            <div class="grid-overlay"></div>
+        </div>
+        <header>
+            <nav>
+                <div class="logo">
+                    <a href="index.html">
+                        <i class="fa-solid fa-code"></i>
+                        <h1>LOXI</h1>
+                    </a>
+                </div>
+
+                <ul class="desktop-menu">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li class="has-submenu">
+                        <a href="confirmation.html">Servicios</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="./services.html#level-selector"
+                                    >Niveles</a
+                                >
+                            </li>
+                            <li>
+                                <a href="../pages/practice.html">Pratica</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="us.html">Conócenos</a></li>
+                    <li><a href="d&s.html">D&S</a></li>
+                </ul>
+
+                <div class="burger-menu" onclick="toggleMobileMenu()">
+                    <div class="burger-line"></div>
+                    <div class="burger-line"></div>
+                    <div class="burger-line"></div>
+                </div>
+            </nav>
+        </header>
+
+        <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+            <div class="logo">
+                <a href="../pages/index.html">
+                    <i class="fa-solid fa-code"></i>
+                    <h1>LOXI</h1>
+                </a>
+            </div>
+            <div class="mobile-menu-content">
+                <div class="mobile-menu-single">
+                    <a href="index.html">Inicio</a>
+                </div>
+            </div>
+
+            <div class="mobile-menu-section" onclick="toggleMenuSection(this)">
+                <h3>
+                    Servicios
+                    <i class="fa-solid fa-chevron-down"></i>
+                </h3>
+                <ul class="mobile-menu-items">
+                    <li>
+                        <a href="confirmation.html">Servicios</a>
+                    </li>
+                    <li>
+                        <a href="services.html#level-selector">Niveles</a>
+                    </li>
+                    <li>
+                        <a href="../pages/practice.html">Practica</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="mobile-menu-single">
+                <a href="us.html">Conócenos</a>
+            </div>
+
+            <div class="mobile-menu-single">
+                <a href="d&s.html">D&S</a>
+            </div>
+        </div>
+        <main>
+            <!-- Mejorar estilos -->
+            <div class="profile-container">
+                <h2>Perfil</h2>
+                <div class="botones">
+                    <button class="boton" id="cerrarSesion">Cerrar sesión</button>
+                </div>
+            </div>
+        </main>
+        <script src="../js/profile.js"></script>
+    </body>
 </html>
