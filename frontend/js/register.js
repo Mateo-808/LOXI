@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const contrasena = document.getElementById('contrasena').value;
 
     try {
-      const res = await fetch('http://localhost:3000/api/registro', {
+      const res = await fetch('https://loxi.onrender.com/api/registro', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nombre, correo, contrasena })
