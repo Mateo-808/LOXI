@@ -18,7 +18,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   if (data.ok) {
     console.log('Usuario:', data.usuario);
     localStorage.setItem('usuario', JSON.stringify(data.usuario));
-    window.location.href = 'index.html'
+    window.location.href = '../pages/profile.html'
   } else {
     alert('Error: ' + data.error);
   }
