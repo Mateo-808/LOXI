@@ -20,7 +20,7 @@
       }
 
       try {
-        const response = await fetch('http://localhost:3000/api/verificar-token', {
+        const response = await fetch('http://loxi.onrender.com/api/verificar-token', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ token })
