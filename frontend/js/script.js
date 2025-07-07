@@ -168,15 +168,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (usuarioGuardado) {
     btnSesion.textContent = 'Ver perfil';
-    btnSesion.href = '../pages/profile.html';
+    btnSesion.href = 'frontend/pages/profile.html';
 
     btnSesionMobile.textContent = 'Ver perfil';
-    btnSesionMobile.href = '../pages/profile.html';
+    btnSesionMobile.href = 'frontend/pages/profile.html';
   } else {
     btnSesion.textContent = 'Iniciar sesión';
-    btnSesion.href = '../pages/login.html';
+    btnSesion.href = 'frontend/pages/login.html';
 
     btnSesionMobile.textContent = 'Iniciar sesión';
-    btnSesionMobile.href = '../pages/login.html';
+    btnSesionMobile.href = 'frontend/pages/login.html';
   }
 });
