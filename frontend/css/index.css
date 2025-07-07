@@ -365,34 +365,28 @@ desktop-menu li .submenu li a:hover {
 }
 
 .central_start {
-    position: relative;
     padding: 0 50px;
     z-index: 2;
     height: 100vh;
+    display: flex;
+    align-items: center;
 }
 
-.central_start h2,
-.central_start p,
-.central_start div {
-    position: relative;
-    z-index: 2;
+.separator {
+    padding: 0;
+    margin: 0;
 }
 
 .particles {
-    position: absolute;
-    right: 80px;
-    top: -20%;
     max-width: 35%;
     z-index: 1;
 }
 
 .developers {
-    margin-top: 175px;
-    margin-bottom: 30px;
     line-height: 1;
     max-width: 800px;
     text-wrap: balance;
-    font-size: 50px;
+    font-size: clamp(1.5rem, 6vw, 3.5rem);
     background: linear-gradient(to top, #ffffff, #b5b7ba, #6b7280);
     -webkit-background-clip: text;
     background-clip: text;
@@ -515,7 +509,10 @@ desktop-menu li .submenu li a:hover {
 }
 
 .container {
-    width: 800px;
+    max-width: 800px;
+    width: 100%;
+    padding: 20px;
+    margin: auto;
     height: 550px;
     background: #011c26;
     border-radius: 8px;
@@ -660,6 +657,7 @@ desktop-menu li .submenu li a:hover {
 
 .thought_info {
     margin: 40px;
+    padding: auto 40px;
     font-size: 45px;
     color: #fff;
 }
@@ -671,7 +669,7 @@ desktop-menu li .submenu li a:hover {
 }
 
 .circles {
-    margin: auto;
+    margin: 0 auto;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -1010,20 +1008,13 @@ footer p {
         align-items: center;
     }
 
-    .central_start h2 {
-        font-size: 2em;
+    .central_start {
+        flex-direction: column;
+        justify-content: space-evenly;
     }
 
     .central_start p {
         margin: auto auto 20px auto;
-    }
-
-    .particles {
-        display: none;
-    }
-
-    .developers {
-        margin: 125px auto 0 auto;
     }
 
     nav ul {
@@ -1033,9 +1024,6 @@ footer p {
 
     .button_start {
         margin-top: 50px;
-    }
-
-    .button_start {
         left: 0;
     }
 
@@ -1097,14 +1085,22 @@ footer p {
         font-size: 14px;
     }
 
+    .central_start {
+        padding: 0 20px;
+    }
+
+    .thought_info {
+        margin: 40px auto;
+    }
+
     .developers {
-        margin-top: 50px;
+        font-size: 1.8rem;
     }
 
     .button_start {
         width: 150px;
-        padding: 10px 25px;
-        font-size: 15px;
+        padding: 8px 20px;
+        font-size: 1rem;
         margin-top: 30px;
     }
 
@@ -1123,7 +1119,7 @@ footer p {
     }
 
     .title-footer {
-        font-size: 7rem;
+        font-size: 6rem;
     }
 
     .footer-links h4 {
@@ -1131,6 +1127,6 @@ footer p {
     }
 
     .footer-links ul li a {
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
 }
