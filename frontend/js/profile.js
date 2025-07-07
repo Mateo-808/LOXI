@@ -47,5 +47,5 @@ document.addEventListener("keydown", function (event) {
 document.getElementById('cerrarSesion').addEventListener('click', () => {
   localStorage.removeItem('usuario');
 
-  window.location.href = 'index.html';
+  window.location.href = '../../index.html';
 });
