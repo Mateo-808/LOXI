@@ -1,34 +1,49 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../css/question.css">
-        <link rel="shortcut icon" href="../assets/logo.svg" type="image/svg+xml">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <title>LOXI -  QUESTION</title>
-
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../css/profile.css" />
+        <link
+            rel="shortcut icon"
+            href="../assets/logo.svg"
+            type="image/svg+xml"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+            integrity="sha512-..."
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <title>Perfil - LOXI</title>
     </head>
     <body>
         <div class="background-layers">
             <div class="grid-overlay"></div>
         </div>
-        
         <header>
             <nav>
                 <div class="logo">
                     <a href="index.html">
-                        <i class="fa-solid fa-code"></i><h1>LOXI</h1>
+                        <i class="fa-solid fa-code"></i>
+                        <h1>LOXI</h1>
                     </a>
                 </div>
 
                 <ul class="desktop-menu">
                     <li><a href="index.html">Inicio</a></li>
                     <li class="has-submenu">
-                        <a href="services.html">Servicios</a>
+                        <a href="confirmation.html">Servicios</a>
                         <ul class="submenu">
-                            <li><a href="./services.html#level-selector">Niveles</a></li>
-                            <li><a href="#">Pratica</a></li>
+                            <li>
+                                <a href="./services.html#level-selector"
+                                    >Niveles</a
+                                >
+                            </li>
+                            <li>
+                                <a href="../pages/practice.html">Pratica</a>
+                            </li>
                         </ul>
                     </li>
                     <li><a href="us.html">Conócenos</a></li>
@@ -40,15 +55,14 @@
                     <div class="burger-line"></div>
                     <div class="burger-line"></div>
                 </div>
-
-                <a class="profile" id="btnSesion">Iniciar sesión</a>
             </nav>
         </header>
-    
+
         <div class="mobile-menu-overlay" id="mobileMenuOverlay">
             <div class="logo">
-                <a href="#">
-                    <i class="fa-solid fa-code"></i><h1>LOXI</h1>
+                <a href="../pages/index.html">
+                    <i class="fa-solid fa-code"></i>
+                    <h1>LOXI</h1>
                 </a>
             </div>
             <div class="mobile-menu-content">
@@ -70,7 +84,7 @@
                         <a href="services.html#level-selector">Niveles</a>
                     </li>
                     <li>
-                        <a href="#">Practica</a>
+                        <a href="../pages/practice.html">Practica</a>
                     </li>
                 </ul>
             </div>
@@ -80,35 +94,18 @@
             </div>
 
             <div class="mobile-menu-single">
-                <a href="#">D&S</a>
-            </div>
-
-            <div class="mobile-profile">
-                <a class="profile" id="btnSesionMobile">Iniciar sesión</a>
+                <a href="d&s.html">D&S</a>
             </div>
         </div>
-
         <main>
-            <section class="exercise">
-                <div class="description">
-                    <h2>RESPONDE ESTO PARA MEDIR TU NIVEL LÓGICO</h2>
-                    <div class="text">
-                        <span>></span>
-                        <p>Completa la secuencia: 2, 6, 12, 20, 30...</p>
-                    </div>
+            <!-- Mejorar estilos -->
+            <div class="profile-container">
+                <h2>Perfil</h2>
+                <div class="botones">
+                    <button class="boton" id="cerrarSesion">Cerrar sesión</button>
                 </div>
-                <div class="result" id="result"></div>
-                <div class="write">
-                    <input type="text" id="write" placeholder="Escriba aquí..." autofocus>
-                    <button class="send" id="send" title="Enviar mensaje"><i class="fa-solid fa-paper-plane"></i></button>
-                </div>
-            </section>
+            </div>
         </main>
-
-        <footer>
-            <p>LOXI © 2025. TODOS LOS DERECHOS RESERVADOS</p>
-        </footer>
-
-        <script src="../js/question.js"></script>
+        <script src="../js/profile.js"></script>
     </body>
 </html>

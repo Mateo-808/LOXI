@@ -1,9 +1,3 @@
-const faqTitle = document.getElementById('faq-title');
-
-document.querySelector(".down-arrow").addEventListener("click", () => {
-    faqTitle.scrollIntoView({ behavior: "smooth" });
-});
-
 function toggleMobileMenu() {
     const overlay = document.getElementById("mobileMenuOverlay");
     const burgerMenu = document.querySelector(".burger-menu");
@@ -50,23 +44,8 @@ document.addEventListener("keydown", function (event) {
     }
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-  const btnSesion = document.getElementById('btnSesion');
-  const btnSesionMobile = document.getElementById('btnSesionMobile');
+document.getElementById('cerrarSesion').addEventListener('click', () => {
+  localStorage.removeItem('usuario');
 
-  const usuarioGuardado = localStorage.getItem('usuario');
-
-  if (usuarioGuardado) {
-    btnSesion.textContent = 'Ver perfil';
-    btnSesion.href = '../pages/profile.html';
-
-    btnSesionMobile.textContent = 'Ver perfil';
-    btnSesionMobile.href = '../pages/profile.html';
-  } else {
-    btnSesion.textContent = 'Iniciar sesión';
-    btnSesion.href = '../pages/login.html';
-
-    btnSesionMobile.textContent = 'Iniciar sesión';
-    btnSesionMobile.href = '../pages/login.html';
-  }
+  window.location.href = 'index.html';
 });

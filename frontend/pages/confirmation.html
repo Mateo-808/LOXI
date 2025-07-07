@@ -19,7 +19,8 @@
                         <i class="fa-solid fa-code"></i><h1>LOXI</h1>
                     </a>
                 </div>
-                <ul>
+
+                <ul class="desktop-menu">
                     <li><a href="index.html">Inicio</a></li>
                     <li class="has-submenu">
                         <a href="#">Servicios</a>
@@ -31,18 +32,68 @@
                     <li><a href="us.html">Conócenos</a></li>
                     <li><a href="d&s.html">D&S</a></li>
                 </ul>
-                <button class="profile">Ver perfil</button>
+
+                <div class="burger-menu" onclick="toggleMobileMenu()">
+                    <div class="burger-line"></div>
+                    <div class="burger-line"></div>
+                    <div class="burger-line"></div>
+                </div>
+
+                <a class="profile" id="btnSesion">Iniciar sesión</a>
             </nav>
         </header>
     
+        <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+            <div class="logo">
+                <a href="#">
+                    <i class="fa-solid fa-code"></i><h1>LOXI</h1>
+                </a>
+            </div>
+            <div class="mobile-menu-content">
+                <div class="mobile-menu-single">
+                    <a href="index.html">Inicio</a>
+                </div>
+            </div>
+
+            <div class="mobile-menu-section" onclick="toggleMenuSection(this)">
+                <h3>
+                    Servicios
+                    <i class="fa-solid fa-chevron-down"></i>
+                </h3>
+                <ul class="mobile-menu-items">
+                    <li>
+                        <a href="#">Servicios</a>
+                    </li>
+                    <li>
+                        <a href="services.html#level-selector">Niveles</a>
+                    </li>
+                    <li>
+                        <a href="practice.html">Practica</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="mobile-menu-single">
+                <a href="us.html">Conócenos</a>
+            </div>
+
+            <div class="mobile-menu-single">
+                <a href="d&s.html">D&S</a>
+            </div>
+
+            <div class="mobile-profile">
+                <a class="profile" id="btnSesionMobile">Iniciar sesión</a>
+            </div>
+        </div>
+
         <main>
             <section class="exercise">
                 <div class="title">
-                    <h2>¿LISTO<br> PARA MEDIR<br> TU NIVEL LÓGICO?</h2>
+                    <h2>¿LISTO PARA MEDIR TU NIVEL LÓGICO?</h2>
                 </div>
                 <div class="options">
-                    <button class="option"><a href="question.html">SÍ</a></button>
-                    <button class="option" id="no"><a href="#">NO</a></button>
+                    <a href="question.html" class="option">SÍ</a>
+                    <a href="#" class="option">NO</a>
                 </div>
             </section>
         </main>

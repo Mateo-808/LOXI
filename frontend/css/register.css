@@ -428,13 +428,6 @@ input::placeholder {
 .fas.fa-lock:before { content: "🔒"; }
 
 @media (max-width: 768px) {
-    .back-button {
-        top: 10px;
-        left: 10px;
-        padding: 6px 10px;
-        font-size: 12px;
-    }
-
     .container {
         flex-direction: column;
         height: auto;
