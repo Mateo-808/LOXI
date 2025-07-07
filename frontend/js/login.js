@@ -37,7 +37,7 @@ document.getElementById('loginGoogle').addEventListener('click', async () => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: 'http://127.0.0.1:5500/frontend/pages/callback.html' 
+      redirectTo: 'https://loxi-one.vercel.app/frontend/pages/callback.html' 
     }
   });
   
@@ -52,7 +52,7 @@ document.getElementById('loginGitHub').addEventListener('click', async () => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'github',
     options: {
-      redirectTo: 'http://127.0.0.1:5500/frontend/pages/callback.html'
+      redirectTo: 'https://loxi-one.vercel.app/frontend/pages/callback.html'
     }
   });
 
