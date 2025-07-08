@@ -19,6 +19,8 @@ export async function loginUsuario(nombre, correo, contrasena) {
 
     return { ok: true, usuario: data };
   } catch (err) {
-    return { ok: false, error: err.message };
-  }
+    console.error('Login error:', err);
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ ok: false, error: err.message }));
+}
 }
