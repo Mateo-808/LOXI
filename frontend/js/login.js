@@ -3,7 +3,7 @@ import { supabase } from './supabaseClient.js';
 
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const nombre = document.getElementById('nombre').value.trim();
+  const nombre = document.getElementById('nombre').value.trim().toLowerCase();
   const correo = document.getElementById('correo').value.trim();
   const contrasena = document.getElementById('contrasena').value;
 
@@ -14,6 +14,10 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   });
 
   const data = await res.json();
+
+  if (data.nombre !== nombre) {
+  throw new Error('Nombre no coincide con el registrado');
+}
 
   if (data.ok) {
     console.log('Usuario:', data.usuario);
