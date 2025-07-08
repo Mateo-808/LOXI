@@ -4,6 +4,19 @@
   <meta charset="UTF-8">
   <title>Autenticando...</title>
 </head>
+      <style>
+        body{
+          background: #000000;
+          color: #ffffff;
+          text-align: center;
+          justify-content: center;
+          align-items: center;
+        }
+      
+        p{
+          font-size: 48px;
+        }
+      </style>
 <body>
   <p>Autenticando, espera un momento...</p>
 
@@ -14,7 +27,7 @@
       const token = params.get('access_token');
 
       if (!token) {
-        document.body.innerHTML = `<p style="color:red;">Token no encontrado. ¿Redireccionaste bien desde Supabase?</p>`;
+        document.body.innerHTML = `<p style="color:red; font-size: 48px; text-align: center; justify-content: center; align-items: center;">Token no encontrado. ¿Redireccionaste bien desde Supabase?</p>`;
         console.error('No se encontró access_token en la URL');
         return;
       }
@@ -45,3 +58,4 @@
   </script>
 </body>
 </html>
+
