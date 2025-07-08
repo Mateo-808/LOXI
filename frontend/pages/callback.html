@@ -3,21 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <title>Autenticando...</title>
+  <style>
+    body {
+      background: #000000;
+      color: #ffffff;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    p {
+      font-size: 24px;
+      margin-top: 2rem;
+    }
+
+    .loader {
+      border: 8px solid #ffffff20;
+      border-top: 8px solid #ffffff;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
 </head>
-      <style>
-        body{
-          background: #000000;
-          color: #ffffff;
-          text-align: center;
-          justify-content: center;
-          align-items: center;
-        }
-      
-        p{
-          font-size: 48px;
-        }
-      </style>
 <body>
+  <div class="loader"></div>
   <p>Autenticando, espera un momento...</p>
 
   <script>
@@ -27,7 +47,7 @@
       const token = params.get('access_token');
 
       if (!token) {
-        document.body.innerHTML = `<p style="color:red; font-size: 48px; text-align: center; justify-content: center; align-items: center;">Token no encontrado. ¿Redireccionaste bien desde Supabase?</p>`;
+        document.body.innerHTML = `<p style="color:red; font-size: 24px;">Token no encontrado. ¿Redireccionaste bien desde Supabase?</p>`;
         console.error('No se encontró access_token en la URL');
         return;
       }
@@ -46,11 +66,11 @@
           window.location.href = '/frontend/pages/login.html';
         } else {
           console.error('Error de verificación:', data);
-          document.body.innerHTML = `<p>Error de autenticación: ${data.error}</p>`;
+          document.body.innerHTML = `<p style="color:red;">Error de autenticación: ${data.error}</p>`;
         }
       } catch (err) {
         console.error('Error de red:', err);
-        document.body.innerHTML = `<p>Error de red al verificar el token.</p>`;
+        document.body.innerHTML = `<p style="color:red;">Error de red al verificar el token.</p>`;
       }
     }
 
@@ -58,4 +78,3 @@
   </script>
 </body>
 </html>
-
