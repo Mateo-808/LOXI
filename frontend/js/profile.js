@@ -72,8 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
     profileInfo.innerHTML = `
         <p><strong>Nombre:</strong> ${usuario.name || usuario.nombre ||'Sin nombre'}</p>
         <p><strong>Correo:</strong> ${usuario.email || usuario.correo ||'Sin correo'}</p>
-              <p><strong>Fecha de registro:</strong> ${usuario.fecha_registro 
-        ? new Date(usuario.fecha_registro).toLocaleDateString()
+              <p><strong>Fecha de registro:</strong> ${usuario.fecha_registro || created_at
+        ? new Date(usuario.fecha_registro || usuario.created_at).toLocaleDateString()
         : 'No disponible'}</p>
         <p><strong>Nivel actual:</strong> ${usuario.nivel || 'No asignado'}</p>
         <p><strong>Puntos:</strong> ${usuario.puntos || 0}</p>
