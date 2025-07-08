@@ -10,7 +10,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   const res = await fetch('https://loxi.onrender.com/api/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nombre, correo, contrasena })
+    body: JSON.stringify({ correo, contrasena })
   });
 
   const data = await res.json();
