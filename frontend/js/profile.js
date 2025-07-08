@@ -66,6 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
+    console.log(profileInfo)
+
     profileInfo.innerHTML = `
         <p><strong>Nombre:</strong> ${usuario.name || 'Sin nombre'}</p>
         <p><strong>Correo:</strong> ${usuario.email || 'Sin correo'}</p>
