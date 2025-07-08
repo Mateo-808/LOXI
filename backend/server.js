@@ -22,7 +22,7 @@ const PORT = 3000;
 
 const server = http.createServer(async (req, res) => {
   // Acá se habilitan los CORS globalmente
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Origin', 'https://loxi-one.vercel.app');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
 
