@@ -523,6 +523,127 @@ footer p {
     text-align: center;
 }
 
+.alerta-sesion {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  font-family: "Poppins", sans-serif;
+}
+
+.alerta-contenido {
+  background: #011c26;
+  border: 1px solid #ffffff22;
+  border-radius: 20px;
+  padding: 40px 30px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  max-width: 400px;
+  width: 90%;
+  animation: fadeIn 0.3s ease;
+}
+
+.alerta-contenido h2 {
+  color: #fff;
+  font-size: 26px;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.alerta-contenido p {
+  color: #9ca3af;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.btn {
+    background: #0003;
+    color: #fff;
+    border: 1px solid #ffffff61;
+    border-radius: 15px;
+    box-shadow: 0 0 7px #a5a8b496;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    height: 50px;
+    width: 200px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transition: 0.6s;
+}
+
+.btn:hover {
+    border-color: #fff;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 0 5px #a5a8b496;
+}
+
+.btn-primary {
+    color: white;
+}
+
+.btn-secondary {
+    color: white;
+    box-shadow: none;
+}
+
+.alerta-botones {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Ocultar inicialmente */
+.oculto {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
 ::-webkit-scrollbar {
     width: 10px;
     height: 10px;

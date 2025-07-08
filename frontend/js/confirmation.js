@@ -47,7 +47,6 @@ document.addEventListener("keydown", function (event) {
 document.addEventListener('DOMContentLoaded', () => {
   const btnSesion = document.getElementById('btnSesion');
   const btnSesionMobile = document.getElementById('btnSesionMobile');
-
   const usuarioGuardado = localStorage.getItem('usuario');
 
   if (usuarioGuardado) {
@@ -62,5 +61,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnSesionMobile.textContent = 'Iniciar sesión';
     btnSesionMobile.href = '../pages/login.html';
+
+    // Mostrar alerta personalizada
+    const alerta = document.getElementById('alertaSesion');
+    alerta.classList.remove('oculto');
+
+    const btnIrLogin = document.getElementById('btnIrLogin');
+    const btnCancelarAlerta = document.getElementById('btnCancelarAlerta');
+
+    btnIrLogin.addEventListener('click', () => {
+      window.location.href = '../pages/login.html';
+    });
+
+    btnCancelarAlerta.addEventListener('click', () => {
+      window.location.href = '../../';
+    });
   }
 });
