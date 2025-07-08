@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(usuario)
 
     profileInfo.innerHTML = `
-        <p><strong>Nombre:</strong> ${usuario.display_name || 'Sin nombre'}</p>
+        <p><strong>Nombre:</strong> ${usuario.name || 'Sin nombre'}</p>
         <p><strong>Correo:</strong> ${usuario.email || 'Sin correo'}</p>
         <p><strong>Fecha de registro:</strong> ${usuario.created_at || 'No disponible'}</p>
         <p><strong>Nivel actual:</strong> ${usuario.nivel || 'No asignado'}</p>
