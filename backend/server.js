@@ -65,8 +65,8 @@ const server = http.createServer(async (req, res) => {
 
   if (method === 'POST' && pathname === '/api/login') {
     try {
-      const { correo, contrasena } = await readBody(req);
-      const result = await loginUsuario(correo, contrasena);
+      const { nombre, correo, contrasena } = await readBody(req);
+      const result = await loginUsuario(nombre, correo, contrasena);
 
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(result));
@@ -108,6 +108,7 @@ if (method === 'POST' && pathname === '/api/verificar-token') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({
       id: userData.id,
+      name: userData.user_metadata?.full_name || userData.user_metadata?.name || 'Usuario',
       email: userData.email,
       email_confirmed_at: userData.email_confirmed_at,
       created_at: userData.created_at
