@@ -46,6 +46,12 @@
       const params = new URLSearchParams(hash);
       const token = params.get('access_token');
 
+      // Eliminar el token de la URL
+      if (window.history.replaceState) {
+        const cleanUrl = window.location.origin + window.location.pathname;
+        window.history.replaceState(null, null, cleanUrl);
+      }
+
       if (!token) {
         document.body.innerHTML = `<p style="color:red; font-size: 24px;">Token no encontrado. ¿Redireccionaste bien desde Supabase?</p>`;
         console.error('No se encontró access_token en la URL');
@@ -63,7 +69,7 @@
 
         if (response.ok) {
           localStorage.setItem('usuario', JSON.stringify(data));
-          window.location.href = '/frontend/pages/login.html';
+          window.location.href = '/frontend/pages/confirmation.html';
         } else {
           console.error('Error de verificación:', data);
           document.body.innerHTML = `<p style="color:red;">Error de autenticación: ${data.error}</p>`;
