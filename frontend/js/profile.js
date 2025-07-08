@@ -49,3 +49,28 @@ document.getElementById('cerrarSesion').addEventListener('click', () => {
 
   window.location.href = '../../index.html';
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+
+    const profileInfo = document.querySelector(".profile-info");
+
+    if (!usuario || !profileInfo) {
+        profileInfo.innerHTML = `
+            <p><strong>Nombre:</strong> No disponible</p>
+            <p><strong>Correo:</strong> No disponible</p>
+            <p><strong>Fecha de registro:</strong> No disponible</p>
+            <p><strong>Nivel actual:</strong> No disponible</p>
+            <p><strong>Puntos:</strong> No disponible</p>
+        `;
+        return;
+    }
+
+    profileInfo.innerHTML = `
+        <p><strong>Nombre:</strong> ${usuario.nombre || 'Sin nombre'}</p>
+        <p><strong>Correo:</strong> ${usuario.email || 'Sin correo'}</p>
+        <p><strong>Fecha de registro:</strong> ${usuario.fechaRegistro || 'No disponible'}</p>
+        <p><strong>Nivel actual:</strong> ${usuario.nivel || 'No asignado'}</p>
+        <p><strong>Puntos:</strong> ${usuario.puntos || 0}</p>
+    `;
+});
