@@ -366,20 +366,30 @@ desktop-menu li .submenu li a:hover {
 
 .central_start {
     padding: 0 50px;
-    z-index: 2;
     height: 100vh;
     display: flex;
     align-items: center;
+    justify-content: center;
+    text-align: center;
+    align-self: center;
+    flex-direction: column;
+
+    /* svg{
+        max-width: 70px;
+        max-height: 70px;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(180deg, #012e40 5%, #011c26 30%, #00080d 100%);
+        padding: 15px;
+        border-radius: 24px;
+        margin: 0 auto 1rem auto;
+        box-shadow: 0 0 14px 4px rgba(0, 0, 0, 0.3);
+    } */
 }
 
 .separator {
     padding: 0;
     margin: 0;
-}
-
-.particles {
-    max-width: 35%;
-    z-index: 1;
 }
 
 .developers {
@@ -399,6 +409,7 @@ desktop-menu li .submenu li a:hover {
     color: #fafafa;
     max-width: 600px;
     margin-bottom: 40px;
+    margin-left: 5rem;
     color: #9ca3af;
 }
 
@@ -418,7 +429,7 @@ desktop-menu li .submenu li a:hover {
     align-items: center;
     justify-content: center;
     position: relative;
-    margin-top: 20px;
+    margin-left: 4rem;
     text-decoration: none;
     padding: 10px 50px;
     left: 25%;
@@ -467,13 +478,37 @@ desktop-menu li .submenu li a:hover {
 .services {
     position: relative;
     top: 5px;
-    left: 30%;
+    left: -10px;
+    margin-bottom: 1rem;
     color: #9ca3af;
     display: inline-block;
+    transition: all 0.3s ease;
 }
 
 .services:hover {
     color: #fafafa;
+    scale: 1.05;
+}
+
+@media (max-width: 768px) {
+    .central_start {
+        padding: 20px 10px;
+    }
+
+    .text {
+        font-size: 0.95rem;
+    }
+
+    .button_start {
+        width: 100%;
+        max-width: 300px;
+        align-self: center;
+        align-content: center;
+        align-items: center;
+        margin-left: 30%;
+    }
+
+
 }
 
 .terminal {
