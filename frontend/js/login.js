@@ -3,7 +3,7 @@ import { supabase } from './supabaseClient.js';
 
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const nombre = document.getElementById('name').value.trim();
+  const nombre = document.getElementById('nombre').value.trim();
   const correo = document.getElementById('correo').value.trim();
   const contrasena = document.getElementById('contrasena').value;
 
