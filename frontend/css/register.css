@@ -357,6 +357,22 @@ input::placeholder {
     margin-top: 6px;
 }
 
+.privacy{
+    font-size: 12px;
+    color: #666666;
+    margin-top: 6px;
+
+    a{
+        color: #fafafa;
+        text-decoration: none;
+        transition: all 0.5s ease;
+
+        &:hover{
+            text-decoration:underline;
+        }
+    }
+}
+
 .signup-btn {
     width: 100%;
     padding: 12px;
