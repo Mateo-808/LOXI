@@ -15,10 +15,6 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
   const data = await res.json();
 
-  if (data.nombre !== nombre) {
-  throw new Error('Nombre no coincide con el registrado');
-}
-
   if (data.ok) {
     console.log('Usuario:', data.usuario);
     localStorage.setItem('usuario', JSON.stringify(data.usuario));
