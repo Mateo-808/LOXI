@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Autenticando...</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     * {
       box-sizing: border-box;
@@ -209,7 +210,6 @@
       color: #e0f7ff;
       margin-bottom: 0.5rem;
       letter-spacing: 0.5px;
-      text-shadow: 0 0 10px rgba(64, 224, 255, 0.3);
     }
 
     .auth-subtext {
@@ -256,7 +256,6 @@
       background: linear-gradient(90deg, #40e0ff, #00ffff, #40e0ff);
       border-radius: 2px;
       animation: progress 3s ease-in-out infinite;
-      box-shadow: 0 0 10px rgba(64, 224, 255, 0.5);
     }
 
     @keyframes progress {
@@ -285,32 +284,55 @@
       background: linear-gradient(145deg, rgba(220, 38, 38, 0.2), rgba(153, 27, 27, 0.3));
       color: #fca5a5;
       border: 1px solid rgba(220, 38, 38, 0.4);
-      box-shadow: 0 0 15px rgba(220, 38, 38, 0.2);
     }
 
     .success-message {
       background: linear-gradient(145deg, rgba(34, 197, 94, 0.2), rgba(21, 128, 61, 0.3));
       color: #86efac;
       border: 1px solid rgba(34, 197, 94, 0.4);
-      box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
     }
 
     /* Icono de estado */
     .status-icon {
-      font-size: 2rem;
+      font-size: 2.5rem;
       margin-bottom: 1rem;
       transition: all 0.3s ease;
       filter: drop-shadow(0 0 10px rgba(64, 224, 255, 0.5));
+      color: #40e0ff;
+    }
+
+    .status-icon.loading {
+      color: #40e0ff;
+      animation: iconPulse 2s ease-in-out infinite;
     }
 
     .status-icon.success {
       color: #22c55e;
-      filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.5));
+      filter: drop-shadow(0 0 15px rgba(34, 197, 94, 0.6));
+      animation: successBounce 0.6s ease-out;
     }
 
     .status-icon.error {
       color: #ef4444;
-      filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.5));
+      filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.6));
+      animation: errorShake 0.6s ease-out;
+    }
+
+    @keyframes iconPulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+
+    @keyframes successBounce {
+      0% { transform: scale(0.3); opacity: 0; }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes errorShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
     }
 
     /* Botón de reintento */
@@ -325,14 +347,28 @@
       font-family: inherit;
       font-weight: 500;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0, 8, 13, 0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .retry-button:hover {
       background: linear-gradient(145deg, rgba(1, 46, 64, 1), rgba(1, 28, 38, 1));
       border-color: #40e0ff;
-      box-shadow: 0 0 20px rgba(64, 224, 255, 0.4);
       transform: translateY(-2px);
+    }
+
+    .retry-button i {
+      animation: rotateIcon 2s linear infinite;
+    }
+
+    .retry-button:hover i {
+      animation-duration: 0.5s;
+    }
+
+    @keyframes rotateIcon {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     /* Responsive */
@@ -354,6 +390,10 @@
       .loader-pulse {
         width: 100px;
         height: 100px;
+      }
+
+      .status-icon {
+        font-size: 2rem;
       }
     }
 
@@ -381,6 +421,28 @@
     @keyframes breathe {
       0%, 100% { box-shadow: 0 20px 40px rgba(0, 8, 13, 0.5), inset 0 1px 0 rgba(64, 224, 255, 0.1); }
       50% { box-shadow: 0 25px 50px rgba(0, 8, 13, 0.7), inset 0 1px 0 rgba(64, 224, 255, 0.2), 0 0 30px rgba(64, 224, 255, 0.1); }
+    }
+
+    /* Animaciones específicas para iconos de progreso */
+    .progress-icon {
+      display: inline-block;
+      margin-left: 0.5rem;
+      color: #40e0ff;
+    }
+
+    .progress-icon.step-1 { animation: fadeInOut 2s ease-in-out infinite; }
+    .progress-icon.step-2 { animation: bounce 1s ease-in-out infinite; }
+    .progress-icon.step-3 { animation: pulse 1.5s ease-in-out infinite; }
+    .progress-icon.step-4 { animation: spin 1s linear infinite; }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
     }
   </style>
 </head>
@@ -411,7 +473,9 @@
       <div class="loader"></div>
     </div>
     
-    <div class="status-icon" id="status-icon">🔐</div>
+    <div class="status-icon loading" id="status-icon">
+      <i class="fas fa-shield-alt"></i>
+    </div>
     
     <h1 class="auth-text" id="auth-text">Autenticando</h1>
     <p class="auth-subtext" id="auth-subtext">
@@ -446,12 +510,12 @@
         this.message.className = `message ${type}-message show`;
         
         if (type === 'error') {
-          this.statusIcon.textContent = '❌';
+          this.statusIcon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
           this.statusIcon.className = 'status-icon error';
           this.authText.textContent = 'Error de autenticación';
           this.authSubtext.textContent = 'No se pudo verificar tu identidad';
         } else if (type === 'success') {
-          this.statusIcon.textContent = '✅';
+          this.statusIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
           this.statusIcon.className = 'status-icon success';
           this.authText.textContent = '¡Autenticación exitosa!';
           this.authSubtext.textContent = 'Redirigiendo...';
@@ -460,20 +524,32 @@
 
       updateProgress(step) {
         const steps = {
-          1: 'Obteniendo token de acceso...',
-          2: 'Validando credenciales...',
-          3: 'Configurando sesión...',
-          4: 'Finalizando autenticación...'
+          1: {
+            text: 'Obteniendo token de acceso...',
+            icon: '<i class="fas fa-key progress-icon step-1"></i>'
+          },
+          2: {
+            text: 'Validando credenciales...',
+            icon: '<i class="fas fa-user-check progress-icon step-2"></i>'
+          },
+          3: {
+            text: 'Configurando sesión...',
+            icon: '<i class="fas fa-cog progress-icon step-3"></i>'
+          },
+          4: {
+            text: 'Finalizando autenticación...',
+            icon: '<i class="fas fa-sync-alt progress-icon step-4"></i>'
+          }
         };
 
         if (steps[step]) {
-          this.authSubtext.innerHTML = `${steps[step]}<span class="dots"></span>`;
+          this.authSubtext.innerHTML = `${steps[step].text}<span class="dots"></span>${steps[step].icon}`;
         }
       }
 
       createRetryButton() {
         const retryButton = document.createElement('button');
-        retryButton.textContent = 'Reintentar';
+        retryButton.innerHTML = '<i class="fas fa-redo-alt"></i> Reintentar';
         retryButton.className = 'retry-button';
         retryButton.onclick = () => location.reload();
         return retryButton;
