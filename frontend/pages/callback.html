@@ -14,7 +14,7 @@
 
     body {
       height: 100vh;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(180deg, #012e40 10%, #011c26 50%, #00080d 100%);
       font-family: 'Inter', sans-serif;
       display: flex;
       flex-direction: column;
@@ -37,9 +37,10 @@
 
     .particle {
       position: absolute;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(64, 224, 255, 0.15);
       border-radius: 50%;
-      animation: float 6s ease-in-out infinite;
+      animation: float 8s ease-in-out infinite;
+      box-shadow: 0 0 10px rgba(64, 224, 255, 0.3);
     }
 
     .particle:nth-child(1) { width: 4px; height: 4px; left: 10%; animation-delay: 0s; }
@@ -59,20 +60,80 @@
       100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
     }
 
+    /* Efectos de luz de fondo */
+    .light-effects {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .light-beam {
+      position: absolute;
+      background: radial-gradient(ellipse at center, rgba(64, 224, 255, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: glow 4s ease-in-out infinite alternate;
+    }
+
+    .light-beam:nth-child(1) {
+      width: 300px;
+      height: 200px;
+      top: 20%;
+      left: -10%;
+      animation-delay: 0s;
+    }
+
+    .light-beam:nth-child(2) {
+      width: 250px;
+      height: 150px;
+      bottom: 30%;
+      right: -5%;
+      animation-delay: 2s;
+    }
+
+    @keyframes glow {
+      0% { opacity: 0.3; transform: scale(1); }
+      100% { opacity: 0.6; transform: scale(1.1); }
+    }
+
     /* Contenedor principal */
     .auth-container {
       position: relative;
       z-index: 2;
       text-align: center;
-      background: rgba(255, 255, 255, 0.1);
+      background: linear-gradient(145deg, rgba(1, 46, 64, 0.4), rgba(1, 28, 38, 0.6));
       backdrop-filter: blur(20px);
       border-radius: 24px;
       padding: 3rem 2.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(64, 224, 255, 0.2);
+      box-shadow: 
+        0 20px 40px rgba(0, 8, 13, 0.5),
+        inset 0 1px 0 rgba(64, 224, 255, 0.1);
       max-width: 400px;
       width: 90%;
       transition: all 0.3s ease;
+    }
+
+    .auth-container::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, rgba(64, 224, 255, 0.3), transparent, rgba(64, 224, 255, 0.3));
+      border-radius: 24px;
+      z-index: -1;
+      opacity: 0;
+      animation: borderGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes borderGlow {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
     }
 
     /* Loader mejorado */
@@ -85,11 +146,12 @@
       width: 80px;
       height: 80px;
       border-radius: 50%;
-      border: 3px solid rgba(255, 255, 255, 0.2);
-      border-top: 3px solid #ffffff;
+      border: 3px solid rgba(64, 224, 255, 0.2);
+      border-top: 3px solid #40e0ff;
       animation: spin 1s linear infinite;
       margin: 0 auto;
       position: relative;
+      box-shadow: 0 0 20px rgba(64, 224, 255, 0.3);
     }
 
     .loader::before {
@@ -101,7 +163,7 @@
       bottom: -3px;
       border-radius: 50%;
       border: 3px solid transparent;
-      border-top: 3px solid rgba(255, 255, 255, 0.5);
+      border-top: 3px solid rgba(0, 255, 255, 0.5);
       animation: spin 2s linear infinite reverse;
     }
 
@@ -114,7 +176,7 @@
       bottom: 6px;
       border-radius: 50%;
       border: 2px solid transparent;
-      border-top: 2px solid rgba(255, 255, 255, 0.8);
+      border-top: 2px solid rgba(64, 224, 255, 0.8);
       animation: spin 0.5s linear infinite;
     }
 
@@ -131,7 +193,7 @@
       width: 120px;
       height: 120px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
+      background: radial-gradient(circle, rgba(64, 224, 255, 0.2) 0%, transparent 70%);
       animation: pulse 2s ease-in-out infinite;
     }
 
@@ -144,14 +206,15 @@
     .auth-text {
       font-size: 1.5rem;
       font-weight: 600;
-      color: #ffffff;
+      color: #e0f7ff;
       margin-bottom: 0.5rem;
       letter-spacing: 0.5px;
+      text-shadow: 0 0 10px rgba(64, 224, 255, 0.3);
     }
 
     .auth-subtext {
       font-size: 1rem;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(224, 247, 255, 0.7);
       margin-bottom: 1.5rem;
       position: relative;
     }
@@ -161,6 +224,7 @@
       display: inline-block;
       width: 20px;
       text-align: left;
+      color: #40e0ff;
     }
 
     .dots::after {
@@ -180,17 +244,19 @@
     .progress-bar {
       width: 100%;
       height: 4px;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(1, 28, 38, 0.8);
       border-radius: 2px;
       overflow: hidden;
       margin-bottom: 1.5rem;
+      border: 1px solid rgba(64, 224, 255, 0.2);
     }
 
     .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #ffffff, rgba(255, 255, 255, 0.8));
+      background: linear-gradient(90deg, #40e0ff, #00ffff, #40e0ff);
       border-radius: 2px;
       animation: progress 3s ease-in-out infinite;
+      box-shadow: 0 0 10px rgba(64, 224, 255, 0.5);
     }
 
     @keyframes progress {
@@ -216,15 +282,17 @@
     }
 
     .error-message {
-      background: rgba(239, 68, 68, 0.2);
-      color: #fecaca;
-      border: 1px solid rgba(239, 68, 68, 0.3);
+      background: linear-gradient(145deg, rgba(220, 38, 38, 0.2), rgba(153, 27, 27, 0.3));
+      color: #fca5a5;
+      border: 1px solid rgba(220, 38, 38, 0.4);
+      box-shadow: 0 0 15px rgba(220, 38, 38, 0.2);
     }
 
     .success-message {
-      background: rgba(34, 197, 94, 0.2);
-      color: #bbf7d0;
-      border: 1px solid rgba(34, 197, 94, 0.3);
+      background: linear-gradient(145deg, rgba(34, 197, 94, 0.2), rgba(21, 128, 61, 0.3));
+      color: #86efac;
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
     }
 
     /* Icono de estado */
@@ -232,14 +300,39 @@
       font-size: 2rem;
       margin-bottom: 1rem;
       transition: all 0.3s ease;
+      filter: drop-shadow(0 0 10px rgba(64, 224, 255, 0.5));
     }
 
     .status-icon.success {
       color: #22c55e;
+      filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.5));
     }
 
     .status-icon.error {
       color: #ef4444;
+      filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.5));
+    }
+
+    /* Botón de reintento */
+    .retry-button {
+      background: linear-gradient(145deg, rgba(1, 46, 64, 0.8), rgba(1, 28, 38, 0.9));
+      color: #40e0ff;
+      border: 1px solid rgba(64, 224, 255, 0.4);
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 1rem;
+      font-family: inherit;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 8, 13, 0.3);
+    }
+
+    .retry-button:hover {
+      background: linear-gradient(145deg, rgba(1, 46, 64, 1), rgba(1, 28, 38, 1));
+      border-color: #40e0ff;
+      box-shadow: 0 0 20px rgba(64, 224, 255, 0.4);
+      transform: translateY(-2px);
     }
 
     /* Responsive */
@@ -266,22 +359,38 @@
 
     /* Animación de entrada */
     .auth-container {
-      animation: slideIn 0.6s ease-out;
+      animation: slideIn 0.8s ease-out;
     }
 
     @keyframes slideIn {
       from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(50px) scale(0.9);
       }
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
       }
+    }
+
+    /* Efecto de respiración en el contenedor */
+    .auth-container {
+      animation: slideIn 0.8s ease-out, breathe 4s ease-in-out infinite 1s;
+    }
+
+    @keyframes breathe {
+      0%, 100% { box-shadow: 0 20px 40px rgba(0, 8, 13, 0.5), inset 0 1px 0 rgba(64, 224, 255, 0.1); }
+      50% { box-shadow: 0 25px 50px rgba(0, 8, 13, 0.7), inset 0 1px 0 rgba(64, 224, 255, 0.2), 0 0 30px rgba(64, 224, 255, 0.1); }
     }
   </style>
 </head>
 <body>
+  <!-- Efectos de luz de fondo -->
+  <div class="light-effects">
+    <div class="light-beam"></div>
+    <div class="light-beam"></div>
+  </div>
+
   <!-- Partículas de fondo -->
   <div class="particles">
     <div class="particle"></div>
@@ -362,6 +471,14 @@
         }
       }
 
+      createRetryButton() {
+        const retryButton = document.createElement('button');
+        retryButton.textContent = 'Reintentar';
+        retryButton.className = 'retry-button';
+        retryButton.onclick = () => location.reload();
+        return retryButton;
+      }
+
       async authenticate() {
         try {
           // Paso 1: Obtener token
@@ -419,35 +536,9 @@
           console.error('Error de autenticación:', error);
           this.showMessage(error.message || 'Error de red al verificar el token.');
           
-          // Opción para reintentar después de 5 segundos
+          // Agregar botón de reintento después de 3 segundos
           setTimeout(() => {
-            const retryButton = document.createElement('button');
-            retryButton.textContent = 'Reintentar';
-            retryButton.style.cssText = `
-              background: rgba(255, 255, 255, 0.2);
-              color: white;
-              border: 1px solid rgba(255, 255, 255, 0.3);
-              padding: 0.5rem 1rem;
-              border-radius: 8px;
-              cursor: pointer;
-              margin-top: 1rem;
-              font-family: inherit;
-              transition: all 0.3s ease;
-            `;
-            
-            retryButton.onmouseover = () => {
-              retryButton.style.background = 'rgba(255, 255, 255, 0.3)';
-            };
-            
-            retryButton.onmouseout = () => {
-              retryButton.style.background = 'rgba(255, 255, 255, 0.2)';
-            };
-            
-            retryButton.onclick = () => {
-              location.reload();
-            };
-            
-            this.message.appendChild(retryButton);
+            this.message.appendChild(this.createRetryButton());
           }, 3000);
         }
       }
