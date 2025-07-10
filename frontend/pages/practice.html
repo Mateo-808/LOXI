@@ -88,5 +88,42 @@
             </div>
         </div>
         <script src="../js/practice.js"></script>
+        <section>
+            <h1 id="titulo"></h1>
+            <p id="contenido"></p>
+            <script>
+                function getNivel() {
+                const params = new URLSearchParams(window.location.search);
+                return params.get('nivel');
+                }
+
+                const nivel = getNivel();
+                const titulo = document.getElementById('titulo');
+                const contenido = document.getElementById('contenido');
+
+                switch (nivel) {
+                case 'principiante':
+                    titulo.textContent = 'Prácticas para Principiantes';
+                    contenido.textContent = 'Aquí encontrarás ejercicios básicos para empezar desde cero.';
+                    break;
+                case 'novato':
+                    titulo.textContent = 'Prácticas para Novatos';
+                    contenido.textContent = 'Tienes algo de experiencia, vamos a subir el nivel.';
+                    break;
+                case 'intermedio':
+                    titulo.textContent = 'Prácticas Intermedias';
+                    contenido.textContent = 'Estas prácticas te ayudarán a consolidar tus conocimientos.';
+                    break;
+                case 'avanzado':
+                    titulo.textContent = 'Prácticas Avanzadas';
+                    contenido.textContent = 'Retos de alto nivel para que pongas a prueba tus habilidades.';
+                    break;
+                default:
+                    titulo.textContent = 'Nivel no reconocido';
+                    contenido.textContent = 'Por favor selecciona un nivel válido desde la página de niveles.';
+                }
+            </script>
+        </section>
+
     </body>
 </html>

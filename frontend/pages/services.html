@@ -92,7 +92,8 @@
             <p>¿Cuál es tu nivel de lógica de programación con el que te sientes más cómodo?</p>
             
             <div class="level-selector" id="level-selector">
-                <button class="level-card" onclick="window.location.href = 'practice.html'">
+                
+                <button class="level-card" onclick="goToPractica('principiante')">
                     <div class="code-sample">
                         <span class="method">console.log</span>(<span class="string">"Hola"</span>);
                     </div>
@@ -100,7 +101,7 @@
                     <p class="level-description">Quiero empezar desde lo básico</p>
                 </button>
                 
-                <button class="level-card" onclick="window.location.href = 'practice.html'">
+                <button class="level-card"  onclick="goToPractica('novato')">
                     <div class="code-sample">
                         <span class="keyword">if</span> (<span class="variable">a</span> > <span class="variable">b</span>) {
                         &nbsp;&nbsp;<span class="method">console.log</span>(<span class="variable">a</span>);
@@ -110,7 +111,7 @@
                     <p class="level-description">He visto código, pero no lo he tocado antes.</p>
                 </button>
                 
-                <button class="level-card" onclick="window.location.href = 'practice.html'">
+                <button class="level-card" onclick="goToPractica('intermedio')">
                     <div class="code-sample">
                         <span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">i</span> = 0; <span class="variable">i</span> <= <span class="variable">11</span>; <span class="variable">i</span>++) {...}
                     </div>
@@ -118,13 +119,18 @@
                     <p class="level-description">Puedo escribir programas simples con bucles.</p>
                 </button>
                 
-                <button class="level-card" onclick="window.location.href = 'practice.html'">
+                <button class="level-card" onclick="goToPractica('avanzado')">
                     <div class="code-sample">
                         <span class="function">function</span> <span class="variable">sumar</span>(<span class="variable">a</span>,<span class="variable">b</span>) {...}
                     </div>
                     <h3 class="level-title">Avanzado:</h3>
                     <p class="level-description">He escrito programas más avanzados.</p>
                 </button>
+                <script>
+                    function goToPractica(nivel) {
+                    window.location.href = `practice.html?nivel=${nivel}`;
+                    }
+                </script>
             </div>
         </section>
         <footer>
