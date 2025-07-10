@@ -366,25 +366,28 @@ desktop-menu li .submenu li a:hover {
 
 .central_start {
     padding: 0 50px;
-    z-index: 2;
     height: 100vh;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-}
+    text-align: center;
 
-.separator {
-    padding: 0;
-    margin: 0;
-}
-
-.particles {
-    max-width: 35%;
-    z-index: 1;
+    /* svg{
+        max-width: 70px;
+        max-height: 70px;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(180deg, #012e40 5%, #011c26 30%, #00080d 100%);
+        padding: 15px;
+        border-radius: 24px;
+        margin: 0 auto 1rem auto;
+        box-shadow: 0 0 14px 4px rgba(0, 0, 0, 0.3);
+    } */
 }
 
 .developers {
     line-height: 1;
-    max-width: 800px;
     text-wrap: balance;
     font-size: clamp(1.5rem, 6vw, 3.5rem);
     background: linear-gradient(to top, #ffffff, #b5b7ba, #6b7280);
@@ -418,10 +421,8 @@ desktop-menu li .submenu li a:hover {
     align-items: center;
     justify-content: center;
     position: relative;
-    margin-top: 20px;
     text-decoration: none;
     padding: 10px 50px;
-    left: 25%;
 }
 
 .button_start::before {
@@ -467,13 +468,30 @@ desktop-menu li .submenu li a:hover {
 .services {
     position: relative;
     top: 5px;
-    left: 30%;
+    left: -10px;
+    margin-bottom: 1rem;
     color: #9ca3af;
     display: inline-block;
+    transition: all 0.3s ease;
 }
 
 .services:hover {
     color: #fafafa;
+    scale: 1.05;
+}
+
+@media (max-width: 768px) {
+    .text {
+        font-size: 0.95rem;
+    }
+
+    .button_start {
+        width: 100%;
+        max-width: 300px;
+        align-self: center;
+        align-content: center;
+        align-items: center;
+    }
 }
 
 .terminal {
@@ -1014,11 +1032,7 @@ footer p {
 
     .central_start {
         flex-direction: column;
-        justify-content: space-evenly;
-    }
-
-    .central_start p {
-        margin: auto auto 20px auto;
+        justify-content: center;
     }
 
     nav ul {

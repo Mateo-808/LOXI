@@ -2,46 +2,630 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Autenticando...</title>
-</head>
-<body>
-  <p>Autenticando, espera un momento...</p>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  <script>
-    async function verificarToken() {
-      const hash = window.location.hash.substring(1);
-      const params = new URLSearchParams(hash);
-      const token = params.get('access_token');
+    body {
+      height: 100vh;
+      background: linear-gradient(180deg, #012e40 10%, #011c26 50%, #00080d 100%);
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
 
-      if (!token) {
-        document.body.innerHTML = `<p style="color:red;">Token no encontrado. ¿Redireccionaste bien desde Supabase?</p>`;
-        console.error('No se encontró access_token en la URL');
-        return;
+    /* Partículas de fondo animadas */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(64, 224, 255, 0.15);
+      border-radius: 50%;
+      animation: float 8s ease-in-out infinite;
+      box-shadow: 0 0 10px rgba(64, 224, 255, 0.3);
+    }
+
+    .particle:nth-child(1) { width: 4px; height: 4px; left: 10%; animation-delay: 0s; }
+    .particle:nth-child(2) { width: 6px; height: 6px; left: 20%; animation-delay: 1s; }
+    .particle:nth-child(3) { width: 3px; height: 3px; left: 30%; animation-delay: 2s; }
+    .particle:nth-child(4) { width: 5px; height: 5px; left: 40%; animation-delay: 3s; }
+    .particle:nth-child(5) { width: 4px; height: 4px; left: 50%; animation-delay: 4s; }
+    .particle:nth-child(6) { width: 6px; height: 6px; left: 60%; animation-delay: 5s; }
+    .particle:nth-child(7) { width: 3px; height: 3px; left: 70%; animation-delay: 0.5s; }
+    .particle:nth-child(8) { width: 5px; height: 5px; left: 80%; animation-delay: 1.5s; }
+    .particle:nth-child(9) { width: 4px; height: 4px; left: 90%; animation-delay: 2.5s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+    }
+
+    /* Efectos de luz de fondo */
+    .light-effects {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .light-beam {
+      position: absolute;
+      background: radial-gradient(ellipse at center, rgba(64, 224, 255, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: glow 4s ease-in-out infinite alternate;
+    }
+
+    .light-beam:nth-child(1) {
+      width: 300px;
+      height: 200px;
+      top: 20%;
+      left: -10%;
+      animation-delay: 0s;
+    }
+
+    .light-beam:nth-child(2) {
+      width: 250px;
+      height: 150px;
+      bottom: 30%;
+      right: -5%;
+      animation-delay: 2s;
+    }
+
+    @keyframes glow {
+      0% { opacity: 0.3; transform: scale(1); }
+      100% { opacity: 0.6; transform: scale(1.1); }
+    }
+
+    /* Contenedor principal */
+    .auth-container {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      background: linear-gradient(145deg, rgba(1, 46, 64, 0.4), rgba(1, 28, 38, 0.6));
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      border: 1px solid rgba(64, 224, 255, 0.2);
+      box-shadow: 
+        0 20px 40px rgba(0, 8, 13, 0.5),
+        inset 0 1px 0 rgba(64, 224, 255, 0.1);
+      max-width: 400px;
+      width: 90%;
+      transition: all 0.3s ease;
+    }
+
+    .auth-container::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, rgba(64, 224, 255, 0.3), transparent, rgba(64, 224, 255, 0.3));
+      border-radius: 24px;
+      z-index: -1;
+      opacity: 0;
+      animation: borderGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes borderGlow {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
+    /* Loader mejorado */
+    .loader-container {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .loader {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid rgba(64, 224, 255, 0.2);
+      border-top: 3px solid #40e0ff;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+      position: relative;
+      box-shadow: 0 0 20px rgba(64, 224, 255, 0.3);
+    }
+
+    .loader::before {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top: 3px solid rgba(0, 255, 255, 0.5);
+      animation: spin 2s linear infinite reverse;
+    }
+
+    .loader::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      right: 6px;
+      bottom: 6px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      border-top: 2px solid rgba(64, 224, 255, 0.8);
+      animation: spin 0.5s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Pulso de fondo del loader */
+    .loader-pulse {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(64, 224, 255, 0.2) 0%, transparent 70%);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: translate(-50%, -50%) scale(0.8); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0; }
+    }
+
+    /* Texto principal */
+    .auth-text {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #e0f7ff;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.5px;
+    }
+
+    .auth-subtext {
+      font-size: 1rem;
+      color: rgba(224, 247, 255, 0.7);
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    /* Animación de puntos mejorada */
+    .dots {
+      display: inline-block;
+      width: 20px;
+      text-align: left;
+      color: #40e0ff;
+    }
+
+    .dots::after {
+      content: '';
+      animation: dots 1.5s steps(4, end) infinite;
+    }
+
+    @keyframes dots {
+      0% { content: ''; }
+      25% { content: '.'; }
+      50% { content: '..'; }
+      75% { content: '...'; }
+      100% { content: ''; }
+    }
+
+    /* Barra de progreso */
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(1, 28, 38, 0.8);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(64, 224, 255, 0.2);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #40e0ff, #00ffff, #40e0ff);
+      border-radius: 2px;
+      animation: progress 3s ease-in-out infinite;
+    }
+
+    @keyframes progress {
+      0% { width: 0%; }
+      50% { width: 70%; }
+      100% { width: 100%; }
+    }
+
+    /* Estados de error y éxito */
+    .message {
+      padding: 1rem;
+      border-radius: 12px;
+      margin-top: 1rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .error-message {
+      background: linear-gradient(145deg, rgba(220, 38, 38, 0.2), rgba(153, 27, 27, 0.3));
+      color: #fca5a5;
+      border: 1px solid rgba(220, 38, 38, 0.4);
+    }
+
+    .success-message {
+      background: linear-gradient(145deg, rgba(34, 197, 94, 0.2), rgba(21, 128, 61, 0.3));
+      color: #86efac;
+      border: 1px solid rgba(34, 197, 94, 0.4);
+    }
+
+    /* Icono de estado */
+    .status-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+      filter: drop-shadow(0 0 10px rgba(64, 224, 255, 0.5));
+      color: #40e0ff;
+    }
+
+    .status-icon.loading {
+      color: #40e0ff;
+      animation: iconPulse 2s ease-in-out infinite;
+    }
+
+    .status-icon.success {
+      color: #22c55e;
+      filter: drop-shadow(0 0 15px rgba(34, 197, 94, 0.6));
+      animation: successBounce 0.6s ease-out;
+    }
+
+    .status-icon.error {
+      color: #ef4444;
+      filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.6));
+      animation: errorShake 0.6s ease-out;
+    }
+
+    @keyframes iconPulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+
+    @keyframes successBounce {
+      0% { transform: scale(0.3); opacity: 0; }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes errorShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    /* Botón de reintento */
+    .retry-button {
+      background: linear-gradient(145deg, rgba(1, 46, 64, 0.8), rgba(1, 28, 38, 0.9));
+      color: #40e0ff;
+      border: 1px solid rgba(64, 224, 255, 0.4);
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 1rem;
+      font-family: inherit;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .retry-button:hover {
+      background: linear-gradient(145deg, rgba(1, 46, 64, 1), rgba(1, 28, 38, 1));
+      border-color: #40e0ff;
+      transform: translateY(-2px);
+    }
+
+    .retry-button i {
+      animation: rotateIcon 2s linear infinite;
+    }
+
+    .retry-button:hover i {
+      animation-duration: 0.5s;
+    }
+
+    @keyframes rotateIcon {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .auth-container {
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+      }
+      
+      .auth-text {
+        font-size: 1.3rem;
+      }
+      
+      .loader {
+        width: 60px;
+        height: 60px;
+      }
+      
+      .loader-pulse {
+        width: 100px;
+        height: 100px;
       }
 
-      try {
-        const response = await fetch('http://localhost:3000/api/verificar-token', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          localStorage.setItem('usuario', JSON.stringify(data));
-          window.location.href = '/frontend/pages/login.html';
-        } else {
-          console.error('Error de verificación:', data);
-          document.body.innerHTML = `<p>Error de autenticación: ${data.error}</p>`;
-        }
-      } catch (err) {
-        console.error('Error de red:', err);
-        document.body.innerHTML = `<p>Error de red al verificar el token.</p>`;
+      .status-icon {
+        font-size: 2rem;
       }
     }
 
-    verificarToken();
+    /* Animación de entrada */
+    .auth-container {
+      animation: slideIn 0.8s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Efecto de respiración en el contenedor */
+    .auth-container {
+      animation: slideIn 0.8s ease-out, breathe 4s ease-in-out infinite 1s;
+    }
+
+    @keyframes breathe {
+      0%, 100% { box-shadow: 0 20px 40px rgba(0, 8, 13, 0.5), inset 0 1px 0 rgba(64, 224, 255, 0.1); }
+      50% { box-shadow: 0 25px 50px rgba(0, 8, 13, 0.7), inset 0 1px 0 rgba(64, 224, 255, 0.2), 0 0 30px rgba(64, 224, 255, 0.1); }
+    }
+
+    /* Animaciones específicas para iconos de progreso */
+    .progress-icon {
+      display: inline-block;
+      margin-left: 0.5rem;
+      color: #40e0ff;
+    }
+
+    .progress-icon.step-1 { animation: fadeInOut 2s ease-in-out infinite; }
+    .progress-icon.step-2 { animation: bounce 1s ease-in-out infinite; }
+    .progress-icon.step-3 { animation: pulse 1.5s ease-in-out infinite; }
+    .progress-icon.step-4 { animation: spin 1s linear infinite; }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Efectos de luz de fondo -->
+  <div class="light-effects">
+    <div class="light-beam"></div>
+    <div class="light-beam"></div>
+  </div>
+
+  <!-- Partículas de fondo -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <!-- Contenedor principal -->
+  <div class="auth-container">
+    <div class="loader-container">
+      <div class="loader-pulse"></div>
+      <div class="loader"></div>
+    </div>
+    
+    <div class="status-icon loading" id="status-icon">
+      <i class="fas fa-shield-alt"></i>
+    </div>
+    
+    <h1 class="auth-text" id="auth-text">Autenticando</h1>
+    <p class="auth-subtext" id="auth-subtext">
+      Verificando credenciales<span class="dots"></span>
+    </p>
+    
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+    
+    <div class="message" id="message"></div>
+  </div>
+
+  <script>
+    class AuthLoader {
+      constructor() {
+        this.statusIcon = document.getElementById('status-icon');
+        this.authText = document.getElementById('auth-text');
+        this.authSubtext = document.getElementById('auth-subtext');
+        this.message = document.getElementById('message');
+        this.init();
+      }
+
+      init() {
+        document.addEventListener("DOMContentLoaded", () => {
+          this.authenticate();
+        });
+      }
+
+      showMessage(text, type = 'error') {
+        this.message.textContent = text;
+        this.message.className = `message ${type}-message show`;
+        
+        if (type === 'error') {
+          this.statusIcon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+          this.statusIcon.className = 'status-icon error';
+          this.authText.textContent = 'Error de autenticación';
+          this.authSubtext.textContent = 'No se pudo verificar tu identidad';
+        } else if (type === 'success') {
+          this.statusIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+          this.statusIcon.className = 'status-icon success';
+          this.authText.textContent = '¡Autenticación exitosa!';
+          this.authSubtext.textContent = 'Redirigiendo...';
+        }
+      }
+
+      updateProgress(step) {
+        const steps = {
+          1: {
+            text: 'Obteniendo token de acceso...',
+            icon: '<i class="fas fa-key progress-icon step-1"></i>'
+          },
+          2: {
+            text: 'Validando credenciales...',
+            icon: '<i class="fas fa-user-check progress-icon step-2"></i>'
+          },
+          3: {
+            text: 'Configurando sesión...',
+            icon: '<i class="fas fa-cog progress-icon step-3"></i>'
+          },
+          4: {
+            text: 'Finalizando autenticación...',
+            icon: '<i class="fas fa-sync-alt progress-icon step-4"></i>'
+          }
+        };
+
+        if (steps[step]) {
+          this.authSubtext.innerHTML = `${steps[step].text}<span class="dots"></span>${steps[step].icon}`;
+        }
+      }
+
+      createRetryButton() {
+        const retryButton = document.createElement('button');
+        retryButton.innerHTML = '<i class="fas fa-redo-alt"></i> Reintentar';
+        retryButton.className = 'retry-button';
+        retryButton.onclick = () => location.reload();
+        return retryButton;
+      }
+
+      async authenticate() {
+        try {
+          // Paso 1: Obtener token
+          this.updateProgress(1);
+          await this.delay(800);
+
+          const hash = window.location.hash.substring(1);
+          const params = new URLSearchParams(hash);
+          const token = params.get('access_token');
+
+          // Limpiar URL
+          if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.pathname);
+          }
+
+          if (!token) {
+            throw new Error("Token no encontrado. ¿Redireccionaste correctamente desde Supabase?");
+          }
+
+          // Paso 2: Validar credenciales
+          this.updateProgress(2);
+          await this.delay(1000);
+
+          const res = await fetch('https://loxi.onrender.com/api/verificar-token', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token })
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+            throw new Error(data.error || 'Error desconocido en la verificación');
+          }
+
+          // Paso 3: Configurar sesión
+          this.updateProgress(3);
+          await this.delay(800);
+
+          localStorage.setItem('usuario', JSON.stringify(data));
+
+          // Paso 4: Finalizar
+          this.updateProgress(4);
+          await this.delay(600);
+
+          // Mostrar éxito
+          this.showMessage('¡Bienvenido! Redirigiendo a tu cuenta...', 'success');
+          
+          // Redireccionar después de mostrar el mensaje de éxito
+          setTimeout(() => {
+            window.location.replace('/frontend/pages/confirmation.html');
+          }, 2000);
+
+        } catch (error) {
+          console.error('Error de autenticación:', error);
+          this.showMessage(error.message || 'Error de red al verificar el token.');
+          
+          // Agregar botón de reintento después de 3 segundos
+          setTimeout(() => {
+            this.message.appendChild(this.createRetryButton());
+          }, 3000);
+        }
+      }
+
+      delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+    }
+
+    // Inicializar el loader
+    new AuthLoader();
   </script>
 </body>
 </html>
