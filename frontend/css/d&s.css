@@ -13,6 +13,7 @@ body {
     background: linear-gradient(180deg, #012e40 10%, #011c26 50%, #00080d 100%);
     min-height: 100vh;
     width: 100%;
+    overflow-x: hidden;
 }
 
 .background-layers {
@@ -44,8 +45,11 @@ body {
     }
 }
 
+/* Header y navegación */
 header {
-    padding: 20px 0;
+    padding: 15px 0;
+    position: relative;
+    z-index: 1000;
 }
 
 nav {
@@ -137,7 +141,7 @@ nav {
     white-space: nowrap;
 }
 
-desktop-menu li .submenu li a:hover {
+.desktop-menu li .submenu li a:hover {
     opacity: 0.5;
 }
 
@@ -347,12 +351,14 @@ desktop-menu li .submenu li a:hover {
     max-width: 300px;
 }
 
+/* Sección principal */
 main {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     position: relative;
+    padding: 0 20px;
 }
 
 .ds {
@@ -361,6 +367,7 @@ main {
     justify-content: center;
     align-items: center;
     text-align: center;
+    padding: 0 20px;
 }
 
 .ds h2 {
@@ -383,7 +390,9 @@ main {
     color: #B5B7BA;
     background: transparent;
     position: relative;
-    width: 800px;
+    width: 100%;
+    max-width: 800px;
+    padding: 0 20px;
 }
 
 .write input {
@@ -391,7 +400,7 @@ main {
     color: #B5B7BA;
     border: 1px solid #B5B7BA;
     border-radius: 70px;
-    width: 90%;
+    width: 100%;
     font-size: 30px;
     padding: 10px 20px; 
     outline: none;
@@ -399,7 +408,7 @@ main {
 
 .write .send {
     position: absolute;
-    right: 100px;
+    right: 110px;
     background: transparent;
     border: none;
     color: #B5B7BA;
@@ -422,10 +431,10 @@ main {
     border: 1px solid #B5B7BA;
     color: #B5B7BA;
     border-radius: 100%;
-    margin-left: 10px;
     cursor: pointer;
     box-shadow: 0px 0px 7px #a5a8b496;
     animation: bounceArrow 1s infinite ease-in-out;
+    flex-shrink: 0;
 }
 
 .down-arrow:hover {
@@ -451,6 +460,7 @@ main {
     }
 }
 
+/* Sección de preguntas frecuentes */
 .more-d {
     width: 100%;
     max-width: 1200px;
@@ -647,21 +657,29 @@ footer {
     padding: 20px;
 }
 
+/* Media queries para responsive design */
+
+/* Tablet grande */
 @media (max-width: 1100px) {
     .faq-container {
         grid-template-columns: 1fr 1fr;
     }
-}
-
-@media (max-width: 768px) {
-    .faq-container {
-        grid-template-columns: 1fr;
+    
+    .faq-card, .faq-card-small {
+        grid-column: span 1;
     }
     
-    .faq-title {
-        font-size: 28px;
+    .ds h2 {
+        font-size: 56px;
     }
+    
+    .write {
+        max-width: 700px;
+    }
+}
 
+/* Tablet */
+@media (max-width: 768px) {
     .desktop-menu {
         display: none;
     }
@@ -681,46 +699,336 @@ footer {
 
     nav {
         justify-content: space-between;
+        padding: 0 15px;
     }
 
-    nav ul {
-        justify-content: center;
-        padding: 10px 0;
+    .faq-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .faq-card, .faq-card-small {
+        grid-column: span 1;
+        padding: 25px;
+    }
+    
+    .faq-title {
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+    
+    .ds {
+        margin: 60px auto 20px;
+        padding: 0 15px;
+    }
+    
+    .ds h2 {
+        font-size: 48px;
+        margin-bottom: 10px;
+    }
+    
+    .ds p {
+        font-size: 20px;
+    }
+    
+    .write {
+        margin: 8rem 0 0 0;
+        padding: 0 15px;
+        gap: 15px;
+    }
+    
+    .write input {
+        font-size: 24px;
+        padding: 15px 20px;
+        padding-right: 80px;
+    }
+    
+    .write .send {
+        font-size: 24px;
+        right: 35px;
+    }
+    
+    .write .down-arrow {
+        width: 55px;
+        height: 55px;
+        font-size: 24px;
+    }
+    
+    .more-d {
+        margin: 60px auto;
+        padding: 0 15px;
+    }
+    
+    .faq-admin {
+        position: static;
+        margin-bottom: 15px;
+        justify-content: flex-start;
+    }
+    
+    .faq-card-small .faq-admin {
+        position: static;
+        margin-bottom: 15px;
+    }
+    
+    .faq-answer {
+        text-align: left;
+        padding-left: 0;
+        margin-bottom: 20px;
+    }
+    
+    .faq-card-small .faq-answer {
+        padding-left: 0;
+    }
+    
+    .faq-like {
+        position: static;
+        margin-top: 15px;
+        text-align: left;
+    }
+    
+    .faq-card-small .faq-like {
+        position: static;
+        margin-top: 15px;
+    }
+    
+    .contact-section {
+        padding: 30px 20px;
+    }
+    
+    .contact-title {
+        font-size: 20px;
+    }
+    
+    .contact-btn {
+        font-size: 16px;
+        padding: 10px 25px;
     }
 }
 
+/* Mobile */
 @media (max-width: 576px) {
-    nav ul {
-        gap: 10px;
-    }
-
-    nav ul li a {
-        font-size: 16px;
-        padding: 0.5rem;
-        text-align: center;
-    }
-
-    .profile {
-        width: 120px;
-        padding: 8px 15px;
+    body {
         font-size: 14px;
     }
+    
+    header {
+        padding: 10px 0;
+    }
+    
+    nav {
+        padding: 0 10px;
+    }
+    
+    .logo h1 {
+        font-size: 20px;
+    }
+    
+    .logo i {
+        font-size: 20px;
+    }
+    
+    .ds {
+        margin: 40px auto 15px;
+        padding: 0 10px;
+    }
+    
+    .ds h2 {
+        font-size: 36px;
+        line-height: 1.2;
+    }
+    
+    .ds p {
+        font-size: 18px;
+        margin: 15px 0;
+    }
+    
+    .write {
+        margin: 6rem 0 0 0;
+        padding: 0 10px;
+        gap: 15px;
+    }
+    
+    .write input {
+        font-size: 18px;
+        padding: 12px 15px;
+        padding-right: 60px;
+    }
+    
+    .write .send {
+        font-size: 20px;
+        right: 85px;
+    }
+    
+    .write .down-arrow {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        align-self: center;
+    }
+    
+    .more-d {
+        margin: 40px auto;
+        padding: 0 10px;
+    }
+    
+    .faq-title {
+        font-size: 24px;
+        margin-bottom: 25px;
+    }
+    
+    .faq-container {
+        gap: 15px;
+    }
+    
+    .faq-card, .faq-card-small {
+        padding: 20px;
+    }
+    
+    .faq-question {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+    
+    .faq-card-small .faq-question {
+        font-size: 15px;
+    }
+    
+    .faq-answer {
+        font-size: 13px;
+        margin-bottom: 15px;
+    }
+    
+    .faq-card-small .faq-answer {
+        font-size: 12px;
+    }
+    
+    .user-avatar {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .faq-card-small .user-avatar {
+        width: 25px;
+        height: 25px;
+    }
+    
+    .user-name {
+        font-size: 12px;
+    }
+    
+    .faq-card-small .user-name {
+        font-size: 11px;
+    }
+    
+    .faq-like {
+        font-size: 20px;
+    }
+    
+    .faq-card-small .faq-like {
+        font-size: 18px;
+    }
+    
+    .contact-section {
+        padding: 25px 15px;
+    }
+    
+    .contact-title {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+    
+    .contact-btn {
+        font-size: 14px;
+        padding: 8px 20px;
+    }
+    
+    .profile {
+        width: 100px;
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    
+    .mobile-profile .profile {
+        width: 100%;
+        max-width: 250px;
+        font-size: 16px;
+        padding: 12px 20px;
+    }
+    
+    footer {
+        font-size: 12px;
+        padding: 15px;
+    }
 }
 
+/* Mobile pequeño */
+@media (max-width: 400px) {
+    .ds h2 {
+        font-size: 28px;
+    }
+    
+    .ds p {
+        font-size: 16px;
+    }
+    
+    .write input {
+        font-size: 16px;
+        padding: 10px 12px;
+        padding-right: 50px;
+    }
+    
+    .write .send {
+        font-size: 18px;
+        right: 20px;
+    }
+    
+    .write .down-arrow {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+    
+    .faq-title {
+        font-size: 22px;
+    }
+    
+    .faq-card, .faq-card-small {
+        padding: 15px;
+    }
+    
+    .faq-question {
+        font-size: 15px;
+    }
+    
+    .faq-card-small .faq-question {
+        font-size: 14px;
+    }
+    
+    .contact-title {
+        font-size: 16px;
+    }
+    
+    .contact-btn {
+        font-size: 13px;
+        padding: 6px 15px;
+    }
+}
+
+/* Scrollbar personalizada */
 ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
     background: linear-gradient(180deg, #011C26 0%, #00080D 100%);
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
     background-color: #012E40;
-    border-radius: 10px;
-    border: 2px solid #00080D;
+    border-radius: 8px;
+    border: 1px solid #00080D;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -729,4 +1037,74 @@ footer {
 
 * {
     scrollbar-color: #012E40 #00080D;
+}
+
+/* Mejoras adicionales para móvil */
+@media (max-width: 768px) {
+    /* Evitar scroll horizontal */
+    body, html {
+        overflow-x: hidden;
+    }
+    
+    /* Mejor espaciado para touch */
+    .mobile-menu-items a,
+    .mobile-menu-single a {
+        padding: 15px 0;
+        font-size: 16px;
+    }
+    
+    /* Botones más grandes para touch */
+    .burger-menu {
+        padding: 12px;
+    }
+    
+    .burger-line {
+        width: 28px;
+        height: 3px;
+        margin: 4px 0;
+    }
+    
+    /* Campos de entrada más accesibles */
+    .write input {
+        min-height: 50px;
+    }
+    
+    .write .send {
+        min-width: 44px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .write .down-arrow {
+        min-width: 55px;
+        min-height: 55px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* Optimización para pantallas muy pequeñas */
+@media (max-width: 320px) {
+    .ds h2 {
+        font-size: 24px;
+    }
+    
+    .ds p {
+        font-size: 14px;
+    }
+    
+    .write {
+        margin: 4rem 0 0 0;
+    }
+    
+    .more-d {
+        margin: 30px auto;
+    }
+    
+    .faq-title {
+        font-size: 20px;
+    }
 }
