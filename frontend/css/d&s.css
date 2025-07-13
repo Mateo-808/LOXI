@@ -599,6 +599,10 @@ main {
     transform: scale(1.2);
 }
 
+.faq-like i.filled{
+    color: red;
+}
+
 .contact-section {
     text-align: center;
     width: 100%;

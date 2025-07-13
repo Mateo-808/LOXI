@@ -70,3 +70,18 @@ document.addEventListener('DOMContentLoaded', () => {
     btnSesionMobile.href = '../pages/login.html';
   }
 });
+
+const heartIcons = document.querySelectorAll('.faq-like i');
+
+heartIcons.forEach(icon => {
+    icon.addEventListener('click', () => {
+        icon.classList.toggle('fa-regular');
+        icon.classList.toggle('fa-solid');
+        icon.classList.toggle('filled');
+    });
+});
+
+heartIcon.addEventListener('click', () => {
+    heartIcon.classList.toggle('fa-regular');
+    heartIcon.classList.toggle('fa-solid');
+});
