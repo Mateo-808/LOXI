@@ -365,7 +365,7 @@ main {
     align-items: center;
     gap: 15px;
     padding: 30px;
-    border-radius: 8px;
+    border-radius: 30px;
     margin: 20px;
 }
 
@@ -374,6 +374,32 @@ main {
     height: 80vh;
     background-color: #012E40;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    position: relative;
+}
+
+.sub-header {
+    height: 10%;
+    background-color: #B5B7BA88;
+    border-radius: 20px;
+    margin: 5px;
+}
+
+.separador button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 35%;
+    background-color: #B5B7BA88;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px;
+    text-wrap: wrap;
 }
 
 .mascota {
