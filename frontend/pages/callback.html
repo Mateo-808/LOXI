@@ -559,7 +559,7 @@
 
     async authenticate() {
       try {
-        // Paso 1: Obtener token de la URL (hash)
+        // Paso 1: Obtener token de la URL
         this.updateProgress(1);
         await this.delay(800);
 
@@ -575,7 +575,7 @@
           throw new Error("Token no encontrado en la URL. Asegúrate de que Supabase redirigió correctamente.");
         }
 
-        // Paso 2: Validar sesión con Supabase
+        // Paso 2: Obtener sesión actual de Supabase
         this.updateProgress(2);
         await this.delay(1000);
 
@@ -585,25 +585,39 @@
           throw new Error("No se pudo obtener la sesión de Supabase.");
         }
 
-        // Paso 3: Guardar en localStorage
+        const user = session.user;
+
+        // Paso 3: Guardar usuario en tabla personalizada si no existe
         this.updateProgress(3);
         await this.delay(800);
 
-        const usuario = {
-          nombre: session.user.user_metadata.full_name || session.user.email,
-          correo: session.user.email,
-          foto: session.user.user_metadata.avatar_url || ''
-        };
+        // Guardar en localStorage para uso en la app
+        localStorage.setItem("usuario", JSON.stringify(user));
 
-        localStorage.setItem('usuario', JSON.stringify(usuario));
+        const { data: existingUser, error: selectError } = await supabase
+          .from('usuarios')
+          .select('*')
+          .eq('id', user.id)
+          .single();
 
-        // Paso 4: Finalizar
+        if (!existingUser) {
+          const { error: insertError } = await supabase.from('usuarios').insert({
+            id: user.id,
+            nombre: user.user_metadata.full_name,
+            correo: user.email,
+          });
+
+          if (insertError) {
+            console.error("Error al registrar usuario:", insertError);
+          }
+        }
+
+        // Paso 4: Mostrar éxito y redirigir
         this.updateProgress(4);
         await this.delay(600);
 
         this.showMessage('¡Bienvenido! Redirigiendo a tu cuenta...', 'success');
 
-        // Redireccionar después del mensaje final
         setTimeout(() => {
           window.location.replace('/frontend/pages/question.html');
         }, 2000);
@@ -612,7 +626,6 @@
         console.error('Error de autenticación:', error);
         this.showMessage(error.message || 'Error inesperado al verificar autenticación.');
 
-        // Botón de reintento
         setTimeout(() => {
           this.message.appendChild(this.createRetryButton());
         }, 3000);
@@ -626,6 +639,7 @@
 
   new AuthLoader();
 </script>
+
 
 </body>
 </html>
