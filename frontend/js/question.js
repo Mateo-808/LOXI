@@ -26,7 +26,7 @@ window.addEventListener('DOMContentLoaded', function() {
 async function guardarProgreso(nivel, puntuacion, completado = true) {
     try {
         // Obtener el ID del usuario desde localStorage (ajustar según tu implementación)
-        const usuarioId = localStorage.getItem('id') || localStorage.getItem('usuario_id');
+        const usuarioId = localStorage.getItem('id') || localStorage.getItem('id');
         const ejercicioId = '550e8400-e29b-41d4-a716-446655440001'; 
         
         if (!usuarioId) {
