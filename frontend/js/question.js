@@ -55,7 +55,7 @@ async function guardarProgreso(nivel, puntuacion, completado = true) {
             console.log('ID encontrado en fallback:', usuarioId);
         }
         
-        const ejercicioId = '550e8400-e29b-41d4-a716-446655440001'; // UUID del ejercicio de lógica
+        const ejercicioId = '7c1a8ae1-a72e-4a4f-9efb-5a7be07a8b3a'; // UUID del ejercicio de lógica
         
         if (!usuarioId) {
             console.warn('No se encontró ID de usuario válido. El progreso no se guardará.');
