@@ -527,15 +527,15 @@
     updateProgress(step) {
       const steps = {
         1: {
-          text: 'Obteniendo token de acceso...',
+          text: 'Verificando sesión...',
           icon: '<i class="fas fa-key progress-icon step-1"></i>'
         },
         2: {
-          text: 'Validando credenciales...',
+          text: 'Validando usuario...',
           icon: '<i class="fas fa-user-check progress-icon step-2"></i>'
         },
         3: {
-          text: 'Configurando sesión...',
+          text: 'Guardando sesión...',
           icon: '<i class="fas fa-cog progress-icon step-3"></i>'
         },
         4: {
@@ -559,40 +559,21 @@
 
     async authenticate() {
       try {
-        // Paso 1: Obtener token de la URL
+        // Paso 1: Verificar sesión actual de Supabase
         this.updateProgress(1);
         await this.delay(800);
 
-        const hash = window.location.hash.substring(1);
-        const params = new URLSearchParams(hash);
-        const token = params.get('access_token');
-
-        if (window.history.replaceState) {
-          window.history.replaceState(null, null, window.location.pathname);
-        }
-
-        if (!token) {
-          throw new Error("Token no encontrado en la URL. Asegúrate de que Supabase redirigió correctamente.");
-        }
-
-        // Paso 2: Obtener sesión actual de Supabase
-        this.updateProgress(2);
-        await this.delay(1000);
-
         const { data: { session }, error } = await supabase.auth.getSession();
 
-        if (error || !session) {
-          throw new Error("No se pudo obtener la sesión de Supabase.");
+        if (error || !session || !session.user) {
+          throw new Error("No se pudo obtener la sesión. ¿Redirigiste desde Supabase?");
         }
 
         const user = session.user;
 
-        // Paso 3: Guardar usuario en tabla personalizada si no existe
-        this.updateProgress(3);
-        await this.delay(800);
-
-        // Guardar en localStorage para uso en la app
-        localStorage.setItem("usuario", JSON.stringify(user));
+        // Paso 2: Validar existencia en base de datos
+        this.updateProgress(2);
+        await this.delay(1000);
 
         const { data: existingUser, error: selectError } = await supabase
           .from('usuarios')
@@ -600,22 +581,31 @@
           .eq('id', user.id)
           .single();
 
+        if (selectError && selectError.code !== 'PGRST116') {
+          throw new Error("Error al consultar usuario en la base de datos.");
+        }
+
+        // Paso 3: Guardar usuario si no existe
+        this.updateProgress(3);
+        await this.delay(600);
+
         if (!existingUser) {
           const { error: insertError } = await supabase.from('usuarios').insert({
             id: user.id,
-            nombre: user.user_metadata.full_name,
-            correo: user.email,
+            nombre: user.user_metadata?.full_name || user.email,
+            correo: user.email
           });
 
           if (insertError) {
-            console.error("Error al registrar usuario:", insertError);
+            throw new Error("No se pudo guardar el usuario.");
           }
         }
 
-        // Paso 4: Mostrar éxito y redirigir
-        this.updateProgress(4);
-        await this.delay(600);
+        localStorage.setItem("usuario", JSON.stringify(user));
 
+        // Paso 4: Finalizar y redirigir
+        this.updateProgress(4);
+        await this.delay(500);
         this.showMessage('¡Bienvenido! Redirigiendo a tu cuenta...', 'success');
 
         setTimeout(() => {
@@ -639,7 +629,5 @@
 
   new AuthLoader();
 </script>
-
-
 </body>
 </html>
