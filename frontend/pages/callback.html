@@ -589,16 +589,21 @@
         this.updateProgress(3);
         await this.delay(600);
 
-        if (!existingUser) {
-          const { error: insertError } = await supabase.from('usuarios').insert({
-            id: user.id,
-            nombre: user.user_metadata?.full_name || user.email,
-            correo: user.email
-          });
-
-          if (insertError) {
-            throw new Error("No se pudo guardar el usuario.");
-          }
+        const nuevoUsuario = {
+          id: user.id,
+          nombre: user.user_metadata?.full_name || 'Sin nombre',
+          correo: user.email
+        };
+        
+        console.log("Intentando insertar usuario:", nuevoUsuario);
+        
+        const { error: insertError } = await supabase
+          .from('usuarios')
+          .insert(nuevoUsuario);
+        
+        if (insertError) {
+          console.error("Error al registrar usuario:", insertError);
+          throw new Error("No se pudo guardar el usuario.");
         }
 
         localStorage.setItem("usuario", JSON.stringify(user));
