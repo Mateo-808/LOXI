@@ -26,8 +26,8 @@ window.addEventListener('DOMContentLoaded', function() {
 async function guardarProgreso(nivel, puntuacion, completado = true) {
     try {
         // Obtener el ID del usuario desde localStorage (ajustar según tu implementación)
-        const usuarioId = localStorage.getItem('user_id') || localStorage.getItem('usuario_id');
-        const ejercicioId = '550e8400-e29b-41d4-a716-446655440001'; // UUID del ejercicio de lógica
+        const usuarioId = localStorage.getItem('id') || localStorage.getItem('usuario_id');
+        const ejercicioId = '550e8400-e29b-41d4-a716-446655440001'; 
         
         if (!usuarioId) {
             console.warn('No se encontró ID de usuario. El progreso no se guardará.');
@@ -37,7 +37,7 @@ async function guardarProgreso(nivel, puntuacion, completado = true) {
         // URL de tu servidor 
         const serverUrl = window.location.hostname === 'localhost' 
             ? 'http://localhost:3000' 
-            : 'https://loxi.onrender.com'; // Cambia esto por tu URL real de producción
+            : 'https://loxi.onrender.com'; 
         
         const response = await fetch(`${serverUrl}/api/progreso`, {
             method: 'POST',
