@@ -61,7 +61,7 @@ async function guardarProgreso(nivel, puntuacion, completado = true) {
         // URL de tu servidor 
         const serverUrl = window.location.hostname === 'localhost' 
             ? 'http://localhost:3000' 
-            : 'https://loxi-backend-production.up.railway.app'; // Cambia esto por tu URL real de producción
+            : 'https://loxi.onrender.com'; // Cambia esto por tu URL real de producción
         
         const response = await fetch(`${serverUrl}/api/progreso`, {
             method: 'POST',
