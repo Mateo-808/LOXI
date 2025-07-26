@@ -20,24 +20,48 @@ window.addEventListener('DOMContentLoaded', function() {
     
     // Enfocar automáticamente el campo de entrada al cargar
     input.focus();
+    
+    // Función de depuración para verificar localStorage (remover en producción)
+    console.log('Contenido actual de localStorage:');
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        console.log(`${key}:`, localStorage.getItem(key));
+    }
 });
 
 // Función para guardar progreso en Supabase
 async function guardarProgreso(nivel, puntuacion, completado = true) {
     try {
-        // Obtener el ID del usuario desde localStorage (ajustar según tu implementación)
-        const usuarioId = localStorage.getItem('id') || localStorage.getItem('id');
-        const ejercicioId = '550e8400-e29b-41d4-a716-446655440001'; 
+        // Obtener el ID del usuario desde localStorage
+        const usuarioGuardado = localStorage.getItem('usuario');
+        let usuarioId = null;
+        
+        // Extraer el ID del objeto usuario guardado
+        if (usuarioGuardado) {
+            try {
+                const usuario = JSON.parse(usuarioGuardado);
+                usuarioId = usuario.id;
+                console.log('Usuario encontrado:', usuario.nombre, 'ID:', usuarioId);
+            } catch (e) {
+                console.error('Error al parsear usuario guardado:', e);
+            }
+        } else {
+            // Fallback: buscar IDs directos en localStorage
+            usuarioId = localStorage.getItem('user_id') || localStorage.getItem('usuario_id');
+        }
+        
+        const ejercicioId = '550e8400-e29b-41d4-a716-446655440001'; // UUID del ejercicio de lógica
         
         if (!usuarioId) {
-            console.warn('No se encontró ID de usuario. El progreso no se guardará.');
+            console.warn('No se encontró ID de usuario válido. El progreso no se guardará.');
+            console.log('Estado del localStorage usuario:', usuarioGuardado);
             return;
         }
 
         // URL de tu servidor 
         const serverUrl = window.location.hostname === 'localhost' 
             ? 'http://localhost:3000' 
-            : 'https://loxi.onrender.com'; 
+            : 'https://loxi-backend-production.up.railway.app'; // Cambia esto por tu URL real de producción
         
         const response = await fetch(`${serverUrl}/api/progreso`, {
             method: 'POST',
