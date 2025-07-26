@@ -5,16 +5,23 @@ export async function loginUsuario(nombre, correo, contrasena) {
   try {
     const { data, error } = await supabase
       .from('usuarios')
-      .select('*')
+      .select('id, nombre, correo, nivel, puntos, contrasena') 
       .eq('correo', correo)
       .single();
-      
+
     if (error || !data) throw new Error('Correo no registrado');
 
     const contrasenaValida = await bcrypt.compare(contrasena, data.contrasena);
     if (!contrasenaValida) throw new Error('Contraseña incorrecta');
 
-    return { ok: true, usuario: data };
+    // Excluimos contrasena del retorno para no exponerla
+    const { contrasena: _, ...usuarioSinContrasena } = data;
+
+    return {
+      ok: true,
+      usuario: usuarioSinContrasena
+    };
+
   } catch (err) {
     return { ok: false, error: err.message };
   }

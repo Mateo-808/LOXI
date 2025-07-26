@@ -148,7 +148,9 @@ const server = http.createServer(async (req, res) => {
         name: userData.user_metadata?.full_name || userData.user_metadata?.name || 'Usuario',
         email: userData.email,
         email_confirmed_at: userData.email_confirmed_at,
-        created_at: userData.created_at
+        created_at: userData.created_at,
+        nivel: userData.user_metadata?.nivel,
+        puntos: userData.user_metadata?.puntos
       }));
     } catch (err) {
       console.error('Error al verificar token:', err);
@@ -169,7 +171,7 @@ if (method === 'POST' && pathname === '/api/progreso') {
       ejercicio_id,
       completado,
       puntuacion,
-      nivel, // Cambiado de nivel_logica a nivel
+      nivel, 
       intentos
     } = await readBody(req);
 
@@ -209,7 +211,7 @@ if (method === 'POST' && pathname === '/api/progreso') {
         body: JSON.stringify({
           completado: completado,
           puntuacion: mejorPuntuacion,
-          nivel: nivel, // Cambiado de nivel_logica a nivel
+          nivel: nivel,
           intentos: nuevosIntentos,
           fecha: new Date().toISOString()
         })
@@ -223,7 +225,7 @@ if (method === 'POST' && pathname === '/api/progreso') {
           ejercicio_id: ejercicio_id,
           completado: completado || false,
           puntuacion: puntuacion || 0,
-          nivel: nivel, // Cambiado de nivel_logica a nivel
+          nivel: nivel, 
           intentos: intentos || 1
         })
       });
