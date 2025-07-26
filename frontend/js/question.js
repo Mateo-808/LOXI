@@ -73,7 +73,7 @@ async function guardarProgreso(nivel, puntuacion, completado = true) {
                 ejercicio_id: ejercicioId,
                 completado: completado,
                 puntuacion: puntuacion,
-                nivel_logica: nivel,
+                nivel: nivel,
                 intentos: 1
             })
         });
