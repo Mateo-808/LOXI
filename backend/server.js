@@ -2,7 +2,6 @@ import http from 'http';
 import fetch from 'node-fetch'; 
 import { registrarUsuario } from './js/register.js';
 import { loginUsuario } from './js/login.js';
-import { supabase } from './db/supabase.js';
 import { URL } from 'url';
 
 function readBody(req) {
@@ -22,6 +21,7 @@ function readBody(req) {
 const PORT = 3000;
 
 const server = http.createServer(async (req, res) => {
+  // Acá se habilitan los CORS globalmente
   res.setHeader('Access-Control-Allow-Origin', 'https://loxi-one.vercel.app');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -44,7 +44,6 @@ const server = http.createServer(async (req, res) => {
         <li><strong>POST</strong> /api/registro - Registrar un nuevo usuario</li>
         <li><strong>POST</strong> /api/login - Iniciar sesión</li>
         <li><strong>POST</strong> /api/verificar-token - Verificar usuario con Supabase</li>
-        <li><strong>POST</strong> /api/oauth-callback - Registrar/verificar usuario OAuth</li>
       </ul>
     `);
     return;
@@ -78,92 +77,51 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  if (method === 'POST' && pathname === '/api/verificar-token') {
-    try {
-      const { token } = await readBody(req);
+if (method === 'POST' && pathname === '/api/verificar-token') {
+  try {
+    const { token } = await readBody(req);
 
-      if (!token) {
-        res.writeHead(400, { 'Content-Type': 'application/json' });
-        return res.end(JSON.stringify({ error: 'Token no proporcionado' }));
-      }
-
-      const response = await fetch('https://bllvqufahggmbhhfqidk.supabase.co/auth/v1/user', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJsbHZxdWZhaGdnbWJoaGZxaWRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQyMTA1NTgsImV4cCI6MjA1OTc4NjU1OH0.Sucy2GME2XYMxW7cVSbqnxG4cmeTkY2IeqSvWUHSxts',
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Error de Supabase:', response.status, errorText);
-        res.writeHead(401, { 'Content-Type': 'application/json' });
-        return res.end(JSON.stringify({ error: 'Token inválido o expirado' }));
-      }
-
-      const userData = await response.json();
-      console.log('Datos del usuario:', userData);
-
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({
-        id: userData.id,
-        name: userData.user_metadata?.full_name || userData.user_metadata?.name || 'Usuario',
-        email: userData.email,
-        email_confirmed_at: userData.email_confirmed_at,
-        created_at: userData.created_at
-      }));
-    } catch (err) {
-      console.error('Error al verificar token:', err);
-      res.writeHead(500, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: 'Error al comunicarse con Supabase' }));
-    }
-    return;
-  }
-
-  if (method === 'POST' && pathname === '/api/oauth-callback') {
-    try {
-      const { nombre, correo } = await readBody(req);
-
-      if (!correo || !nombre) {
-        throw new Error('Datos incompletos');
-      }
-
-      const { data: existente } = await supabase
-        .from('usuarios')
-        .select('*')
-        .eq('correo', correo)
-        .single();
-
-      let usuario = existente;
-
-      if (!usuario) {
-        const { data, error } = await supabase.from('usuarios').insert([
-          {
-            nombre,
-            correo,
-            contrasena: null,
-            fecha_registro: new Date().toISOString()
-          }
-        ]).select().single();
-
-        if (error) throw error;
-        usuario = data;
-      }
-
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ ok: true, usuario }));
-
-    } catch (err) {
-      console.error('Error en /api/oauth-callback:', err.message);
+    if (!token) {
       res.writeHead(400, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ ok: false, error: err.message }));
+      return res.end(JSON.stringify({ error: 'Token no proporcionado' }));
     }
-    return;
-  }
 
-  // Ruta no encontrada
+    const response = await fetch('https://bllvqufahggmbhhfqidk.supabase.co/auth/v1/user', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJsbHZxdWZhaGdnbWJoaGZxaWRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQyMTA1NTgsImV4cCI6MjA1OTc4NjU1OH0.Sucy2GME2XYMxW7cVSbqnxG4cmeTkY2IeqSvWUHSxts',
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Error de Supabase:', response.status, errorText);
+      res.writeHead(401, { 'Content-Type': 'application/json' });
+      return res.end(JSON.stringify({ error: 'Token inválido o expirado' }));
+    }
+
+    const userData = await response.json();
+    console.log('Datos del usuario:', userData);
+
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      id: userData.id,
+      name: userData.user_metadata?.full_name || userData.user_metadata?.name || 'Usuario',
+      email: userData.email,
+      email_confirmed_at: userData.email_confirmed_at,
+      created_at: userData.created_at
+    }));
+  } catch (err) {
+    console.error('Error al verificar token:', err);
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: 'Error al comunicarse con Supabase' }));
+  }
+  return;
+}
+
+  // Si no se encuentra ruta
   res.writeHead(404, { 'Content-Type': 'text/plain' });
   res.end('Ruta no encontrada');
 });
