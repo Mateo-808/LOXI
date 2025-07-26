@@ -32,9 +32,13 @@ window.addEventListener('DOMContentLoaded', function() {
 // Función para guardar progreso en Supabase
 async function guardarProgreso(nivel, puntuacion, completado = true) {
     try {
+        console.log('=== INICIANDO GUARDADO DE PROGRESO ===');
+        
         // Obtener el ID del usuario desde localStorage
         const usuarioGuardado = localStorage.getItem('usuario');
         let usuarioId = null;
+        
+        console.log('usuarioGuardado:', usuarioGuardado);
         
         // Extraer el ID del objeto usuario guardado
         if (usuarioGuardado) {
@@ -48,6 +52,7 @@ async function guardarProgreso(nivel, puntuacion, completado = true) {
         } else {
             // Fallback: buscar IDs directos en localStorage
             usuarioId = localStorage.getItem('user_id') || localStorage.getItem('usuario_id');
+            console.log('ID encontrado en fallback:', usuarioId);
         }
         
         const ejercicioId = '550e8400-e29b-41d4-a716-446655440001'; // UUID del ejercicio de lógica
@@ -63,32 +68,52 @@ async function guardarProgreso(nivel, puntuacion, completado = true) {
             ? 'http://localhost:3000' 
             : 'https://loxi.onrender.com'; // URL actualizada según tu consola
         
+        console.log('URL del servidor:', serverUrl);
+        
+        const datosAEnviar = {
+            usuario_id: usuarioId,
+            ejercicio_id: ejercicioId,
+            completado: completado,
+            puntuacion: puntuacion,
+            nivel: nivel,
+            intentos: 1
+        };
+        
+        console.log('Datos a enviar:', datosAEnviar);
+        
         const response = await fetch(`${serverUrl}/api/progreso`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                usuario_id: usuarioId,
-                ejercicio_id: ejercicioId,
-                completado: completado,
-                puntuacion: puntuacion,
-                nivel: nivel, // Cambiado de nivel_logica a nivel
-                intentos: 1
-            })
+            body: JSON.stringify(datosAEnviar)
         });
 
-        const data = await response.json();
+        console.log('Response status:', response.status);
+        console.log('Response ok:', response.ok);
         
-        if (!data.ok) {
-            throw new Error(data.error || 'Error al guardar progreso');
+        const responseText = await response.text();
+        console.log('Response text:', responseText);
+        
+        let data;
+        try {
+            data = JSON.parse(responseText);
+        } catch (e) {
+            console.error('Error al parsear respuesta JSON:', e);
+            throw new Error(`Respuesta no válida del servidor: ${responseText}`);
+        }
+        
+        if (!response.ok) {
+            throw new Error(data.error || `Error HTTP: ${response.status}`);
         }
 
         console.log('Progreso guardado exitosamente:', data);
         return data;
         
     } catch (error) {
-        console.error('Error al guardar progreso:', error);
+        console.error('=== ERROR AL GUARDAR PROGRESO ===');
+        console.error('Error completo:', error);
+        console.error('Stack trace:', error.stack);
         
         // Mostrar mensaje discreto al usuario
         const chatContainer = document.getElementById("chatContainer");
