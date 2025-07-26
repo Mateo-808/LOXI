@@ -22,6 +22,63 @@ window.addEventListener('DOMContentLoaded', function() {
     input.focus();
 });
 
+// Función para guardar progreso en Supabase
+async function guardarProgreso(nivel, puntuacion, completado = true) {
+    try {
+        // Obtener el ID del usuario desde localStorage (ajustar según tu implementación)
+        const usuarioId = localStorage.getItem('user_id') || localStorage.getItem('usuario_id');
+        const ejercicioId = '550e8400-e29b-41d4-a716-446655440001'; // UUID del ejercicio de lógica
+        
+        if (!usuarioId) {
+            console.warn('No se encontró ID de usuario. El progreso no se guardará.');
+            return;
+        }
+
+        // URL de tu servidor 
+        const serverUrl = window.location.hostname === 'localhost' 
+            ? 'http://localhost:3000' 
+            : 'https://loxi.onrender.com'; // Cambia esto por tu URL real de producción
+        
+        const response = await fetch(`${serverUrl}/api/progreso`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                usuario_id: usuarioId,
+                ejercicio_id: ejercicioId,
+                completado: completado,
+                puntuacion: puntuacion,
+                nivel_logica: nivel,
+                intentos: 1
+            })
+        });
+
+        const data = await response.json();
+        
+        if (!data.ok) {
+            throw new Error(data.error || 'Error al guardar progreso');
+        }
+
+        console.log('Progreso guardado exitosamente:', data);
+        return data;
+        
+    } catch (error) {
+        console.error('Error al guardar progreso:', error);
+        
+        // Mostrar mensaje discreto al usuario
+        const chatContainer = document.getElementById("chatContainer");
+        if (chatContainer) {
+            chatContainer.innerHTML += `
+                <div class="bot-msg" style="opacity: 0.7; font-style: italic;">
+                    LOXI: <small>(Progreso no guardado - ${error.message})</small>
+                </div>
+            `;
+            scrollToBottom(result);
+        }
+    }
+}
+
 // Función para enviar el mensaje
 function sendMessage() {
     const answer = input.value.trim();
@@ -40,21 +97,26 @@ function sendMessage() {
     let level = "";
     let redirectURL = "";
     let isValidAnswer = false;
+    let puntuacion = 0;
 
     if (numAnswer === 42) {
         level = "Avanzado";
+        puntuacion = 100;
         redirectURL = "../pages/services.html";
         isValidAnswer = true;
     } else if (numAnswer === 36) {
         level = "Intermedio";
+        puntuacion = 75;
         redirectURL = "../pages/services.html";
         isValidAnswer = true;
     } else if (numAnswer === 30 || numAnswer === 40) {
-        level = "Básico";
+        level = numAnswer === 40 ? "Principiante" : "Novato";
+        puntuacion = numAnswer === 40 ? 60 : 40;
         redirectURL = "../pages/services.html";
         isValidAnswer = true;
     } else {
         level = "No identificado";
+        puntuacion = 0;
         isValidAnswer = false;
     }
 
@@ -67,6 +129,9 @@ function sendMessage() {
             chatContainer.innerHTML += `
                 <div class="bot-msg">LOXI: Su nivel de lógica es <strong>${level}</strong></div>
             `;
+            
+            // Guardar progreso en Supabase de forma asíncrona
+            guardarProgreso(level, puntuacion, true);
         } else {
             chatContainer.innerHTML += `
                 <div class="bot-msg error-msg">LOXI: <strong>Respuesta incorrecta.</strong> Necesita intentarlo de nuevo para obtener un nivel de lógica válido.</div>
@@ -174,6 +239,7 @@ input.addEventListener('keypress', function(event) {
     }
 });
 
+// Funciones para el menú móvil
 function toggleMobileMenu() {
     const overlay = document.getElementById("mobileMenuOverlay");
     const burgerMenu = document.querySelector(".burger-menu");
@@ -201,6 +267,7 @@ function toggleMenuSection(section) {
     section.classList.toggle("expanded");
 }
 
+// Event listeners para el menú móvil
 document.addEventListener("click", function (event) {
     const overlay = document.getElementById("mobileMenuOverlay");
     const burgerMenu = document.querySelector(".burger-menu");
@@ -220,23 +287,32 @@ document.addEventListener("keydown", function (event) {
     }
 });
 
+// Manejo de sesión de usuario
 document.addEventListener('DOMContentLoaded', () => {
-  const btnSesion = document.getElementById('btnSesion');
-  const btnSesionMobile = document.getElementById('btnSesionMobile');
+    const btnSesion = document.getElementById('btnSesion');
+    const btnSesionMobile = document.getElementById('btnSesionMobile');
 
-  const usuarioGuardado = localStorage.getItem('usuario');
+    const usuarioGuardado = localStorage.getItem('usuario');
 
-  if (usuarioGuardado) {
-    btnSesion.textContent = 'Ver perfil';
-    btnSesion.href = '../pages/profile.html';
+    if (usuarioGuardado) {
+        if (btnSesion) {
+            btnSesion.textContent = 'Ver perfil';
+            btnSesion.href = '../pages/profile.html';
+        }
 
-    btnSesionMobile.textContent = 'Ver perfil';
-    btnSesionMobile.href = '../pages/profile.html';
-  } else {
-    btnSesion.textContent = 'Iniciar sesión';
-    btnSesion.href = '../pages/login.html';
+        if (btnSesionMobile) {
+            btnSesionMobile.textContent = 'Ver perfil';
+            btnSesionMobile.href = '../pages/profile.html';
+        }
+    } else {
+        if (btnSesion) {
+            btnSesion.textContent = 'Iniciar sesión';
+            btnSesion.href = '../pages/login.html';
+        }
 
-    btnSesionMobile.textContent = 'Iniciar sesión';
-    btnSesionMobile.href = '../pages/login.html';
-  }
+        if (btnSesionMobile) {
+            btnSesionMobile.textContent = 'Iniciar sesión';
+            btnSesionMobile.href = '../pages/login.html';
+        }
+    }
 });
