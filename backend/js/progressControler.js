@@ -1,4 +1,4 @@
-const { supabase } = require('../database');
+const { supabase } = require('../db/supabase.js');
 
 // Obtener progreso completo de un usuario (todos los ejercicios)
 async function getUserProgress(userId) {
