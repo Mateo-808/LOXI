@@ -24,7 +24,7 @@ export async function loginUsuario(nombre, correo, contrasena) {
       .maybeSingle(); // <- importante para que no lance error si no hay resultado
 
     // Si no hay progreso, asignar valores por defecto
-    const nivel = progreso?.nivel ?? 'no asignado';
+    const nivel = progreso?.nivel ?? 'novato';
     const puntos = progreso?.puntos ?? 0;
 
     // Excluir contraseña
