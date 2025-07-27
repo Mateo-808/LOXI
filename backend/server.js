@@ -101,8 +101,8 @@ const server = http.createServer(async (req, res) => {
   // Endpoint de login (existente)
 if (method === 'POST' && pathname === '/api/login') {
   try {
-    const { nombre, correo, contrasena } = await readBody(req);
-    const result = await loginUsuario(nombre, correo, contrasena);
+    const { nombre, correo, contrasena, nivel, puntos } = await readBody(req);
+    const result = await loginUsuario(nombre, correo, contrasena, nivel, puntos);
 
     if (result.ok) {
       // Login exitoso
