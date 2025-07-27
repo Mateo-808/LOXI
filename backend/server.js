@@ -160,95 +160,93 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // ===================== NUEVOS ENDPOINTS PARA PROGRESO =====================
-
+  
   // POST /api/progreso - Guardar progreso del ejercicio
-// POST /api/progreso - Guardar progreso del ejercicio
-if (method === 'POST' && pathname === '/api/progreso') {
-  try {
-    const {
-      usuario_id,
-      ejercicio_id,
-      completado,
-      puntuacion,
-      nivel, 
-      intentos
-    } = await readBody(req);
-
-    // Validar datos requeridos
-    if (!usuario_id || !ejercicio_id) {
-      res.writeHead(400, { 'Content-Type': 'application/json' });
-      return res.end(JSON.stringify({
-        ok: false,
-        error: 'usuario_id y ejercicio_id son requeridos'
-      }));
-    }
-
-    // Validar nivel
-    const nivelesValidos = ['Novato', 'Principiante', 'Intermedio', 'Avanzado'];
-    if (nivel && !nivelesValidos.includes(nivel)) {
-      res.writeHead(400, { 'Content-Type': 'application/json' });
-      return res.end(JSON.stringify({
-        ok: false,
-        error: 'nivel debe ser uno de: ' + nivelesValidos.join(', ')
-      }));
-    }
-
-    // Verificar si ya existe un registro
-    const existingRecord = await supabaseRequest(
-      `progreso?usuario_id=eq.${usuario_id}&ejercicio_id=eq.${ejercicio_id}&select=*`
-    );
-
-    let result;
-
-    if (existingRecord && existingRecord.length > 0) {
-      // Actualizar registro existente
-      const nuevosIntentos = existingRecord[0].intentos + (intentos || 1);
-      const mejorPuntuacion = Math.max(existingRecord[0].puntuacion || 0, puntuacion || 0);
+  if (method === 'POST' && pathname === '/api/progreso') {
+    try {
+      const {
+        usuario_id,
+        ejercicio_id,
+        completado,
+        puntuacion,
+        nivel, 
+        intentos
+      } = await readBody(req);
+    
+      // Validar datos requeridos
+      if (!usuario_id || !ejercicio_id) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({
+          ok: false,
+          error: 'usuario_id y ejercicio_id son requeridos'
+        }));
+      }
+    
+      // Validar nivel
+      const nivelesValidos = ['Novato', 'Principiante', 'Intermedio', 'Avanzado'];
+      if (nivel && !nivelesValidos.includes(nivel)) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({
+          ok: false,
+          error: 'nivel debe ser uno de: ' + nivelesValidos.join(', ')
+        }));
+      }
+    
+      // Verificar si ya existe un registro
+      const existingRecord = await supabaseRequest(
+        `progreso?usuario_id=eq.${usuario_id}&ejercicio_id=eq.${ejercicio_id}&select=*`
+      );
       
-      result = await supabaseRequest(`progreso?usuario_id=eq.${usuario_id}&ejercicio_id=eq.${ejercicio_id}`, {
-        method: 'PATCH',
-        body: JSON.stringify({
-          completado: completado,
-          puntuacion: mejorPuntuacion,
-          nivel: nivel,
-          intentos: nuevosIntentos,
-          fecha: new Date().toISOString()
-        })
-      });
-    } else {
-      // Crear nuevo registro
-      result = await supabaseRequest('progreso', {
-        method: 'POST',
-        body: JSON.stringify({
-          usuario_id: usuario_id,
-          ejercicio_id: ejercicio_id,
-          completado: completado || false,
-          puntuacion: puntuacion || 0,
-          nivel: nivel, 
-          intentos: intentos || 1
-        })
-      });
+      let result;
+      
+      if (existingRecord && existingRecord.length > 0) {
+        // Actualizar registro existente
+        const nuevosIntentos = existingRecord[0].intentos + (intentos || 1);
+        const mejorPuntuacion = Math.max(existingRecord[0].puntuacion || 0, puntuacion || 0);
+        
+        result = await supabaseRequest(`progreso?usuario_id=eq.${usuario_id}&ejercicio_id=eq.${ejercicio_id}`, {
+          method: 'PATCH',
+          body: JSON.stringify({
+            completado: completado,
+            puntuacion: mejorPuntuacion,
+            nivel: nivel,
+            intentos: nuevosIntentos,
+            fecha: new Date().toISOString()
+          })
+        });
+      } else {
+        // Crear nuevo registro
+        result = await supabaseRequest('progreso', {
+          method: 'POST',
+          body: JSON.stringify({
+            usuario_id: usuario_id,
+            ejercicio_id: ejercicio_id,
+            completado: completado || false,
+            puntuacion: puntuacion || 0,
+            nivel: nivel, 
+            intentos: intentos || 1
+          })
+        });
+      }
+    
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        ok: true,
+        data: result,
+        message: 'Progreso guardado exitosamente'
+      }));
+    
+    } catch (err) {
+      console.error('Error al guardar progreso:', err);
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        ok: false,
+        error: 'Error interno del servidor',
+        details: err.message
+      }));
     }
-
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({
-      ok: true,
-      data: result,
-      message: 'Progreso guardado exitosamente'
-    }));
-
-  } catch (err) {
-    console.error('Error al guardar progreso:', err);
-    res.writeHead(500, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({
-      ok: false,
-      error: 'Error interno del servidor',
-      details: err.message
-    }));
+    return;
   }
-  return;
-}
 
   // GET /api/progreso/:usuario_id - Obtener progreso de un usuario
   if (method === 'GET' && pathname.startsWith('/api/progreso/') && !pathname.includes('/estadisticas/')) {
