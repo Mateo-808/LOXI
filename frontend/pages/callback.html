@@ -607,8 +607,7 @@
           .eq('correo', correo)
           .single();
 
-        let nivel = 'principiante';
-        let puntos = 0;
+
 
         if (progresoError && progresoError.code === 'PGRST116') {
           // No existe progreso → crear uno
