@@ -600,6 +600,10 @@
         this.updateProgress(3);
         await this.delay(1000);
 
+        // Declarar variables para nivel y puntos con valores por defecto
+        let nivel = 1;
+        let puntos = 0;
+
         // Verificar si tiene progreso
         const { data: progreso, error: progresoError } = await supabase
           .from('progreso')
@@ -607,10 +611,8 @@
           .eq('correo', correo)
           .single();
 
-
-
         if (progresoError && progresoError.code === 'PGRST116') {
-          // No existe progreso → crear uno
+          // No existe progreso → crear uno con valores por defecto
           const { data: nuevoProgreso, error: insertProgresoError } = await supabase
             .from('progreso')
             .insert({
@@ -625,14 +627,19 @@
             throw new Error('No se pudo crear el progreso del usuario');
           }
 
+          // Usar los valores del nuevo progreso creado
           nivel = nuevoProgreso.nivel;
           puntos = nuevoProgreso.puntos;
         } else if (progreso) {
+          // Si existe progreso, usar esos valores
           nivel = progreso.nivel;
           puntos = progreso.puntos;
+        } else if (progresoError) {
+          // Si hay otro tipo de error, lanzar excepción
+          throw new Error('Error al obtener el progreso del usuario');
         }
 
-        // Guardar en localStorage
+        // Guardar en localStorage con todos los datos incluyendo nivel y puntos
         const usuario = {
           id: user.id,
           correo,
