@@ -16,23 +16,26 @@ export async function loginUsuario(nombre, correo, contrasena) {
     const contrasenaValida = await bcrypt.compare(contrasena, usuario.contrasena);
     if (!contrasenaValida) throw new Error('Contraseña incorrecta');
 
-    // Obtener nivel y puntos desde la tabla 'progreso' usando el id del usuario
+    // Intentar obtener progreso
     const { data: progreso, error: errorProgreso } = await supabase
       .from('progreso')
       .select('nivel, puntos')
       .eq('usuario_id', usuario.id)
-      .single();
+      .maybeSingle(); // <- importante para que no lance error si no hay resultado
 
-    if (errorProgreso || !progreso) throw new Error('No se encontró progreso para este usuario');
+    // Si no hay progreso, asignar valores por defecto
+    const nivel = progreso?.nivel ?? 'no asignado';
+    const puntos = progreso?.puntos ?? 0;
 
-    // Excluir contraseña y unir datos
+    // Excluir contraseña
     const { contrasena: _, ...usuarioSinContrasena } = usuario;
 
     return {
       ok: true,
       usuario: {
         ...usuarioSinContrasena,
-        ...progreso
+        nivel,
+        puntos
       }
     };
 
