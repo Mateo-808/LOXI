@@ -535,7 +535,7 @@
           icon: '<i class="fas fa-user-check progress-icon step-2"></i>'
         },
         3: {
-          text: 'Guardando sesión...',
+          text: 'Guardando sesión y progreso...',
           icon: '<i class="fas fa-cog progress-icon step-3"></i>'
         },
         4: {
@@ -559,7 +559,6 @@
 
     async authenticate() {
       try {
-        // Paso 1: Verificar sesión actual de Supabase
         this.updateProgress(1);
         await this.delay(800);
 
@@ -570,45 +569,80 @@
         }
 
         const user = session.user;
+        const correo = user.email;
+        const nombre = user.user_metadata?.full_name || 'Sin nombre';
 
-        // Paso 2: Validar existencia en base de datos
         this.updateProgress(2);
-        await this.delay(1000);
+        await this.delay(800);
 
-        const { data: existingUser, error: selectError } = await supabase
+        // Verificar si el usuario existe en la tabla 'usuarios'
+        const { data: existingUser, error: userSelectError } = await supabase
           .from('usuarios')
           .select('*')
           .eq('id', user.id)
           .single();
 
-        if (selectError && selectError.code !== 'PGRST116') {
-          throw new Error("Error al consultar usuario en la base de datos.");
+        // Si no existe, insertarlo
+        if (!existingUser && (!userSelectError || userSelectError.code === 'PGRST116')) {
+          const { error: userInsertError } = await supabase
+            .from('usuarios')
+            .insert({
+              id: user.id,
+              nombre,
+              correo
+            });
+
+          if (userInsertError) {
+            throw new Error("No se pudo registrar el usuario.");
+          }
         }
 
-        // Paso 3: Guardar usuario si no existe
         this.updateProgress(3);
-        await this.delay(600);
+        await this.delay(1000);
 
-        const nuevoUsuario = {
-          id: user.id,
-          nombre: user.user_metadata?.full_name || 'Sin nombre',
-          correo: user.email
-        };
-        
-        console.log("Intentando insertar usuario:", nuevoUsuario);
-        
-        const { error: insertError } = await supabase
-          .from('usuarios')
-          .insert(nuevoUsuario);
-        
-        if (insertError) {
-          console.error("Error al registrar usuario:", insertError);
-          throw new Error("No se pudo guardar el usuario.");
+        // Verificar si tiene progreso
+        const { data: progreso, error: progresoError } = await supabase
+          .from('progreso')
+          .select('nivel, puntos')
+          .eq('correo', correo)
+          .single();
+
+        let nivel = 'principiante';
+        let puntos = 0;
+
+        if (progresoError && progresoError.code === 'PGRST116') {
+          // No existe progreso → crear uno
+          const { data: nuevoProgreso, error: insertProgresoError } = await supabase
+            .from('progreso')
+            .insert({
+              correo,
+              nivel,
+              puntos
+            })
+            .select('nivel, puntos')
+            .single();
+
+          if (insertProgresoError) {
+            throw new Error('No se pudo crear el progreso del usuario');
+          }
+
+          nivel = nuevoProgreso.nivel;
+          puntos = nuevoProgreso.puntos;
+        } else if (progreso) {
+          nivel = progreso.nivel;
+          puntos = progreso.puntos;
         }
 
-        localStorage.setItem("usuario", JSON.stringify(user));
+        // Guardar en localStorage
+        const usuario = {
+          id: user.id,
+          correo,
+          nombre,
+          nivel,
+          puntos
+        };
+        localStorage.setItem('usuario', JSON.stringify(usuario));
 
-        // Paso 4: Finalizar y redirigir
         this.updateProgress(4);
         await this.delay(500);
         this.showMessage('¡Bienvenido! Redirigiendo a tu cuenta...', 'success');
@@ -620,7 +654,6 @@
       } catch (error) {
         console.error('Error de autenticación:', error);
         this.showMessage(error.message || 'Error inesperado al verificar autenticación.');
-
         setTimeout(() => {
           this.message.appendChild(this.createRetryButton());
         }, 3000);
