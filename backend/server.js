@@ -99,19 +99,29 @@ const server = http.createServer(async (req, res) => {
   }
 
   // Endpoint de login (existente)
-  if (method === 'POST' && pathname === '/api/login') {
-    try {
-      const { nombre, correo, contrasena } = await readBody(req);
-      const result = await loginUsuario(nombre, correo, contrasena);
+if (method === 'POST' && pathname === '/api/login') {
+  try {
+    const { nombre, correo, contrasena } = await readBody(req);
+    const result = await loginUsuario(nombre, correo, contrasena);
 
+    if (result.ok) {
+      // Login exitoso
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(result));
-    } catch (err) {
-      res.writeHead(500, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ ok: false, error: err.message }));
+    } else {
+      // Error de login (correo no registrado o contraseña incorrecta)
+      res.writeHead(401, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(result));
     }
-    return;
+
+  } catch (err) {
+    // Error interno del servidor
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ ok: false, error: err.message }));
   }
+  return;
+}
+
 
   // Endpoint de verificación de token (existente)
   if (method === 'POST' && pathname === '/api/verificar-token') {
