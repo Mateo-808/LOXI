@@ -571,6 +571,7 @@
         const user = session.user;
         const correo = user.email;
         const nombre = user.user_metadata?.full_name || 'Sin nombre';
+        const userId = user.id;
 
         this.updateProgress(2);
         await this.delay(800);
@@ -579,7 +580,7 @@
         const { data: existingUser, error: userSelectError } = await supabase
           .from('usuarios')
           .select('*')
-          .eq('id', user.id)
+          .eq('id', userId)
           .single();
 
         // Si no existe, insertarlo
@@ -587,7 +588,7 @@
           const { error: userInsertError } = await supabase
             .from('usuarios')
             .insert({
-              id: user.id,
+              id: userId,
               nombre,
               correo
             });
@@ -600,15 +601,15 @@
         this.updateProgress(3);
         await this.delay(1000);
 
-        // Declarar variables para nivel y puntos con valores por defecto
-        let nivel = 1;
+        // Declarar variables para nivel y puntuación
+        let nivel = 'Novato';
         let puntos = 0;
 
         // Verificar si tiene progreso
         const { data: progreso, error: progresoError } = await supabase
           .from('progreso')
-          .select('nivel, puntos')
-          .eq('correo', correo)
+          .select('nivel, puntuacion')
+          .eq('usuario_id', userId)
           .single();
 
         if (progresoError && progresoError.code === 'PGRST116') {
@@ -616,32 +617,29 @@
           const { data: nuevoProgreso, error: insertProgresoError } = await supabase
             .from('progreso')
             .insert({
-              correo,
+              usuario_id: userId,
               nivel,
-              puntos
+              puntuacion: puntos
             })
-            .select('nivel, puntos')
+            .select('nivel, puntuacion')
             .single();
 
           if (insertProgresoError) {
             throw new Error('No se pudo crear el progreso del usuario');
           }
 
-          // Usar los valores del nuevo progreso creado
           nivel = nuevoProgreso.nivel;
-          puntos = nuevoProgreso.puntos;
+          puntos = nuevoProgreso.puntuacion;
         } else if (progreso) {
-          // Si existe progreso, usar esos valores
           nivel = progreso.nivel;
-          puntos = progreso.puntos;
+          puntos = progreso.puntuacion;
         } else if (progresoError) {
-          // Si hay otro tipo de error, lanzar excepción
           throw new Error('Error al obtener el progreso del usuario');
         }
 
-        // Guardar en localStorage con todos los datos incluyendo nivel y puntos
+        // Guardar en localStorage
         const usuario = {
-          id: user.id,
+          id: userId,
           correo,
           nombre,
           nivel,
@@ -673,5 +671,6 @@
 
   new AuthLoader();
 </script>
+
 </body>
 </html>
