@@ -23,7 +23,6 @@ export async function loginUsuario(nombre, correo, contrasena) {
       .eq('usuario_id', usuario.id)
       .single();
 
-    if (errorProgreso || !progreso) throw new Error('No se encontró progreso para este usuario');
 
     // Excluir contraseña y unir datos
     const { contrasena: _, ...usuarioSinContrasena } = usuario;
