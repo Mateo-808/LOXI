@@ -14,12 +14,13 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
   const data = await res.json();
 
-  if (data.ok) {
-    console.log('Usuario:', data.usuario);
-    localStorage.setItem('usuario', JSON.stringify(data.usuario));
-    window.location.href = '../pages/question.html'
+  if (result.ok) {
+    const usuario = JSON.parse(localStorage.getItem('usuario')) || {};
+    usuario.nivel = progreso.nivel; 
+    usuario.puntos = progreso.puntuacion;
+    localStorage.setItem('usuario', JSON.stringify(usuario));
   } else {
-    alert('Error: ' + data.error);
+    console.error("Error al guardar progreso:", result.error);
   }
 });
 

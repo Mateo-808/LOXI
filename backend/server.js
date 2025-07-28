@@ -236,12 +236,6 @@ const server = http.createServer(async (req, res) => {
         data: result,
         message: 'Progreso guardado exitosamente'
       }));
-
-      const usuario = JSON.parse(localStorage.getItem('usuario'));
-      usuario.nivel = nivel;
-      usuario.puntos = puntuacion;
-      localStorage.setItem('usuario', JSON.stringify(usuario));
-
     
     } catch (err) {
       console.error('Error al guardar progreso:', err);
