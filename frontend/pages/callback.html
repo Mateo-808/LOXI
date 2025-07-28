@@ -583,20 +583,20 @@
           .eq('id', userId)
           .single();
 
-        // Si no existe, insertarlo
-        if (!existingUser && (!userSelectError || userSelectError.code === 'PGRST116')) {
-          const { error: userInsertError } = await supabase
-            .from('usuarios')
-            .insert({
-              id: userId,
-              nombre,
-              correo
-            });
+        // // Si no existe, insertarlo
+        // if (!existingUser && (!userSelectError || userSelectError.code === 'PGRST116')) {
+        //   const { error: userInsertError } = await supabase
+        //     .from('usuarios')
+        //     .insert({
+        //       id: userId,
+        //       nombre,
+        //       correo
+        //     });
 
-          if (userInsertError) {
-            throw new Error("No se pudo registrar el usuario.");
-          }
-        }
+        //   if (userInsertError) {
+        //     throw new Error("No se pudo registrar el usuario.");
+        //   }
+        // }
 
         this.updateProgress(3);
         await this.delay(1000);
