@@ -26,7 +26,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       alert(`¡Bienvenido ${usuario.nombre}, tu nivel es ${usuario.nivel}!`);
       window.location.href = '../pages/services.html#level-selector';
     } else {
-      alert(`Error: ${result.error}`);
+      alert(`Error: ${data.error}`);
     }
   } catch (err) {
     console.error("Error en la petición:", err);
