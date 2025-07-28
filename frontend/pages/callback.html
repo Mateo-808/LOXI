@@ -652,8 +652,13 @@
         this.showMessage('¡Bienvenido! Redirigiendo a tu cuenta...', 'success');
 
         setTimeout(() => {
-          window.location.replace('/frontend/pages/question.html');
+          if (nivel && nivel.toLowerCase() !== 'no asignado') {
+            window.location.replace('/frontend/index.html');
+          } else {
+            window.location.replace('/frontend/pages/question.html');
+          }
         }, 2000);
+
 
       } catch (error) {
         console.error('Error de autenticación:', error);
