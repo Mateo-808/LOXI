@@ -22,11 +22,11 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       localStorage.setItem('usuario', JSON.stringify(usuario));
       console.log("Usuario guardado en localStorage:", usuario);
 
-    // Redirigir o recargar
-      alert(`¡Bienvenido ${usuario.nombre}, tu nivel es ${usuario.nivel}!`);
-      window.location.href = '../pages/services.html#level-selector';
+      // Redirigir o mostrar mensaje
+      window.location.href = "../../"; 
     } else {
-      alert(`Error: ${data.error}`);
+      alert("Error al iniciar sesión: " + data.error);
+      console.error("Respuesta del servidor:", data);
     }
   } catch (err) {
     console.error("Error en la petición:", err);
