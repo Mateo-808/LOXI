@@ -647,6 +647,16 @@
         };
         localStorage.setItem('usuario', JSON.stringify(usuario));
 
+        if (result.ok) {
+        // Actualizar el localStorage
+        const usuario = JSON.parse(localStorage.getItem('usuario')) || {};
+        usuario.nivel = progreso.nivel; 
+        usuario.puntos = progreso.puntuacion;
+        localStorage.setItem('usuario', JSON.stringify(usuario));
+      } else {
+        console.error("Error al guardar progreso:", result.error);
+      }
+
         this.updateProgress(4);
         await this.delay(500);
         this.showMessage('¡Bienvenido! Redirigiendo a tu cuenta...', 'success');
