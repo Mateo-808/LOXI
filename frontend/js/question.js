@@ -151,17 +151,19 @@ function sendMessage() {
     if (numAnswer === 42) {
         level = "Avanzado";
         puntuacion = 100;
-        redirectURL = "../pages/services.html";
+        redirectURL = "../pages/practice.html?nivel=avanzado";
         isValidAnswer = true;
     } else if (numAnswer === 36) {
         level = "Intermedio";
         puntuacion = 75;
-        redirectURL = "../pages/services.html";
+        redirectURL = "../pages/practice.html?nivel=intermedio";
         isValidAnswer = true;
     } else if (numAnswer === 30 || numAnswer === 40) {
         level = numAnswer === 40 ? "Principiante" : "Novato";
         puntuacion = numAnswer === 40 ? 60 : 40;
-        redirectURL = "../pages/services.html";
+        redirectURL = numAnswer === 40
+        ? "../pages/practice.html?nivel=principiante"
+        : "../pages/practice.html?nivel=novato";
         isValidAnswer = true;
     } else {
         level = "No identificado";
