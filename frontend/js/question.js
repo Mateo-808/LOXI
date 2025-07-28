@@ -66,7 +66,7 @@ async function guardarProgreso(nivel, puntuacion, completado = true) {
         // URL de tu servidor 
         const serverUrl = window.location.hostname === 'localhost' 
             ? 'http://localhost:3000' 
-            : 'https://loxi.onrender.com'; // URL actualizada según tu consola
+            : 'https://loxi.onrender.com'; 
         
         console.log('URL del servidor:', serverUrl);
         
@@ -115,7 +115,7 @@ async function guardarProgreso(nivel, puntuacion, completado = true) {
         console.error('Error completo:', error);
         console.error('Stack trace:', error.stack);
         
-        // Mostrar mensaje discreto al usuario
+        // Eliminar este mensjae cuando se acaben las pruebas para que el usuario no lo vea
         const chatContainer = document.getElementById("chatContainer");
         if (chatContainer) {
             chatContainer.innerHTML += `
