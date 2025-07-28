@@ -653,9 +653,9 @@
 
         setTimeout(() => {
           if (nivel && nivel.toLowerCase() !== 'no asignado') {
-            window.location.replace('./practice.html?nivel=' + encodeURIComponent(nivel));
-          } else {
             window.location.replace('/frontend/pages/question.html');
+          } else {
+            window.location.replace('./practice.html?nivel=' + encodeURIComponent(nivel));
           }
         }, 2000);
 
