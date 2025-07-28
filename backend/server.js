@@ -205,6 +205,7 @@ const server = http.createServer(async (req, res) => {
         const mejorPuntuacion = Math.max(existingRecord[0].puntuacion || 0, puntuacion || 0);
         
         result = await supabaseRequest(`progreso?usuario_id=eq.${usuario_id}&ejercicio_id=eq.${ejercicio_id}`, {
+          // PATCH para cambiar los datos de usuario si se requiere
           method: 'PATCH',
           body: JSON.stringify({
             completado: completado,
@@ -248,11 +249,11 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // GET /api/progreso/:usuario_id - Obtener progreso de un usuario
+  // GET -Obtener progreso de un usuario
   if (method === 'GET' && pathname.startsWith('/api/progreso/') && !pathname.includes('/estadisticas/')) {
     try {
       const pathParts = pathname.split('/');
-      const usuario_id = pathParts[3]; // Extraer usuario_id de la URL
+      const usuario_id = pathParts[3]; // Extraer id del usuario de la URL
 
       if (!usuario_id) {
         res.writeHead(400, { 'Content-Type': 'application/json' });
@@ -283,11 +284,11 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // GET /api/progreso/estadisticas/:usuario_id - Obtener estadísticas de progreso
+  // GET - Obtener estadísticas Ede progreso
   if (method === 'GET' && pathname.startsWith('/api/progreso/estadisticas/')) {
     try {
       const pathParts = pathname.split('/');
-      const usuario_id = pathParts[4]; // Extraer usuario_id de la URL
+      const usuario_id = pathParts[4]; 
 
       if (!usuario_id) {
         res.writeHead(400, { 'Content-Type': 'application/json' });
@@ -309,10 +310,10 @@ const server = http.createServer(async (req, res) => {
           ? progreso.filter(p => p.completado).reduce((sum, p) => sum + (p.puntuacion || 0), 0) / progreso.filter(p => p.completado).length || 0
           : 0,
         total_intentos: progreso ? progreso.reduce((sum, p) => sum + (p.intentos || 0), 0) : 0,
-        nivel_novato: progreso ? progreso.filter(p => p.nivel === 'Novato').length : 0, // Cambiado
-        nivel_principiante: progreso ? progreso.filter(p => p.nivel === 'Principiante').length : 0, // Cambiado
-        nivel_intermedio: progreso ? progreso.filter(p => p.nivel === 'Intermedio').length : 0, // Cambiado
-        nivel_avanzado: progreso ? progreso.filter(p => p.nivel === 'Avanzado').length : 0 // Cambiado
+        nivel_novato: progreso ? progreso.filter(p => p.nivel === 'Novato').length : 0, 
+        nivel_principiante: progreso ? progreso.filter(p => p.nivel === 'Principiante').length : 0, 
+        nivel_intermedio: progreso ? progreso.filter(p => p.nivel === 'Intermedio').length : 0, 
+        nivel_avanzado: progreso ? progreso.filter(p => p.nivel === 'Avanzado').length : 0 
       };
 
       res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -329,10 +330,10 @@ const server = http.createServer(async (req, res) => {
         error: 'Error interno del servidor'
       }));
     }
-    return;
+    return;Guarda
   }
 
-  // GET /api/ejercicios - Obtener lista de ejercicios
+  // GET - Obtener lista de ejercicios
   if (method === 'GET' && pathname === '/api/ejercicios') {
     try {
       const ejercicios = await supabaseRequest('ejercicios?select=*&order=nombre');
@@ -354,7 +355,7 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // POST /api/ejercicios - Crear un nuevo ejercicio
+  // POST - Crear un nuevo ejercicio
   if (method === 'POST' && pathname === '/api/ejercicios') {
     try {
       const { nombre, descripcion, tipo, nivel_dificultad } = await readBody(req);
