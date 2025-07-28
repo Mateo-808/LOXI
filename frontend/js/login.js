@@ -23,7 +23,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       console.log("Usuario guardado en localStorage:", usuario);
 
       // Redirigir o mostrar mensaje
-      window.location.href = "../../"; 
+      window.location.href = "../pages/question.html"; 
     } else {
       alert("Error al iniciar sesión: " + data.error);
       console.error("Respuesta del servidor:", data);
