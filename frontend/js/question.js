@@ -264,6 +264,10 @@ function sendMessage() {
                         chatContainer.innerHTML += `
                             <div class="bot-msg">LOXI: Gracias por participar. ¡Vuelva pronto!</div>
                         `;
+                        // Enviar a la página de inicio
+                        setTimeout(() => {
+                            window.location.href = "../index.html";
+                        }, 2000);
                         scrollToBottom(result);
                     }
                 });
