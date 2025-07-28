@@ -618,8 +618,10 @@
             .from('progreso')
             .insert({
               usuario_id: userId,
+              ejercicio_id: '7c1a8ae1-a72e-4a4f-9efb-5a7be07a8b3a', 
               nivel,
-              puntuacion: puntos
+              puntuacion: puntos,
+              completado: false 
             })
             .select('nivel, puntuacion')
             .single();
