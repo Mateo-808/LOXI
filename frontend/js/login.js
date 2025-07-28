@@ -2,31 +2,47 @@ import { supabase } from './supabaseClient.js';
 
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
+
   const nombre = document.getElementById('nombre').value.trim().toLowerCase();
   const correo = document.getElementById('correo').value.trim();
   const contrasena = document.getElementById('contrasena').value;
 
-  const res = await fetch('https://loxi.onrender.com/api/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nombre, correo, contrasena })
-  });
+  try {
+    const res = await fetch('https://loxi.onrender.com/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nombre, correo, contrasena })
+    });
 
-  const data = await res.json();
+    const data = await res.json();
 
-  if (result.ok) {
-    const usuario = JSON.parse(localStorage.getItem('usuario')) || {};
-    usuario.nivel = progreso.nivel; 
-    usuario.puntos = progreso.puntuacion;
-    localStorage.setItem('usuario', JSON.stringify(usuario));
-  } else {
-    console.error("Error al guardar progreso:", result.error);
+    if (data.ok) {
+      const usuario = {
+        id: data.usuario.id,
+        nombre: data.usuario.nombre,
+        correo: data.usuario.correo,
+        nivel: data.progreso?.nivel || "no asignado",
+        puntos: data.progreso?.puntuacion || 0
+      };
+
+      localStorage.setItem('usuario', JSON.stringify(usuario));
+      console.log("Usuario guardado en localStorage:", usuario);
+
+      // Redirigir o mostrar mensaje
+      window.location.href = "../../"; 
+    } else {
+      alert("Error al iniciar sesión: " + data.error);
+      console.error("Respuesta del servidor:", data);
+    }
+  } catch (err) {
+    console.error("Error en la petición:", err);
+    alert("No se pudo conectar con el servidor.");
   }
 });
 
 // Mostrar/ocultar contraseña
-let togglePassword = document.getElementById('togglePassword');
-let inputContrasena = document.getElementById('contrasena');
+const togglePassword = document.getElementById('togglePassword');
+const inputContrasena = document.getElementById('contrasena');
 
 togglePassword.addEventListener('click', () => {
   inputContrasena.type = inputContrasena.type === "password" ? "text" : "password";
@@ -37,17 +53,16 @@ document.getElementById('loginGoogle').addEventListener('click', async () => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: 'https://loxi-one.vercel.app/frontend/pages/callback.html' 
+      redirectTo: 'https://loxi-one.vercel.app/frontend/pages/callback.html'
     }
   });
-  
+
   if (error) {
     alert('Error al iniciar con Google: ' + error.message);
   }
 });
 
 // Login con GitHub
-
 document.getElementById('loginGitHub').addEventListener('click', async () => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'github',
