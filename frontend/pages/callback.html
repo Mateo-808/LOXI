@@ -572,6 +572,7 @@
         const correo = user.email;
         const nombre = user.user_metadata?.full_name || 'Sin nombre';
         const userId = user.id;
+         
 
         this.updateProgress(2);
         await this.delay(800);
@@ -623,7 +624,7 @@
               puntuacion: puntos,
               completado: false 
             })
-            .select('nivel, puntuacion')
+            .select('nivel, puntuacion, created_at')
             .single();
 
           if (insertProgresoError) {
@@ -644,6 +645,7 @@
           id: userId,
           correo,
           nombre,
+          created_at,
           nivel,
           puntos
         };
