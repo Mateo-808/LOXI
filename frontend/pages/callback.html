@@ -576,7 +576,6 @@ class AuthLoader {
       this.updateProgress(2);
       await this.delay(800);
 
-      // Verificar si el usuario existe en la tabla 'usuarios'
       const { data: existingUser, error: userSelectError } = await supabase
         .from('usuarios')
         .select('*')
@@ -600,12 +599,10 @@ class AuthLoader {
       this.updateProgress(3);
       await this.delay(1000);
 
-      // Declarar variables para nivel, puntuación y fecha
       let nivel = 'Novato';
       let puntos = 0;
       let fechaCreacion = null;
 
-      // Verificar si tiene progreso
       const { data: progreso, error: progresoError } = await supabase
         .from('progreso')
         .select('nivel, puntuacion, fecha')
@@ -613,7 +610,6 @@ class AuthLoader {
         .single();
 
       if (progresoError && progresoError.code === 'PGRST116') {
-        // No existe progreso → crear uno con valores por defecto
         const { data: nuevoProgreso, error: insertProgresoError } = await supabase
           .from('progreso')
           .insert({
@@ -632,23 +628,22 @@ class AuthLoader {
 
         nivel = nuevoProgreso.nivel;
         puntos = nuevoProgreso.puntuacion;
-        fechaCreacion = nuevoProgreso.created_at;
+        fechaCreacion = nuevoProgreso.fecha;
       } else if (progreso) {
         nivel = progreso.nivel;
         puntos = progreso.puntuacion;
-        fechaCreacion = progreso.created_at;
+        fechaCreacion = progreso.fecha;
       } else if (progresoError) {
         throw new Error('Error al obtener el progreso del usuario');
       }
 
-      // Guardar en localStorage
       const usuario = {
         id: userId,
         correo,
         nombre,
         nivel,
         puntos,
-        created_at: fecha
+        created_at: fechaCreacion // Corregido aquí
       };
       localStorage.setItem('usuario', JSON.stringify(usuario));
 
@@ -679,7 +674,6 @@ class AuthLoader {
 }
 
 new AuthLoader();
-
 </script>
 
 </body>
