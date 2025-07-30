@@ -17,19 +17,13 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const data = await res.json();
 
     if (data.ok) {
-      const usuario = {
-        id: data.usuario.id,
-        nombre: data.usuario.nombre,
-        correo: data.usuario.correo,
-        nivel: data.progreso?.nivel || "no asignado",
-        puntos: data.progreso?.puntuacion || 0
-      };
+      const usuario = data.usuario;
 
       localStorage.setItem('usuario', JSON.stringify(usuario));
       console.log("Usuario guardado en localStorage:", usuario);
 
       // Redirigir o mostrar mensaje
-      window.location.href = "../../"; 
+      window.location.href = "../pages/question.html"; 
     } else {
       alert("Error al iniciar sesión: " + data.error);
       console.error("Respuesta del servidor:", data);
