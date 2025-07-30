@@ -608,7 +608,7 @@ class AuthLoader {
       // Verificar si tiene progreso
       const { data: progreso, error: progresoError } = await supabase
         .from('progreso')
-        .select('nivel, puntuacion, created_at')
+        .select('nivel, puntuacion, fecha')
         .eq('usuario_id', userId)
         .single();
 
@@ -623,7 +623,7 @@ class AuthLoader {
             puntuacion: puntos,
             completado: false
           })
-          .select('nivel, puntuacion, created_at')
+          .select('nivel, puntuacion, fecha')
           .single();
 
         if (insertProgresoError) {
@@ -648,7 +648,7 @@ class AuthLoader {
         nombre,
         nivel,
         puntos,
-        created_at: fechaCreacion
+        created_at: fecha
       };
       localStorage.setItem('usuario', JSON.stringify(usuario));
 
