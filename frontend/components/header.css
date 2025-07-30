@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,800&display=swap");
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     color: #fafafa;
 }
 
@@ -23,20 +23,23 @@ body {
     overflow: hidden;
     z-index: -1;
 }
-    
+
 .grid-overlay {
     position: absolute;
     inset: 0;
-    background-image: 
-        linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
+    background-image: linear-gradient(
+            rgba(255, 255, 255, 0.07) 1px,
+            transparent 1px
+        ),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
     background-size: 164px 164px;
     width: 100%;
     height: 100%;
 }
 
 @keyframes pulse {
-    0%, 100% {
+    0%,
+    100% {
         opacity: 0.7;
     }
     50% {
@@ -93,6 +96,7 @@ nav {
 
 .desktop-menu li {
     position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .desktop-menu li a {
@@ -101,8 +105,10 @@ nav {
     font-size: 18px;
     padding: 0.5rem 0.8rem;
     display: block;
-    transition: 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
 .desktop-menu li a:hover {
@@ -178,19 +184,26 @@ desktop-menu li .submenu li a:hover {
     background: #011c26;
     backdrop-filter: blur(10px);
     z-index: 1000;
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     padding: 80px 20px 20px;
 }
 
 .mobile-menu-overlay.active {
-    display: block;
+    opacity: 1;
+    visibility: visible;
 }
 
-.mobile-menu-overlay.active .logo {
+.mobile-menu-overlay .logo {
     position: absolute;
     top: 24px;
     left: 20px;
     z-index: 1001;
+}
+
+.mobile-menu-overlay.active .logo {
+    opacity: 1;
 }
 
 .mobile-menu-overlay.active .logo a {
@@ -213,16 +226,34 @@ desktop-menu li .submenu li a:hover {
     margin: 0 auto;
 }
 
-.mobile-menu-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    z-index: 1001;
+.mobile-menu-section,
+.mobile-menu-single {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-menu-overlay.active .mobile-menu-section,
+.mobile-menu-overlay.active .mobile-menu-single {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.mobile-menu-overlay.active .mobile-menu-section:nth-child(1),
+.mobile-menu-overlay.active .mobile-menu-single:nth-child(1) {
+    transition-delay: 0.05s;
+}
+.mobile-menu-overlay.active .mobile-menu-section:nth-child(2),
+.mobile-menu-overlay.active .mobile-menu-single:nth-child(2) {
+    transition-delay: 0.06s;
+}
+.mobile-menu-overlay.active .mobile-menu-section:nth-child(3),
+.mobile-menu-overlay.active .mobile-menu-single:nth-child(3) {
+    transition-delay: 0.07s;
+}
+.mobile-menu-overlay.active .mobile-menu-section:nth-child(4),
+.mobile-menu-overlay.active .mobile-menu-single:nth-child(4) {
+    transition-delay: 0.08s;
 }
 
 .mobile-menu-section h3 {
@@ -234,7 +265,7 @@ desktop-menu li .submenu li a:hover {
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     font-weight: normal;
 }
 
@@ -255,6 +286,29 @@ desktop-menu li .submenu li a:hover {
 
 .mobile-menu-section.expanded .mobile-menu-items {
     display: block;
+}
+
+.mobile-menu-items li {
+    transform: translateX(-20px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-menu-section.expanded .mobile-menu-items li {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.mobile-menu-section.expanded .mobile-menu-items li:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.mobile-menu-section.expanded .mobile-menu-items li:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.mobile-menu-section.expanded .mobile-menu-items li:nth-child(3) {
+    transition-delay: 0.3s;
 }
 
 .mobile-menu-items a {
@@ -368,7 +422,7 @@ desktop-menu li .submenu li a:hover {
     nav {
         justify-content: space-between;
     }
-  
+
     nav ul {
         justify-content: center;
         padding: 10px 0;
@@ -379,17 +433,16 @@ desktop-menu li .submenu li a:hover {
     nav ul {
         gap: 10px;
     }
-      
+
     nav ul li a {
         font-size: 16px;
         padding: 0.5rem;
         text-align: center;
     }
-      
+
     .profile {
         width: 120px;
         padding: 8px 15px;
         font-size: 14px;
     }
 }
-  
