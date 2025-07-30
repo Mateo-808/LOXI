@@ -490,195 +490,196 @@
   </div>
 
 <script type="module">
-  import { supabase } from '../js/supabaseClient.js';
+import { supabase } from '../js/supabaseClient.js';
 
-  class AuthLoader {
-    constructor() {
-      this.statusIcon = document.getElementById('status-icon');
-      this.authText = document.getElementById('auth-text');
-      this.authSubtext = document.getElementById('auth-subtext');
-      this.message = document.getElementById('message');
-      this.init();
-    }
+class AuthLoader {
+  constructor() {
+    this.statusIcon = document.getElementById('status-icon');
+    this.authText = document.getElementById('auth-text');
+    this.authSubtext = document.getElementById('auth-subtext');
+    this.message = document.getElementById('message');
+    this.init();
+  }
 
-    init() {
-      document.addEventListener("DOMContentLoaded", () => {
-        this.authenticate();
-      });
-    }
+  init() {
+    document.addEventListener("DOMContentLoaded", () => {
+      this.authenticate();
+    });
+  }
 
-    showMessage(text, type = 'error') {
-      this.message.textContent = text;
-      this.message.className = `message ${type}-message show`;
+  showMessage(text, type = 'error') {
+    this.message.textContent = text;
+    this.message.className = `message ${type}-message show`;
 
-      if (type === 'error') {
-        this.statusIcon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
-        this.statusIcon.className = 'status-icon error';
-        this.authText.textContent = 'Error de autenticación';
-        this.authSubtext.textContent = 'No se pudo verificar tu identidad';
-      } else if (type === 'success') {
-        this.statusIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
-        this.statusIcon.className = 'status-icon success';
-        this.authText.textContent = '¡Autenticación exitosa!';
-        this.authSubtext.textContent = 'Redirigiendo...';
-      }
-    }
-
-    updateProgress(step) {
-      const steps = {
-        1: {
-          text: 'Verificando sesión',
-          icon: '<i class="fas fa-key progress-icon step-1"></i>'
-        },
-        2: {
-          text: 'Validando usuario',
-          icon: '<i class="fas fa-user-check progress-icon step-2"></i>'
-        },
-        3: {
-          text: 'Guardando sesión y progreso',
-          icon: '<i class="fas fa-cog progress-icon step-3"></i>'
-        },
-        4: {
-          text: 'Finalizando autenticación',
-          icon: '<i class="fas fa-sync-alt progress-icon step-4"></i>'
-        }
-      };
-
-      if (steps[step]) {
-        this.authSubtext.innerHTML = `${steps[step].text}<span class="dots"></span>${steps[step].icon}`;
-      }
-    }
-
-    createRetryButton() {
-      const retryButton = document.createElement('button');
-      retryButton.innerHTML = '<i class="fas fa-redo-alt"></i> Reintentar';
-      retryButton.className = 'retry-button';
-      retryButton.onclick = () => location.reload();
-      return retryButton;
-    }
-
-    async authenticate() {
-      try {
-        this.updateProgress(1);
-        await this.delay(800);
-
-        const { data: { session }, error } = await supabase.auth.getSession();
-
-        if (error || !session || !session.user) {
-          throw new Error("No se pudo obtener la sesión. ¿Redirigiste desde Supabase?");
-        }
-
-        const user = session.user;
-        const correo = user.email;
-        const nombre = user.user_metadata?.full_name || 'Sin nombre';
-        const userId = user.id;
-         
-
-        this.updateProgress(2);
-        await this.delay(800);
-
-        // Verificar si el usuario existe en la tabla 'usuarios'
-        const { data: existingUser, error: userSelectError } = await supabase
-          .from('usuarios')
-          .select('*')
-          .eq('id', userId)
-          .single();
-
-        // Si no existe, insertarlo
-        if (!existingUser && (!userSelectError || userSelectError.code === 'PGRST116')) {
-          const { error: userInsertError } = await supabase
-            .from('usuarios')
-            .insert({
-              id: userId,
-              nombre,
-              correo
-            });
-
-          if (userInsertError) {
-            throw new Error("No se pudo registrar el usuario.");
-          }
-        }
-
-        this.updateProgress(3);
-        await this.delay(1000);
-
-        // Declarar variables para nivel y puntuación
-        let nivel = 'Novato';
-        let puntos = 0;
-
-        // Verificar si tiene progreso
-        const { data: progreso, error: progresoError } = await supabase
-          .from('progreso')
-          .select('nivel, puntuacion')
-          .eq('usuario_id', userId)
-          .single();
-
-        if (progresoError && progresoError.code === 'PGRST116') {
-          // No existe progreso → crear uno con valores por defecto
-          const { data: nuevoProgreso, error: insertProgresoError } = await supabase
-            .from('progreso')
-            .insert({
-              usuario_id: userId,
-              ejercicio_id: '7c1a8ae1-a72e-4a4f-9efb-5a7be07a8b3a', 
-              nivel,
-              puntuacion: puntos,
-              completado: false 
-            })
-            .select('nivel, puntuacion, created_at')
-            .single();
-
-          if (insertProgresoError) {
-            throw new Error('No se pudo crear el progreso del usuario');
-          }
-
-          nivel = nuevoProgreso.nivel;
-          puntos = nuevoProgreso.puntuacion;
-        } else if (progreso) {
-          nivel = progreso.nivel;
-          puntos = progreso.puntuacion;
-        } else if (progresoError) {
-          throw new Error('Error al obtener el progreso del usuario');
-        }
-
-        // Guardar en localStorage
-        const usuario = {
-          id: userId,
-          correo,
-          nombre,
-          created_at,
-          nivel,
-          puntos
-        };
-        localStorage.setItem('usuario', JSON.stringify(usuario));
-
-        this.updateProgress(4);
-        await this.delay(500);
-        this.showMessage('¡Bienvenido! Redirigiendo a tu cuenta...', 'success');
-
-        setTimeout(() => {
-          if (nivel && nivel.toLowerCase() !== 'no asignado') {
-            window.location.replace('/frontend/pages/question.html');
-          } else {
-            window.location.replace('./practice.html?nivel=' + encodeURIComponent(nivel));
-          }
-        }, 2000);
-
-
-      } catch (error) {
-        console.error('Error de autenticación:', error);
-        this.showMessage(error.message || 'Error inesperado al verificar autenticación.');
-        setTimeout(() => {
-          this.message.appendChild(this.createRetryButton());
-        }, 3000);
-      }
-    }
-
-    delay(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
+    if (type === 'error') {
+      this.statusIcon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+      this.statusIcon.className = 'status-icon error';
+      this.authText.textContent = 'Error de autenticación';
+      this.authSubtext.textContent = 'No se pudo verificar tu identidad';
+    } else if (type === 'success') {
+      this.statusIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+      this.statusIcon.className = 'status-icon success';
+      this.authText.textContent = '¡Autenticación exitosa!';
+      this.authSubtext.textContent = 'Redirigiendo...';
     }
   }
 
-  new AuthLoader();
+  updateProgress(step) {
+    const steps = {
+      1: {
+        text: 'Verificando sesión',
+        icon: '<i class="fas fa-key progress-icon step-1"></i>'
+      },
+      2: {
+        text: 'Validando usuario',
+        icon: '<i class="fas fa-user-check progress-icon step-2"></i>'
+      },
+      3: {
+        text: 'Guardando sesión y progreso',
+        icon: '<i class="fas fa-cog progress-icon step-3"></i>'
+      },
+      4: {
+        text: 'Finalizando autenticación',
+        icon: '<i class="fas fa-sync-alt progress-icon step-4"></i>'
+      }
+    };
+
+    if (steps[step]) {
+      this.authSubtext.innerHTML = `${steps[step].text}<span class="dots"></span>${steps[step].icon}`;
+    }
+  }
+
+  createRetryButton() {
+    const retryButton = document.createElement('button');
+    retryButton.innerHTML = '<i class="fas fa-redo-alt"></i> Reintentar';
+    retryButton.className = 'retry-button';
+    retryButton.onclick = () => location.reload();
+    return retryButton;
+  }
+
+  async authenticate() {
+    try {
+      this.updateProgress(1);
+      await this.delay(800);
+
+      const { data: { session }, error } = await supabase.auth.getSession();
+
+      if (error || !session || !session.user) {
+        throw new Error("No se pudo obtener la sesión. ¿Redirigiste desde Supabase?");
+      }
+
+      const user = session.user;
+      const correo = user.email;
+      const nombre = user.user_metadata?.full_name || 'Sin nombre';
+      const userId = user.id;
+
+      this.updateProgress(2);
+      await this.delay(800);
+
+      // Verificar si el usuario existe en la tabla 'usuarios'
+      const { data: existingUser, error: userSelectError } = await supabase
+        .from('usuarios')
+        .select('*')
+        .eq('id', userId)
+        .single();
+
+      if (!existingUser && (!userSelectError || userSelectError.code === 'PGRST116')) {
+        const { error: userInsertError } = await supabase
+          .from('usuarios')
+          .insert({
+            id: userId,
+            nombre,
+            correo
+          });
+
+        if (userInsertError) {
+          throw new Error("No se pudo registrar el usuario.");
+        }
+      }
+
+      this.updateProgress(3);
+      await this.delay(1000);
+
+      // Declarar variables para nivel, puntuación y fecha
+      let nivel = 'Novato';
+      let puntos = 0;
+      let fechaCreacion = null;
+
+      // Verificar si tiene progreso
+      const { data: progreso, error: progresoError } = await supabase
+        .from('progreso')
+        .select('nivel, puntuacion, created_at')
+        .eq('usuario_id', userId)
+        .single();
+
+      if (progresoError && progresoError.code === 'PGRST116') {
+        // No existe progreso → crear uno con valores por defecto
+        const { data: nuevoProgreso, error: insertProgresoError } = await supabase
+          .from('progreso')
+          .insert({
+            usuario_id: userId,
+            ejercicio_id: '7c1a8ae1-a72e-4a4f-9efb-5a7be07a8b3a',
+            nivel,
+            puntuacion: puntos,
+            completado: false
+          })
+          .select('nivel, puntuacion, created_at')
+          .single();
+
+        if (insertProgresoError) {
+          throw new Error('No se pudo crear el progreso del usuario');
+        }
+
+        nivel = nuevoProgreso.nivel;
+        puntos = nuevoProgreso.puntuacion;
+        fechaCreacion = nuevoProgreso.created_at;
+      } else if (progreso) {
+        nivel = progreso.nivel;
+        puntos = progreso.puntuacion;
+        fechaCreacion = progreso.created_at;
+      } else if (progresoError) {
+        throw new Error('Error al obtener el progreso del usuario');
+      }
+
+      // Guardar en localStorage
+      const usuario = {
+        id: userId,
+        correo,
+        nombre,
+        nivel,
+        puntos,
+        created_at: fechaCreacion
+      };
+      localStorage.setItem('usuario', JSON.stringify(usuario));
+
+      this.updateProgress(4);
+      await this.delay(500);
+      this.showMessage('¡Bienvenido! Redirigiendo a tu cuenta...', 'success');
+
+      setTimeout(() => {
+        if (nivel && nivel.toLowerCase() !== 'no asignado') {
+          window.location.replace('/frontend/pages/question.html');
+        } else {
+          window.location.replace('./practice.html?nivel=' + encodeURIComponent(nivel));
+        }
+      }, 2000);
+
+    } catch (error) {
+      console.error('Error de autenticación:', error);
+      this.showMessage(error.message || 'Error inesperado al verificar autenticación.');
+      setTimeout(() => {
+        this.message.appendChild(this.createRetryButton());
+      }, 3000);
+    }
+  }
+
+  delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+}
+
+new AuthLoader();
+
 </script>
 
 </body>
