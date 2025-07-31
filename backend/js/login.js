@@ -39,7 +39,7 @@ export async function loginUsuario(nombre, correo, contrasena) {
         correo: usuario.correo,
         nivel,
         puntos,
-        fecha // ← ahora correctamente desde el progreso
+        fecha 
       }));
     }
 
@@ -73,7 +73,7 @@ export async function loginUsuario(nombre, correo, contrasena) {
         ...usuarioSinContrasena,
         nivel,
         puntos,
-        fecha // ← también retornamos la fecha por si se usa en el frontend
+        fecha
       }
     };
 
