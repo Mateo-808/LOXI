@@ -19,7 +19,7 @@ export async function loginUsuario(nombre, correo, contrasena) {
     // Intentar obtener progreso
     const { data: progreso, error: errorProgreso } = await supabase
       .from('progreso')
-      .select('nivel, puntos')
+      .select('nivel, puntos, fecha')
       .eq('usuario_id', usuario.id)
       .maybeSingle();
 
@@ -33,6 +33,7 @@ export async function loginUsuario(nombre, correo, contrasena) {
         id: usuario.id,
         nombre: usuario.nombre,
         correo: usuario.correo,
+        fecha: usuario.fecha,
         nivel,
         puntos
       }));
