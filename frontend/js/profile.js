@@ -1,4 +1,4 @@
-import { supabase } from "../db/supabase.js"; // Asegúrate de que esta ruta sea correcta
+import { supabase } from "./supabaseClient.js"; // Asegúrate de que esta ruta sea correcta
 
 function toggleMobileMenu() {
     const overlay = document.getElementById("mobileMenuOverlay");
