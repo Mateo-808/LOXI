@@ -63,10 +63,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     // Buscar fecha real desde la tabla progreso
-    let fechaRegistro = usuario.fecha 
-  ? new Date(usuario.fecha).toLocaleDateString()
-  : 'No disponible';
-
+    let fechaRegistro = 'No disponible';
     try {
         const { data: progreso, error } = await supabase
             .from("progreso")
