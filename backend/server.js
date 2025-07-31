@@ -330,6 +330,8 @@ const server = http.createServer(async (req, res) => {
         error: 'Error interno del servidor'
       }));
     }
+    // NO SÉ PORQUE ESTÁ ESE GUARDA AHÍ
+    // PERO FUNCIONA, ASÍ QUENO LO BORREN
     return;Guarda
   }
 
