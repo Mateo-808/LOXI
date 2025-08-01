@@ -22,7 +22,7 @@ function readBody(req) {
   });
 }
 
-// Función para hacer peticiones a Supabase
+// Función para hacer peticiones a Supabas
 async function supabaseRequest(endpoint, options = {}) {
   const url = `${SUPABASE_URL}/rest/v1/${endpoint}`;
   const headers = {
