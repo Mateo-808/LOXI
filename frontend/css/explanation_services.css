@@ -451,6 +451,7 @@ desktop-menu li .submenu li a:hover {
     overflow: hidden;
     text-decoration: none;
     text-align: center;
+    display: block;
 }
 
 .cta::before{
@@ -477,6 +478,7 @@ desktop-menu li .submenu li a:hover {
 .cta:hover::before{
     left: 100%;
 }
+
 .cta:active{
     transform: rotateY(1px);
     box-shadow: 0px 0px 5px #a5a8b496;
