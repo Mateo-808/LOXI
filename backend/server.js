@@ -51,7 +51,7 @@ const PORT = 3000;
 
 const server = http.createServer(async (req, res) => {
   // CORS headers
-  res.setHeader('Access-Control-Allow-Origin', 'https://loxi-one.vercel.app', 'http://127.0.0.1:3001');
+  res.setHeader('Access-Control-Allow-Origin', 'https://loxi-one.vercel.app', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
 
