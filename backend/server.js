@@ -22,7 +22,7 @@ function readBody(req) {
   });
 }
 
-// Función para hacer peticiones a Supabase
+// Función para hacer peticiones a Supabas
 async function supabaseRequest(endpoint, options = {}) {
   const url = `${SUPABASE_URL}/rest/v1/${endpoint}`;
   const headers = {
@@ -51,7 +51,7 @@ const PORT = 3000;
 
 const server = http.createServer(async (req, res) => {
   // CORS headers
-  res.setHeader('Access-Control-Allow-Origin', 'https://loxi-one.vercel.app');
+  res.setHeader('Access-Control-Allow-Origin', '*', 'https://loxi-one.vercel.app');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
 
@@ -83,7 +83,7 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // Endpoint de registro (existente)
+  // Endpoint de registro (exiPORTstente)
   if (method === 'POST' && pathname === '/api/registro') {
     try {
       const datos = await readBody(req);

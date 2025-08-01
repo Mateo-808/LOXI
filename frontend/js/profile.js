@@ -51,37 +51,34 @@ document.getElementById('cerrarSesion').addEventListener('click', () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-    const usuario = JSON.parse(localStorage.getItem("usuario"));
-    // Eliminar cuando se acabe las pruebas y todo funcione correctamente
-    console.log('Contenido actual de localStorage:');
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        console.log(`${key}:`, localStorage.getItem(key));
-    }
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
+  // Eliminar cuando se acabe las pruebas y todo funcione correctamente
+  console.log('Contenido actual de localStorage:');
+  for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      console.log(`${key}:`, localStorage.getItem(key));
+  }
+  const profileInfo = document.querySelector(".profile-info");
 
-    const profileInfo = document.querySelector(".profile-info");
-
-    if (!usuario || !profileInfo) {
-        profileInfo.innerHTML = `
-            <p><strong>Nombre:</strong> No disponible</p>
-            <p><strong>Correo:</strong> No disponible</p>
-            <p><strong>Fecha de registro:</strong> No disponible</p>
-            <p><strong>Nivel actual:</strong> No disponible</p>
-            <p><strong>Puntos:</strong> No disponible</p>
-        `;
-        return;
-    }
-
-    console.log(profileInfo)
-    console.log(usuario)
-
+  if (!usuario || !profileInfo) {
     profileInfo.innerHTML = `
-        <p><strong>Nombre:</strong> ${usuario.name || usuario.nombre ||'Sin nombre'}</p>
-        <p><strong>Correo:</strong> ${usuario.email || usuario.correo ||'Sin correo'}</p>
-              <p><strong>Fecha de registro:</strong> ${usuario.fecha || usuario.created_at
-        ? new Date(usuario.fecha || usuario.created_at).toLocaleDateString()
-        : 'No disponible'}</p>
-        <p><strong>Nivel actual:</strong> ${usuario.nivel || 'No asignado'}</p>
-        <p><strong>Puntos:</strong> ${usuario.puntos || 0}</p>
+      <p><strong>Nombre:</strong> No disponible</p>
+      <p><strong>Correo:</strong> No disponible</p>
+      <p><strong>Fecha de registro:</strong> No disponible</p>
+      <p><strong>Nivel actual:</strong> No disponible</p>
+      <p><strong>Puntos:</strong> No disponible</p>
     `;
+    return;
+  }
+
+  const fecha = usuario.fecha || usuario.created_at;
+  const fechaFormateada = fecha ? new Date(fecha).toLocaleDateString() : 'No disponible';
+
+  profileInfo.innerHTML = `
+    <p><strong>Nombre:</strong> ${usuario.name || usuario.nombre || 'Sin nombre'}</p>
+    <p><strong>Correo:</strong> ${usuario.email || usuario.correo || 'Sin correo'}</p>
+    <p><strong>Fecha de registro:</strong> ${fechaFormateada}</p>
+    <p><strong>Nivel actual:</strong> ${usuario.nivel || 'No asignado'}</p>
+    <p><strong>Puntos:</strong> ${usuario.puntos ?? 0}</p>
+  `;
 });

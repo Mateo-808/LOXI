@@ -16,12 +16,12 @@ export async function loginUsuario(nombre, correo, contrasena) {
     const contrasenaValida = await bcrypt.compare(contrasena, usuario.contrasena);
     if (!contrasenaValida) throw new Error('Contraseña incorrecta');
 
-    // Obtener el primer progreso registrado (por fecha más antigua)
+    // Obtener el progreso más reciente
     const { data: progresos, error: errorProgreso } = await supabase
       .from('progreso')
       .select('nivel, puntos, fecha')
       .eq('usuario_id', usuario.id)
-      .order('fecha', { ascending: true })
+      .order('fecha', { ascending: false }) 
       .limit(1);
 
     const progreso = progresos?.[0];
@@ -30,6 +30,7 @@ export async function loginUsuario(nombre, correo, contrasena) {
     const nivel = progreso?.nivel ?? 'novato';
     const puntos = progreso?.puntos ?? 0;
     const fecha = progreso?.fecha ?? null;
+
 
     // Guardar en localStorage
     if (typeof localStorage !== 'undefined') {
