@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="../css/explanation_services.css">
         <link rel="shortcut icon" href="../assets/logo.svg" type="image/svg+xml">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer"/>
-        <title>Header - LOXI</title>
+        <title>Servicios - LOXI</title>
     </head>
     <body>
         <div class="background-layers">
@@ -15,36 +15,56 @@
         <header>
             <nav>
                 <div class="logo">
-                    <a href="#">
-                        <i class="fa-solid fa-code"></i><h1>LOXI</h1>
+                    <a href="../../index.html">
+                        <i class="fa-solid fa-code"></i>
+                        <h1>LOXI</h1>
                     </a>
                 </div>
             
                 <ul class="desktop-menu">
-                    <li class="has-submenu">
-                        <a href="explanation_services.html">servicios</a>
-                    </li>
+                    <li><a href="../../index.html">Inicio</a></li>
+                    <li><a href="us.htmly">Conócenos</a></li>
                     <li><a href="d&s.html">D&S</a></li>
-                    <li><a href="us.html">Practica</a></li>
                 </ul>
+
+                <div class="burger-menu" onclick="toggleMobileMenu()">
+                    <div class="burger-line"></div>
+                    <div class="burger-line"></div>
+                    <div class="burger-line"></div>
+                </div>
             
-                <button class="profile">Iniciar sesión</button>
+                <a class="profile" id="btnSesion">Iniciar sesión</a>
             </nav>
         </header>
     
         <div class="mobile-menu-overlay" id="mobileMenuOverlay">
             <div class="logo">
                 <a href="../pages/index.html">
-                    <i class="fa-solid fa-code"></i><h1>LOXI</h1>
+                    <i class="fa-solid fa-code"></i>
+                    <h1>LOXI</h1>
                 </a>
             </div>
-        
-            <div class="mobile-menu-single">
-                <a href="d&s.html">D&S</a>
+            <div class="mobile-menu-content">
+                <div class="mobile-menu-single">
+                    <a href="index.html">Inicio</a>
+                </div>
+            </div>
+
+            <div class="mobile-menu-section" onclick="toggleMenuSection(this)">
+                <div class="mobile-menu-single">
+                    <a href="us.html">Conócenos</a>
+                </div>
+
+                <div class="mobile-menu-single">
+                    <a href="d&s.html">D&S</a>
+                </div>
+
+                <div class="mobile-profile">
+                    <a class="profile" id="btnSesionMobile">Iniciar sesión</a>
+                </div>
             </div>
         </div>
         <main>
-            <!-- Línea decorativa -->
             <section class="exercise">
                 <div class="linea-punto-texto">
                     <span class="linea"></span>
@@ -55,7 +75,6 @@
                 </div>
             </section>
         
-            <!-- Título principal + botón -->
             <section class="hero">
                 <h2 class="main-title">
                     Lo mejor de nuestros <br>
@@ -181,6 +200,6 @@
             </section>
             
         </main>
-        
+        <script src="../js/explanation_services.js"></script>
     </body>
 </html>

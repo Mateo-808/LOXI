@@ -115,6 +115,22 @@ nav {
     opacity: 0.5;
 }
 
+.burger-menu {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 1001;
+}
+
+.burger-line {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
 .desktop-menu li .submenu {
     display: none;
     position: absolute;
