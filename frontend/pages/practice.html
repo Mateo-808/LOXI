@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="../css/practice.css">
-        <link rel="shortcut icon" href="../assets/logo.svg" type="image/svg+xml">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+            integrity="sha512-..."
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <link rel="stylesheet" href="../css/practice.css" />
+        <link
+            rel="shortcut icon"
+            href="../assets/logo.svg"
+            type="image/svg+xml"
+        />
         <title>LOXI - Practica</title>
     </head>
     <body>
@@ -16,7 +26,8 @@
             <nav>
                 <div class="logo">
                     <a href="../../index.html">
-                        <i class="fa-solid fa-code"></i><h1>LOXI</h1>
+                        <i class="fa-solid fa-code"></i>
+                        <h1>LOXI</h1>
                     </a>
                 </div>
 
@@ -25,7 +36,11 @@
                     <li class="has-submenu">
                         <a href="confirmation.html">Servicios</a>
                         <ul class="submenu">
-                            <li><a href="./services.html#level-selector">Niveles</a></li>
+                            <li>
+                                <a href="./services.html#level-selector"
+                                    >Niveles</a
+                                >
+                            </li>
                         </ul>
                     </li>
                     <li><a href="us.html">Conócenos</a></li>
@@ -40,14 +55,13 @@
 
                 <a class="profile" id="btnSesion">Iniciar sesión</a>
             </nav>
-           
-
         </header>
-    
+
         <div class="mobile-menu-overlay" id="mobileMenuOverlay">
             <div class="logo">
                 <a href="../../index.html">
-                    <i class="fa-solid fa-code"></i><h1>LOXI</h1>
+                    <i class="fa-solid fa-code"></i>
+                    <h1>LOXI</h1>
                 </a>
             </div>
             <div class="mobile-menu-content">
@@ -72,18 +86,17 @@
                         <a href="#">Practica</a>
                     </li>
                 </ul>
-            </div>
+                <div class="mobile-menu-single">
+                    <a href="us.html">Conócenos</a>
+                </div>
 
-            <div class="mobile-menu-single">
-                <a href="us.html">Conócenos</a>
-            </div>
+                <div class="mobile-menu-single">
+                    <a href="d&s.html">D&S</a>
+                </div>
 
-            <div class="mobile-menu-single">
-                <a href="d&s.html">D&S</a>
-            </div>
-
-            <div class="mobile-profile">
-                <a class="profile" id="btnSesionMobile">Iniciar sesión</a>
+                <div class="mobile-profile">
+                    <a class="profile" id="btnSesionMobile">Iniciar sesión</a>
+                </div>
             </div>
         </div>
         <script src="../js/practice.js"></script>
@@ -92,114 +105,187 @@
             <p id="contenido"></p>
             <script>
                 function getNivel() {
-                const params = new URLSearchParams(window.location.search);
-                return params.get('nivel');
+                    const params = new URLSearchParams(window.location.search);
+                    return params.get("nivel");
                 }
 
                 const nivel = getNivel();
-                const titulo = document.getElementById('titulo');
-                const contenido = document.getElementById('contenido');
+                const titulo = document.getElementById("titulo");
+                const contenido = document.getElementById("contenido");
 
                 switch (nivel) {
-                case 'principiante':
-                    titulo.textContent = 'Prácticas para Principiantes';
-                    contenido.textContent = 'Aquí encontrarás ejercicios básicos para empezar desde cero.';
-                    break;
-                case 'novato':
-                    titulo.textContent = 'Prácticas para Novatos';
-                    contenido.textContent = 'Tienes algo de experiencia, vamos a subir el nivel.';
-                    break;
-                case 'intermedio':
-                    titulo.textContent = 'Prácticas Intermedias';
-                    contenido.textContent = 'Estas prácticas te ayudarán a consolidar tus conocimientos.';
-                    break;
-                case 'avanzado':
-                    titulo.textContent = 'Prácticas Avanzadas';
-                    contenido.textContent = 'Retos de alto nivel para que pongas a prueba tus habilidades.';
-                    break;
-                default:
-                    titulo.textContent = 'Nivel no reconocido';
-                    contenido.textContent = 'Por favor selecciona un nivel válido desde la página de niveles.';
+                    case "principiante":
+                        titulo.textContent = "Prácticas para Principiantes";
+                        contenido.textContent =
+                            "Aquí encontrarás ejercicios básicos para empezar desde cero.";
+                        break;
+                    case "novato":
+                        titulo.textContent = "Prácticas para Novatos";
+                        contenido.textContent =
+                            "Tienes algo de experiencia, vamos a subir el nivel.";
+                        break;
+                    case "intermedio":
+                        titulo.textContent = "Prácticas Intermedias";
+                        contenido.textContent =
+                            "Estas prácticas te ayudarán a consolidar tus conocimientos.";
+                        break;
+                    case "avanzado":
+                        titulo.textContent = "Prácticas Avanzadas";
+                        contenido.textContent =
+                            "Retos de alto nivel para que pongas a prueba tus habilidades.";
+                        break;
+                    default:
+                        titulo.textContent = "Nivel no reconocido";
+                        contenido.textContent =
+                            "Por favor selecciona un nivel válido desde la página de niveles.";
                 }
             </script>
         </section>
         <section class="level-selection">
-           <details name="coockies">
+            <details name="coockies">
                 <summary>
-                <div class="summary-text">Nivel uno: Nombre ejercicio</div>
-                    <span><img width="24" height="24" src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png" alt="chevron-down"/></span>
+                    <div class="summary-text">Nivel uno: Nombre ejercicio</div>
+                    <span
+                        ><img
+                            width="24"
+                            height="24"
+                            src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png"
+                            alt="chevron-down"
+                    /></span>
                 </summary>
                 <p>Descripción actividad</p>
                 <button class="button_two"><a href="">Iniciar ahora</a></button>
             </details>
-             <details name="coockies">
+            <details name="coockies">
                 <summary>
-                <div class="summary-text">Nivel dos: Nombre ejercicio</div>
-                    <span><img width="24" height="24" src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png" alt="chevron-down"/></span>
+                    <div class="summary-text">Nivel dos: Nombre ejercicio</div>
+                    <span
+                        ><img
+                            width="24"
+                            height="24"
+                            src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png"
+                            alt="chevron-down"
+                    /></span>
                 </summary>
                 <p>Descripción actividad</p>
                 <button class="button_two"><a href="">Iniciar ahora</a></button>
             </details>
-             <details name="coockies">
+            <details name="coockies">
                 <summary>
-                <div class="summary-text">Nivel tres: Nombre ejercicio</div>
-                    <span><img width="24" height="24" src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png" alt="chevron-down"/></span>
+                    <div class="summary-text">Nivel tres: Nombre ejercicio</div>
+                    <span
+                        ><img
+                            width="24"
+                            height="24"
+                            src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png"
+                            alt="chevron-down"
+                    /></span>
                 </summary>
                 <p>Descripción actividad</p>
                 <button class="button_two"><a href="">Iniciar ahora</a></button>
             </details>
-             <details name="coockies">
+            <details name="coockies">
                 <summary>
-                <div class="summary-text">Nivel cuatro: Nombre ejercicio</div>
-                    <span><img width="24" height="24" src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png" alt="chevron-down"/></span>
+                    <div class="summary-text">
+                        Nivel cuatro: Nombre ejercicio
+                    </div>
+                    <span
+                        ><img
+                            width="24"
+                            height="24"
+                            src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png"
+                            alt="chevron-down"
+                    /></span>
                 </summary>
                 <p>Descripción actividad</p>
                 <button class="button_two"><a href="">Iniciar ahora</a></button>
             </details>
-             <details name="coockies">
+            <details name="coockies">
                 <summary>
-                <div class="summary-text">Nivel cinco: Nombre ejercicio</div>
-                    <span><img width="24" height="24" src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png" alt="chevron-down"/></span>
+                    <div class="summary-text">
+                        Nivel cinco: Nombre ejercicio
+                    </div>
+                    <span
+                        ><img
+                            width="24"
+                            height="24"
+                            src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png"
+                            alt="chevron-down"
+                    /></span>
                 </summary>
                 <p>Descripción actividad</p>
                 <button class="button_two"><a href="">Iniciar ahora</a></button>
             </details>
-             <details name="coockies">
+            <details name="coockies">
                 <summary>
-                <div class="summary-text">Nivel seis: Nombre ejercicio</div>
-                    <span><img width="24" height="24" src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png" alt="chevron-down"/></span>
+                    <div class="summary-text">Nivel seis: Nombre ejercicio</div>
+                    <span
+                        ><img
+                            width="24"
+                            height="24"
+                            src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png"
+                            alt="chevron-down"
+                    /></span>
                 </summary>
                 <p>Descripción actividad</p>
                 <button class="button_two"><a href="">Iniciar ahora</a></button>
             </details>
-             <details name="coockies">
+            <details name="coockies">
                 <summary>
-                <div class="summary-text">Nivel siete: Nombre ejercicio</div>
-                    <span><img width="24" height="24" src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png" alt="chevron-down"/></span>
+                    <div class="summary-text">
+                        Nivel siete: Nombre ejercicio
+                    </div>
+                    <span
+                        ><img
+                            width="24"
+                            height="24"
+                            src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png"
+                            alt="chevron-down"
+                    /></span>
                 </summary>
                 <p>Descripción actividad</p>
                 <button class="button_two"><a href="">Iniciar ahora</a></button>
             </details>
-             <details name="coockies">
+            <details name="coockies">
                 <summary>
-                <div class="summary-text">Nivel ocho: Nombre ejercicio</div>
-                    <span><img width="24" height="24" src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png" alt="chevron-down"/></span>
+                    <div class="summary-text">Nivel ocho: Nombre ejercicio</div>
+                    <span
+                        ><img
+                            width="24"
+                            height="24"
+                            src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png"
+                            alt="chevron-down"
+                    /></span>
                 </summary>
                 <p>Descripción actividad</p>
                 <button class="button_two"><a href="">Iniciar ahora</a></button>
             </details>
-             <details name="coockies">
+            <details name="coockies">
                 <summary>
-                <div class="summary-text">Nivel nueve: Nombre ejercicio</div>
-                    <span><img width="24" height="24" src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png" alt="chevron-down"/></span>
+                    <div class="summary-text">
+                        Nivel nueve: Nombre ejercicio
+                    </div>
+                    <span
+                        ><img
+                            width="24"
+                            height="24"
+                            src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png"
+                            alt="chevron-down"
+                    /></span>
                 </summary>
                 <p>Descripción actividad</p>
                 <button class="button_two"><a href="">Iniciar ahora</a></button>
             </details>
-             <details name="coockies">
+            <details name="coockies">
                 <summary>
-                <div class="summary-text">Nivel diez: Nombre ejercicio</div>
-                    <span><img width="24" height="24" src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png" alt="chevron-down"/></span>
+                    <div class="summary-text">Nivel diez: Nombre ejercicio</div>
+                    <span
+                        ><img
+                            width="24"
+                            height="24"
+                            src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png"
+                            alt="chevron-down"
+                    /></span>
                 </summary>
                 <p>Descripción actividad</p>
                 <button class="button_two"><a href="">Iniciar ahora</a></button>

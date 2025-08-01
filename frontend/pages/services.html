@@ -1,23 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../css/services.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer"/>
-        <link rel="shortcut icon" href="../assets/logo.svg" type="image/svg+xml">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../css/services.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+            integrity="sha512-..."
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <link
+            rel="shortcut icon"
+            href="../assets/logo.svg"
+            type="image/svg+xml"
+        />
         <title>LOXI - Niveles</title>
     </head>
     <body>
         <div class="background-layers">
             <div class="grid-overlay"></div>
         </div>
-        
+
         <header>
             <nav>
                 <div class="logo">
                     <a href="../../index.html">
-                        <i class="fa-solid fa-code"></i><h1>LOXI</h1>
+                        <i class="fa-solid fa-code"></i>
+                        <h1>LOXI</h1>
                     </a>
                 </div>
 
@@ -26,7 +37,11 @@
                     <li class="has-submenu">
                         <a href="confirmation.html">Servicios</a>
                         <ul class="submenu">
-                            <li><a href="./services.html#level-selector">Niveles</a></li>
+                            <li>
+                                <a href="./services.html#level-selector"
+                                    >Niveles</a
+                                >
+                            </li>
                         </ul>
                     </li>
                     <li><a href="us.html">Conócenos</a></li>
@@ -42,11 +57,12 @@
                 <a class="profile" id="btnSesion">Iniciar sesión</a>
             </nav>
         </header>
-    
+
         <div class="mobile-menu-overlay" id="mobileMenuOverlay">
             <div class="logo">
                 <a href="../../index.html">
-                    <i class="fa-solid fa-code"></i><h1>LOXI</h1>
+                    <i class="fa-solid fa-code"></i>
+                    <h1>LOXI</h1>
                 </a>
             </div>
             <div class="mobile-menu-content">
@@ -71,63 +87,92 @@
                         <a href="practice.html">Practica</a>
                     </li>
                 </ul>
-            </div>
+                <div class="mobile-menu-single">
+                    <a href="us.html">Conócenos</a>
+                </div>
 
-            <div class="mobile-menu-single">
-                <a href="us.html">Conócenos</a>
-            </div>
+                <div class="mobile-menu-single">
+                    <a href="d&s.html">D&S</a>
+                </div>
 
-            <div class="mobile-menu-single">
-                <a href="d&s.html">D&S</a>
-            </div>
-
-            <div class="mobile-profile">
-                <a class="profile" id="btnSesionMobile">Iniciar sesión</a>
+                <div class="mobile-profile">
+                    <a class="profile" id="btnSesionMobile">Iniciar sesión</a>
+                </div>
             </div>
         </div>
 
         <section class="hero">
             <h2>Desarrolla tu lógica de programación con LOXI...</h2>
-            <p>¿Cuál es tu nivel de lógica de programación con el que te sientes más cómodo?</p>
-            
+            <p>
+                ¿Cuál es tu nivel de lógica de programación con el que te
+                sientes más cómodo?
+            </p>
+
             <div class="level-selector" id="level-selector">
-                
-                <button class="level-card" onclick="goToPractica('principiante')">
+                <button
+                    class="level-card"
+                    onclick="goToPractica('principiante')"
+                >
                     <div class="code-sample">
-                        <span class="method">console.log</span>(<span class="string">"Hola"</span>);
+                        <span class="method">console.log</span>(<span
+                            class="string"
+                            >"Hola"</span
+                        >);
                     </div>
                     <h3 class="level-title">Principiante:</h3>
-                    <p class="level-description">Quiero empezar desde lo básico</p>
+                    <p class="level-description">
+                        Quiero empezar desde lo básico
+                    </p>
                 </button>
-                
-                <button class="level-card"  onclick="goToPractica('novato')">
+
+                <button class="level-card" onclick="goToPractica('novato')">
                     <div class="code-sample">
-                        <span class="keyword">if</span> (<span class="variable">a</span> > <span class="variable">b</span>) {
-                        &nbsp;&nbsp;<span class="method">console.log</span>(<span class="variable">a</span>);
-                        }
+                        <span class="keyword">if</span> (<span class="variable"
+                            >a</span
+                        >
+                        > <span class="variable">b</span>) { &nbsp;&nbsp;<span
+                            class="method"
+                            >console.log</span
+                        >(<span class="variable">a</span>); }
                     </div>
                     <h3 class="level-title">Novato:</h3>
-                    <p class="level-description">He visto código, pero no lo he tocado antes.</p>
+                    <p class="level-description">
+                        He visto código, pero no lo he tocado antes.
+                    </p>
                 </button>
-                
+
                 <button class="level-card" onclick="goToPractica('intermedio')">
                     <div class="code-sample">
-                        <span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">i</span> = 0; <span class="variable">i</span> <= <span class="variable">11</span>; <span class="variable">i</span>++) {...}
+                        <span class="keyword">for</span> (<span class="keyword"
+                            >let</span
+                        >
+                        <span class="variable">i</span> = 0;
+                        <span class="variable">i</span> <=
+                        <span class="variable">11</span>;
+                        <span class="variable">i</span>++) {...}
                     </div>
                     <h3 class="level-title">Intermedio:</h3>
-                    <p class="level-description">Puedo escribir programas simples con bucles.</p>
+                    <p class="level-description">
+                        Puedo escribir programas simples con bucles.
+                    </p>
                 </button>
-                
+
                 <button class="level-card" onclick="goToPractica('avanzado')">
                     <div class="code-sample">
-                        <span class="function">function</span> <span class="variable">sumar</span>(<span class="variable">a</span>,<span class="variable">b</span>) {...}
+                        <span class="function">function</span>
+                        <span class="variable">sumar</span>(<span
+                            class="variable"
+                            >a</span
+                        >,<span class="variable">b</span>) {...}
                     </div>
                     <h3 class="level-title">Avanzado:</h3>
-                    <p class="level-description">He escrito programas más avanzados.</p>
+                    <p class="level-description">
+                        He escrito programas más avanzados.
+                    </p>
                 </button>
                 <script>
                     function goToPractica(nivel) {
-                    window.location.href = `practice.html?nivel=${nivel}`;
+                        window.location.href = `practice.html?nivel=${nivel}`;
                     }
                 </script>
             </div>
