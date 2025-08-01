@@ -47,7 +47,7 @@ async function supabaseRequest(endpoint, options = {}) {
   return data ? JSON.parse(data) : null;
 }
 
-const PORT = 3000;
+const PORT = 3001;
 
 const server = http.createServer(async (req, res) => {
   // CORS headers
