@@ -866,6 +866,30 @@ desktop-menu li .submenu li a:hover {
     margin-top: 130px;
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: linear-gradient(180deg, #011c26 0%, #00080d 100%);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #012e40;
+    border-radius: 10px;
+    border: 2px solid #00080d;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #01475f;
+}
+
+* {
+    scrollbar-color: #012e40 #00080d;
+}
+
 @media (max-width: 1024px) {
     .bloque-beneficios {
         flex-direction: column;
