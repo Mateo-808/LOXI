@@ -546,6 +546,10 @@ desktop-menu li .submenu li a:hover {
     flex-wrap: wrap;
 }
 
+.instituciones-container a {
+    text-decoration: none;
+}
+
 .institucion {
     background-color: #fff;
     color: #000;
@@ -824,23 +828,32 @@ desktop-menu li .submenu li a:hover {
 .footer-links h4,
 .footer-contact h4 {
     color: white;
-    font-size: 30px;
+    font-size: 25px;
+    text-align: left;
 }
 
-.footer-links ul {
+.footer-links ul,
+.footer-contact ul {
     display: flex;
     flex-direction: column;
     list-style: none;
     text-align: start;
 }
 
-.footer-links ul li a {
-    text-decoration: none;
+.footer-contact ul li:first-child {
+    text-decoration: underline;
     color: #b5b7ba;
-    font-size: 20px;
 }
 
-.footer-links ul li a:hover {
+.footer-links ul li a, 
+.footer-contact ul li a {
+    text-decoration: none;
+    color: #b5b7ba;
+    font-size: 17px;
+}
+
+.footer-links ul li a:hover,
+.footer-contact ul li a:hover {
     text-decoration: underline;
     color: #fff;
 }
@@ -901,6 +914,15 @@ footer p {
     .beneficio {
         width: 90%;
         margin-bottom: 20px;
+        border-radius: 20px;
+    }
+
+    .beneficio div img {
+        display: none;
+    }
+
+    .beneficio:nth-child(1),
+    .beneficio:nth-child(3) {
         border-radius: 20px;
     }
 
@@ -970,15 +992,6 @@ footer p {
     }
 
     .punto-1_punto-2 {
-        display: none;
-    }
-
-    .beneficio:nth-child(1),
-    .beneficio:nth-child(3) {
-        border-radius: 20px;
-    }
-
-    .beneficio div img {
         display: none;
     }
 
