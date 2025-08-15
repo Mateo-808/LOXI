@@ -652,6 +652,10 @@ desktop-menu li .submenu li a:hover {
     font-size: 14px;
 }
 
+#terminal-input::placeholder {
+    font-size: 16px;
+}
+
 .output-line {
     margin-bottom: 5px;
     white-space: pre-wrap;
