@@ -58,7 +58,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
-    height: 100vh;
+    height: 100dvh;
 }
 
 header {
@@ -394,7 +394,7 @@ desktop-menu li .submenu li a:hover {
 
 .central_start {
     padding: 0 50px;
-    height: 100vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     justify-content: center;
