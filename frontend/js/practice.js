@@ -64,3 +64,247 @@ document.addEventListener('DOMContentLoaded', () => {
     btnSesionMobile.href = '../pages/login.html';
   }
 });
+
+const ejerciciosPorNivel = {
+            principiante: [
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                }
+            ],
+            novato: [
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                }
+            ],
+            intermedio: [
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                }
+            ],
+            avanzado: [
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                },
+                {
+                    nombre: "",
+                    descripcion: ""
+                }
+            ]
+        };
+
+        function getNivel() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get("nivel") || "principiante";
+        }
+
+       function generarEjercicios(nivel) {
+    const container = document.getElementById("ejercicios-container");
+    const ejercicios = ejerciciosPorNivel[nivel] || ejerciciosPorNivel.principiante;
+    
+    container.innerHTML = "";
+    
+    ejercicios.forEach((ejercicio, index) => {
+        const detailsElement = document.createElement("details");
+        detailsElement.setAttribute("name", "ejercicios");
+        
+        detailsElement.innerHTML = `
+            <summary>
+                <div class="summary-text">
+                    Ejercicio ${index + 1}: ${ejercicio.nombre}
+                </div>
+                <span class="chevron">
+                    <img
+                        width="24"
+                        height="24"
+                        src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png"
+                        alt="chevron-down"
+                    />
+                </span>
+            </summary>
+            <p>${ejercicio.descripcion}</p>
+            <button class="button_two">
+                <a href="ejercicio.html?nivel=${nivel}&ejercicio=${index + 1}">Iniciar ahora</a>
+            </button>
+        `;
+        
+        container.appendChild(detailsElement);
+    });
+}
+
+
+        function inicializarPagina() {
+            const nivel = getNivel();
+            const titulo = document.getElementById("titulo");
+            const contenido = document.getElementById("contenido");
+
+            switch (nivel) {
+                case "principiante":
+                    titulo.textContent = "Prácticas para Principiantes";
+                    contenido.textContent = "Aquí encontrarás ejercicios básicos para empezar desde cero.";
+                    break;
+                case "novato":
+                    titulo.textContent = "Prácticas para Novatos";
+                    contenido.textContent = "Tienes algo de experiencia, vamos a subir el nivel.";
+                    break;
+                case "intermedio":
+                    titulo.textContent = "Prácticas Intermedias";
+                    contenido.textContent = "Estas prácticas te ayudarán a consolidar tus conocimientos.";
+                    break;
+                case "avanzado":
+                    titulo.textContent = "Prácticas Avanzadas";
+                    contenido.textContent = "Retos de alto nivel para que pongas a prueba tus habilidades.";
+                    break;
+                default:
+                    titulo.textContent = "Nivel no reconocido";
+                    contenido.textContent = "Por favor selecciona un nivel válido desde la página de niveles.";
+            }
+
+
+            generarEjercicios(nivel);
+        }
+
+        document.addEventListener("DOMContentLoaded", inicializarPagina);
