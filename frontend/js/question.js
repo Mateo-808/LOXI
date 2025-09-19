@@ -7,22 +7,22 @@ const description = document.querySelector(".description");
 
 // Función para inicializar el contenedor de chat
 function initializeChatContainer() {
-    const chatContainer = document.createElement('div');
-    chatContainer.className = 'chat-container';
-    chatContainer.id = 'chatContainer';
-    
+    const chatContainer = document.createElement("div");
+    chatContainer.className = "chat-container";
+    chatContainer.id = "chatContainer";
+
     description.appendChild(chatContainer);
 }
 
 // Inicializar el contenedor cuando se carga la página
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener("DOMContentLoaded", function () {
     initializeChatContainer();
-    
+
     // Enfocar automáticamente el campo de entrada al cargar
     input.focus();
-    
+
     // Función de depuración para verificar localStorage (remover en producción)
-    console.log('Contenido actual de localStorage:');
+    console.log("Contenido actual de localStorage:");
     for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         console.log(`${key}:`, localStorage.getItem(key));
@@ -32,89 +32,100 @@ window.addEventListener('DOMContentLoaded', function() {
 // Función para guardar progreso en Supabase
 async function guardarProgreso(nivel, puntuacion, completado = true) {
     try {
-        console.log('=== INICIANDO GUARDADO DE PROGRESO ===');
-        
+        console.log("=== INICIANDO GUARDADO DE PROGRESO ===");
+
         // Obtener el ID del usuario desde localStorage
-        const usuarioGuardado = localStorage.getItem('usuario');
+        const usuarioGuardado = localStorage.getItem("usuario");
         let usuarioId = null;
-        
-        console.log('usuarioGuardado:', usuarioGuardado);
-        
+
+        console.log("usuarioGuardado:", usuarioGuardado);
+
         // Extraer el ID del objeto usuario guardado
         if (usuarioGuardado) {
             try {
                 const usuario = JSON.parse(usuarioGuardado);
                 usuarioId = usuario.id;
-                console.log('Usuario encontrado:', usuario.nombre, 'ID:', usuarioId);
+                console.log(
+                    "Usuario encontrado:",
+                    usuario.nombre,
+                    "ID:",
+                    usuarioId
+                );
             } catch (e) {
-                console.error('Error al parsear usuario guardado:', e);
+                console.error("Error al parsear usuario guardado:", e);
             }
         } else {
             // Fallback: buscar IDs directos en localStorage
-            usuarioId = localStorage.getItem('user_id') || localStorage.getItem('usuario_id');
-            console.log('ID encontrado en fallback:', usuarioId);
+            usuarioId =
+                localStorage.getItem("user_id") ||
+                localStorage.getItem("usuario_id");
+            console.log("ID encontrado en fallback:", usuarioId);
         }
-        
-        const ejercicioId = '7c1a8ae1-a72e-4a4f-9efb-5a7be07a8b3a'; // UUID del ejercicio de lógica
-        
+
+        const ejercicioId = "7c1a8ae1-a72e-4a4f-9efb-5a7be07a8b3a"; // UUID del ejercicio de lógica
+
         if (!usuarioId) {
-            console.warn('No se encontró ID de usuario válido. El progreso no se guardará.');
-            console.log('Estado del localStorage usuario:', usuarioGuardado);
+            console.warn(
+                "No se encontró ID de usuario válido. El progreso no se guardará."
+            );
+            console.log("Estado del localStorage usuario:", usuarioGuardado);
             return;
         }
 
-        // URL de tu servidor 
-        const serverUrl = window.location.hostname === 'localhost' 
-            ? 'http://localhost:3000' 
-            : 'https://loxi.onrender.com'; 
-        
-        console.log('URL del servidor:', serverUrl);
-        
+        // URL de tu servidor
+        const serverUrl =
+            window.location.hostname === "localhost"
+                ? "http://localhost:3000"
+                : "https://loxi.onrender.com";
+
+        console.log("URL del servidor:", serverUrl);
+
         const datosAEnviar = {
             usuario_id: usuarioId,
             ejercicio_id: ejercicioId,
             completado: completado,
             puntuacion: puntuacion,
             nivel: nivel,
-            intentos: 1
+            intentos: 1,
         };
-        
-        console.log('Datos a enviar:', datosAEnviar);
-        
+
+        console.log("Datos a enviar:", datosAEnviar);
+
         const response = await fetch(`${serverUrl}/api/progreso`, {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify(datosAEnviar)
+            body: JSON.stringify(datosAEnviar),
         });
 
-        console.log('Response status:', response.status);
-        console.log('Response ok:', response.ok);
-        
+        console.log("Response status:", response.status);
+        console.log("Response ok:", response.ok);
+
         const responseText = await response.text();
-        console.log('Response text:', responseText);
-        
+        console.log("Response text:", responseText);
+
         let data;
         try {
             data = JSON.parse(responseText);
         } catch (e) {
-            console.error('Error al parsear respuesta JSON:', e);
-            throw new Error(`Respuesta no válida del servidor: ${responseText}`);
+            console.error("Error al parsear respuesta JSON:", e);
+            throw new Error(
+                `Respuesta no válida del servidor: ${responseText}`
+            );
         }
-        
+
         if (!response.ok) {
             throw new Error(data.error || `Error HTTP: ${response.status}`);
         }
 
-        console.log('Progreso guardado exitosamente:', data);
+        console.log("Progreso guardado exitosamente:", data);
         return data;
-        
     } catch (error) {
-        console.error('=== ERROR AL GUARDAR PROGRESO ===');
-        console.error('Error completo:', error);
-        console.error('Stack trace:', error.stack);
-        
+        console.error("=== ERROR AL GUARDAR PROGRESO ===");
+        console.error("Error completo:", error);
+        console.error("Stack trace:", error.stack);
+
         // Eliminar este mensjae cuando se acaben las pruebas para que el usuario no lo vea
         const chatContainer = document.getElementById("chatContainer");
         if (chatContainer) {
@@ -132,7 +143,7 @@ async function guardarProgreso(nivel, puntuacion, completado = true) {
 function sendMessage() {
     const answer = input.value.trim();
     const chatContainer = document.getElementById("chatContainer");
-    const writeContainer = document.querySelector('.write');
+    const writeContainer = document.querySelector(".write");
 
     if (answer === "") return;
 
@@ -170,7 +181,7 @@ function sendMessage() {
     }
 
     // Ocultar el área de entrada después de recibir una respuesta
-    writeContainer.classList.add('write-hidden');
+    writeContainer.classList.add("write-hidden");
 
     // Mostrar respuesta según si es válida o no
     setTimeout(() => {
@@ -183,7 +194,7 @@ function sendMessage() {
             guardarProgreso(level, puntuacion, true);
 
             // Guardar también en localStorage para usarlo en otras páginas
-            localStorage.setItem('nivel', level.toLowerCase());
+            localStorage.setItem("nivel", level.toLowerCase());
         } else {
             chatContainer.innerHTML += `
                 <div class="bot-msg error-msg">LOXI: <strong>Respuesta incorrecta.</strong> Necesita intentarlo de nuevo para obtener un nivel de lógica válido.</div>
@@ -216,7 +227,7 @@ function sendMessage() {
                 <div class="bot-msg">LOXI: La secuencia 2, 6, 12, 20, 30... sigue un patrón específico. Analice cuidadosamente cómo aumentan los números.</div>
             `;
             setTimeout(() => {
-                writeContainer.classList.remove('write-hidden');
+                writeContainer.classList.remove("write-hidden");
                 input.focus();
             }, 1500);
         }
@@ -238,9 +249,9 @@ function sendMessage() {
 
             scrollToBottom(result);
 
-            document.querySelectorAll('.continue-btn').forEach(btn => {
-                btn.addEventListener('click', function () {
-                    if (this.classList.contains('yes')) {
+            document.querySelectorAll(".continue-btn").forEach((btn) => {
+                btn.addEventListener("click", function () {
+                    if (this.classList.contains("yes")) {
                         if (redirectURL) {
                             window.location.href = redirectURL;
                         } else {
@@ -273,8 +284,8 @@ function scrollToBottom(element) {
 sendBtn.addEventListener("click", sendMessage);
 
 // Agregar evento de tecla Enter al campo de entrada
-input.addEventListener('keypress', function(event) {
-    if (event.key === 'Enter') {
+input.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
         event.preventDefault();
         sendMessage();
     }
@@ -329,31 +340,31 @@ document.addEventListener("keydown", function (event) {
 });
 
 // Manejo de sesión de usuario
-document.addEventListener('DOMContentLoaded', () => {
-    const btnSesion = document.getElementById('btnSesion');
-    const btnSesionMobile = document.getElementById('btnSesionMobile');
+document.addEventListener("DOMContentLoaded", () => {
+    const btnSesion = document.getElementById("btnSesion");
+    const btnSesionMobile = document.getElementById("btnSesionMobile");
 
-    const usuarioGuardado = localStorage.getItem('usuario');
+    const usuarioGuardado = localStorage.getItem("usuario");
 
     if (usuarioGuardado) {
         if (btnSesion) {
-            btnSesion.textContent = 'Ver perfil';
-            btnSesion.href = '../pages/profile.html';
+            btnSesion.textContent = "Ver perfil";
+            btnSesion.href = "../pages/profile.html";
         }
 
         if (btnSesionMobile) {
-            btnSesionMobile.textContent = 'Ver perfil';
-            btnSesionMobile.href = '../pages/profile.html';
+            btnSesionMobile.textContent = "Ver perfil";
+            btnSesionMobile.href = "../pages/profile.html";
         }
     } else {
         if (btnSesion) {
-            btnSesion.textContent = 'Iniciar sesión';
-            btnSesion.href = '../pages/login.html';
+            btnSesion.textContent = "Iniciar sesión";
+            btnSesion.href = "../pages/login.html";
         }
 
         if (btnSesionMobile) {
-            btnSesionMobile.textContent = 'Iniciar sesión';
-            btnSesionMobile.href = '../pages/login.html';
+            btnSesionMobile.textContent = "Iniciar sesión";
+            btnSesionMobile.href = "../pages/login.html";
         }
     }
 });
