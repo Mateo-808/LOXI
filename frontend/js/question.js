@@ -254,7 +254,7 @@ function sendMessage() {
                             <div class="bot-msg">LOXI: Gracias por participar. ¡Vuelva pronto!</div>
                         `;
                         setTimeout(() => {
-                            window.location.href = "../index.html";
+                            window.location.href = "../../index.html";
                         }, 2000);
                         scrollToBottom(result);
                     }
