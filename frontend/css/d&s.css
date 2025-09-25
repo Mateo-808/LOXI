@@ -609,6 +609,40 @@ main {
     font-size: 12px;
 }
 
+.comentario-actions {
+    margin-top: 8px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-editar {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-editar:hover {
+  background-color: #0056b3;
+}
+
+.btn-eliminar {
+  background-color: #dc3545;
+  border: none;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-eliminar:hover {
+  background-color: #a71d2a;
+}
+
 .faq-like {
     position: absolute;
     bottom: 30px;
@@ -644,7 +678,6 @@ main {
     border-radius: 15px;
     border: 1px solid #B5B7BA;
     box-shadow: 0 4px 20px rgba(255, 255, 255, 0.144);
-    grid-column: 1 / -1; 
     margin-bottom: 60px;
 }
 

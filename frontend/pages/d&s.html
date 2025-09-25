@@ -1,229 +1,219 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-            integrity="sha512-..."
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-        />
-        <link rel="stylesheet" href="../css/d&s.css" />
-        <link
-            rel="shortcut icon"
-            href="../assets/logo.svg"
-            type="image/svg+xml"
-        />
-        <title>LOXI - D&S</title>
-    </head>
-    <body>
-        <div class="background-layers">
-            <div class="grid-overlay"></div>
-        </div>
 
-        <header>
-            <nav>
-                <div class="logo">
-                    <a href="../../index.html">
-                        <i class="fa-solid fa-code"></i>
-                        <h1>LOXI</h1>
-                    </a>
-                </div>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../css/d&s.css" />
+    <link rel="shortcut icon" href="../assets/logo.svg" type="image/svg+xml" />
+    <title>LOXI - D&S</title>
+</head>
 
-                <ul class="desktop-menu">
-                    <li><a href="../../index.html">Inicio</a></li>
-                    <li class="has-submenu">
-                        <a href="explanation_services.html">Servicios</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="./services.html#level-selector"
-                                    >Niveles</a
-                                >
-                            </li>
-                            <li><a href="./practice.html">Pratica</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="us.html">Conócenos</a></li>
-                </ul>
+<body>
+    <div class="background-layers">
+        <div class="grid-overlay"></div>
+    </div>
 
-                <div class="burger-menu" onclick="toggleMobileMenu()">
-                    <div class="burger-line"></div>
-                    <div class="burger-line"></div>
-                    <div class="burger-line"></div>
-                </div>
-
-                <a class="profile" id="btnSesion">Iniciar sesión</a>
-            </nav>
-        </header>
-
-        <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+    <header>
+        <nav>
             <div class="logo">
                 <a href="../../index.html">
                     <i class="fa-solid fa-code"></i>
                     <h1>LOXI</h1>
                 </a>
             </div>
-            <div class="mobile-menu-content">
-                <div class="mobile-menu-single">
-                    <a href="../../index.html">Inicio</a>
-                </div>
+
+            <ul class="desktop-menu">
+                <li><a href="../../index.html">Inicio</a></li>
+                <li class="has-submenu">
+                    <a href="explanation_services.html">Servicios</a>
+                    <ul class="submenu">
+                        <li>
+                            <a href="./services.html#level-selector">Niveles</a>
+                        </li>
+                        <li><a href="./practice.html">Pratica</a></li>
+                    </ul>
+                </li>
+                <li><a href="us.html">Conócenos</a></li>
+            </ul>
+
+            <div class="burger-menu" onclick="toggleMobileMenu()">
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
             </div>
 
-            <div class="mobile-menu-section" onclick="toggleMenuSection(this)">
-                <h3>
-                    Servicios
-                    <i class="fa-solid fa-chevron-down"></i>
-                </h3>
-                <ul class="mobile-menu-items">
-                    <li>
-                        <a href="explanation_services.html">Servicios</a>
-                    </li>
-                    <li>
-                        <a href="services.html#level-selector">Niveles</a>
-                    </li>
-                    <li>
-                        <a href="practice.html">Practica</a>
-                    </li>
-                </ul>
-                <div class="mobile-menu-single">
-                    <a href="us.html">Conócenos</a>
-                </div>
+            <a class="profile" id="btnSesion">Iniciar sesión</a>
+        </nav>
+    </header>
 
-                <div class="mobile-profile">
-                    <a class="profile" id="btnSesionMobile">Iniciar sesión</a>
-                </div>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+        <div class="logo">
+            <a href="../../index.html">
+                <i class="fa-solid fa-code"></i>
+                <h1>LOXI</h1>
+            </a>
+        </div>
+        <div class="mobile-menu-content">
+            <div class="mobile-menu-single">
+                <a href="../../index.html">Inicio</a>
             </div>
         </div>
 
-        <main>
-            <section class="ds">
-                <div class="description">
-                    <h2>D&S</h2>
-                    <p>Escriba su duda o sugerencia</p>
-                </div>
-                <div class="write">
-                    <input
-                        type="text"
-                        id="write"
-                        placeholder="Escriba aqui..."
-                    />
-                    <button class="send" id="send">
+        <div class="mobile-menu-section" onclick="toggleMenuSection(this)">
+            <h3>
+                Servicios
+                <i class="fa-solid fa-chevron-down"></i>
+            </h3>
+            <ul class="mobile-menu-items">
+                <li>
+                    <a href="explanation_services.html">Servicios</a>
+                </li>
+                <li>
+                    <a href="services.html#level-selector">Niveles</a>
+                </li>
+                <li>
+                    <a href="practice.html">Practica</a>
+                </li>
+            </ul>
+            <div class="mobile-menu-single">
+                <a href="us.html">Conócenos</a>
+            </div>
+
+            <div class="mobile-profile">
+                <a class="profile" id="btnSesionMobile">Iniciar sesión</a>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <section class="ds">
+            <div class="description">
+                <h2>D&S</h2>
+                <p>Escriba su duda o sugerencia</p>
+            </div>
+            <div class="write">
+                <form id="formComentario">
+                    <input type="text" id="write" placeholder="Escriba aquí..." required/>
+                    <button type="submit" class="send" id="send">
                         <i class="fa-solid fa-paper-plane"></i>
                     </button>
-                    <button class="down-arrow">
-                        <i class="fa-solid fa-arrow-down"></i>
-                    </button>
+                </form>
+                <button class="down-arrow">
+                    <i class="fa-solid fa-arrow-down"></i>
+                </button>
+            </div>
+        </section>
+        <section class="more-d" id="more-d">
+            <h2 class="faq-title" id="faq-title">
+                MÁS DUDAS Y SUGERENCIAS
+            </h2>
+            <div class="faq-container" id="lista-comentarios">
+                <!-- Tarjeta FAQ 1 - Pequeña -->
+                <div class="faq-card-small">
+                    <div class="faq-question">
+                        ¿Cómo veo mis estadísticas <br />
+                        al terminar el programa?
+                    </div>
+                    <div class="faq-admin">
+                        ADMIN <i class="fa-solid fa-code"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Al terminar el programa puedes ingresar a la sección
+                        de prácticas y buscar en la sección de "Mi progreso"
+                    </div>
+                    <div class="faq-user">
+                        <div class="user-avatar"></div>
+                        <div class="user-name">Nombre de usuario</div>
+                    </div>
+                    <div class="faq-like">
+                        <i class="fa-regular fa-heart"></i>
+                    </div>
                 </div>
-            </section>
-            <section class="more-d" id="more-d">
-                <h2 class="faq-title" id="faq-title">
-                    MÁS DUDAS Y SUGERENCIAS
+
+                <!-- Tarjeta FAQ 2 - Normal -->
+                <div class="faq-card">
+                    <div class="faq-question">
+                        ¿Cómo veo mi nivel actual? <br /><br />
+                    </div>
+                    <div class="faq-admin">
+                        ADMIN <i class="fa-solid fa-code"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Puedes consultar tu nivel actual ingresando a tu
+                        perfil. Una vez allí, dirígete a la sección "Mi
+                        progreso" donde encontrarás información detallada
+                        sobre tu avance, incluyendo tu nivel, actividades
+                        completadas y metas alcanzadas.
+                    </div>
+                    <div class="faq-user">
+                        <div class="user-avatar"></div>
+                        <div class="user-name">Nombre de usuario</div>
+                    </div>
+                    <div class="faq-like">
+                        <i class="fa-regular fa-heart"></i>
+                    </div>
+                </div>
+
+                <!-- Tarjeta FAQ 3 - Normal -->
+                <div class="faq-card">
+                    <div class="faq-question">
+                        ¿Donde Realizo las practicas? <br /><br />
+                    </div>
+                    <div class="faq-admin">
+                        ADMIN <i class="fa-solid fa-code"></i>
+                    </div>
+                    <div class="faq-answer">
+                        En la barra de navegacion seleccioneas el apartado
+                        de "servicios", allí se desplegaran dos opciones y
+                        vas a eleir la de practica.
+                    </div>
+                    <div class="faq-user">
+                        <div class="user-avatar"></div>
+                        <div class="user-name">Nombre de usuario</div>
+                    </div>
+                    <div class="faq-like">
+                        <i class="fa-regular fa-heart"></i>
+                    </div>
+                </div>
+
+                <!-- Tarjeta FAQ 4 - Pequeña -->
+                <div class="faq-card-small">
+                    <div class="faq-question">
+                        ¿cómo puedo iniciar mi experiencia en LOXI?<br /><br />
+                    </div>
+                    <div class="faq-admin">
+                        ADMIN <i class="fa-solid fa-code"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Debes iniciar seción para acceder a nuestros
+                        servicios y obtener una buena experiencia
+                    </div>
+                    <div class="faq-user">
+                        <div class="user-avatar"></div>
+                        <div class="user-name">Nombre de usuario</div>
+                    </div>
+                    <div class="faq-like">
+                        <i class="fa-regular fa-heart"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de contacto -->
+            <section class="contact-section">
+                <h2 class="contact-title">
+                    ¡Si tienes más dudas o sugerencias puedes contactarnos!
                 </h2>
-                <div class="faq-container">
-                    <!-- Tarjeta FAQ 1 - Pequeña -->
-                    <div class="faq-card-small">
-                        <div class="faq-question">
-                            ¿Cómo veo mis estadísticas <br />
-                            al terminar el programa?
-                        </div>
-                        <div class="faq-admin">
-                            ADMIN <i class="fa-solid fa-code"></i>
-                        </div>
-                        <div class="faq-answer">
-                            Al terminar el programa puedes ingresar a la sección
-                            de prácticas y buscar en la sección de "Mi progreso"
-                        </div>
-                        <div class="faq-user">
-                            <div class="user-avatar"></div>
-                            <div class="user-name">Nombre de usuario</div>
-                        </div>
-                        <div class="faq-like">
-                            <i class="fa-regular fa-heart"></i>
-                        </div>
-                    </div>
-
-                    <!-- Tarjeta FAQ 2 - Normal -->
-                    <div class="faq-card">
-                        <div class="faq-question">
-                            ¿Cómo veo mi nivel actual? <br /><br />
-                        </div>
-                        <div class="faq-admin">
-                            ADMIN <i class="fa-solid fa-code"></i>
-                        </div>
-                        <div class="faq-answer">
-                            Puedes consultar tu nivel actual ingresando a tu
-                            perfil. Una vez allí, dirígete a la sección "Mi
-                            progreso" donde encontrarás información detallada
-                            sobre tu avance, incluyendo tu nivel, actividades
-                            completadas y metas alcanzadas.
-                        </div>
-                        <div class="faq-user">
-                            <div class="user-avatar"></div>
-                            <div class="user-name">Nombre de usuario</div>
-                        </div>
-                        <div class="faq-like">
-                            <i class="fa-regular fa-heart"></i>
-                        </div>
-                    </div>
-
-                    <!-- Tarjeta FAQ 3 - Normal -->
-                    <div class="faq-card">
-                        <div class="faq-question">
-                            ¿Donde Realizo las practicas? <br /><br />
-                        </div>
-                        <div class="faq-admin">
-                            ADMIN <i class="fa-solid fa-code"></i>
-                        </div>
-                        <div class="faq-answer">
-                            En la barra de navegacion seleccioneas el apartado
-                            de "servicios", allí se desplegaran dos opciones y
-                            vas a eleir la de practica.
-                        </div>
-                        <div class="faq-user">
-                            <div class="user-avatar"></div>
-                            <div class="user-name">Nombre de usuario</div>
-                        </div>
-                        <div class="faq-like">
-                            <i class="fa-regular fa-heart"></i>
-                        </div>
-                    </div>
-
-                    <!-- Tarjeta FAQ 4 - Pequeña -->
-                    <div class="faq-card-small">
-                        <div class="faq-question">
-                            ¿cómo puedo iniciar mi experiencia en LOXI?<br /><br />
-                        </div>
-                        <div class="faq-admin">
-                            ADMIN <i class="fa-solid fa-code"></i>
-                        </div>
-                        <div class="faq-answer">
-                            Debes iniciar seción para acceder a nuestros
-                            servicios y obtener una buena experiencia
-                        </div>
-                        <div class="faq-user">
-                            <div class="user-avatar"></div>
-                            <div class="user-name">Nombre de usuario</div>
-                        </div>
-                        <div class="faq-like">
-                            <i class="fa-regular fa-heart"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sección de contacto -->
-                <section class="contact-section">
-                    <h2 class="contact-title">
-                        ¡Si tienes más dudas o sugerencias puedes contactarnos!
-                    </h2>
-                    <button class="contact-btn">¡Contáctanos aquí!</button>
-                </section>
+                <button class="contact-btn">¡Contáctanos aquí!</button>
             </section>
-        </main>
-        <footer class="copyright">
-            LOXI © 2025. TODOS LOS DERECHOS RESERVADOS
-        </footer>
-        <script src="../js/d&s.js"></script>
-    </body>
+        </section>
+    </main>
+    <footer class="copyright">
+        LOXI © 2025. TODOS LOS DERECHOS RESERVADOS
+    </footer>
+    <script src="../js/d&s.js"></script>
+</body>
+
 </html>
