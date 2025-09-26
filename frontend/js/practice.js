@@ -302,7 +302,7 @@ function generarEjercicios(nivel) {
             </summary>
             <p>${ejercicio.descripcion}</p>
             <button class="button_two">
-                <a href="ejercicio.html?nivel=${nivel}&ejercicio=${
+                <a href="interface.html?nivel=${nivel}&ejercicio=${
             index + 1
         }">Iniciar ahora</a>
             </button>

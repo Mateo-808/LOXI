@@ -200,6 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     newComment.appendChild(botonesDiv);
                 }
+                lista.innerHTML = "";
                 lista.appendChild(newComment);
             });
         } catch (err) {
