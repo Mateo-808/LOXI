@@ -488,6 +488,7 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
+    // COMENTARIOS
     if (method === "POST" && pathname === "/api/comentarios") {
         try {
             const { usuario_id, mensaje } = await readBody(req);

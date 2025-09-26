@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const res = await fetch("http://localhost:3000/api/comentarios", {
+            const res = await fetch("https://loxi.onrender.com/api/comentarios", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ usuario_id: usuarioActual.id, mensaje }),
@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function cargarComentarios() {
         try {
-            const res = await fetch("http://localhost:3000/api/comentarios");
+            const res = await fetch("https://loxi.onrender.com/api/comentarios");
             const json = await res.json();
             if (!res.ok || !json.ok) {
                 console.error("Error al cargar comentarios:", json);
@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const res = await fetch(
-                `http://localhost:3000/api/comentarios/${comentario.id}`,
+                `https://loxi.onrender.com/api/comentarios/${comentario.id}`,
                 {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
@@ -230,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const res = await fetch(
-                `http://localhost:3000/api/comentarios/${id}`,
+                `https://loxi.onrender.com/api/comentarios/${id}`,
                 { method: "DELETE" }
             );
             const data = await res.json();
