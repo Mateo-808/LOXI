@@ -105,11 +105,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const res = await fetch("https://loxi.onrender.com/api/comentarios", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ usuario_id: usuarioActual.id, mensaje }),
-            });
+            const res = await fetch(
+                "https://loxi.onrender.com/api/comentarios",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        usuario_id: usuarioActual.id,
+                        mensaje,
+                    }),
+                }
+            );
 
             const data = await res.json();
 
@@ -129,19 +135,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function cargarComentarios() {
         try {
-            const res = await fetch("https://loxi.onrender.com/api/comentarios");
+            const res = await fetch(
+                "https://loxi.onrender.com/api/comentarios"
+            );
             const json = await res.json();
             if (!res.ok || !json.ok) {
                 console.error("Error al cargar comentarios:", json);
                 return;
             }
 
+
             json.data.forEach((c, index) => {
                 const nombre =
                     c.usuarios && c.usuarios.nombre
                         ? c.usuarios.nombre
                         : "Anónimo";
-                const fecha = c.fecha ? new Date(c.fecha).toLocaleString() : "";
+                const fecha = c.fecha ? new Date(c.fecha).toLocaleString("es-CO", { timeZone: "America/Bogota" }) : "";
 
                 const newComment = document.createElement("div");
                 newComment.className =
@@ -188,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     newComment.appendChild(botonesDiv);
                 }
-
+                lista.innerHTML = "";
                 lista.appendChild(newComment);
             });
         } catch (err) {
