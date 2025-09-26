@@ -616,7 +616,8 @@ main {
 }
 
 .btn-editar {
-  background-color: #007bff;
+  background: #011c26;
+  background-color: #073f56;
   border: none;
   color: white;
   padding: 5px 12px;

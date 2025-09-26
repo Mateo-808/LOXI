@@ -65,19 +65,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-const faqTitle = document.getElementById("faq-title");
-const heartIcons = document.querySelectorAll(".faq-like i");
-
 document.querySelector(".down-arrow").addEventListener("click", () => {
     faqTitle.scrollIntoView({ behavior: "smooth" });
 });
 
-heartIcons.forEach((icon) => {
-    icon.addEventListener("click", () => {
-        icon.classList.toggle("fa-regular");
-        icon.classList.toggle("fa-solid");
-        icon.classList.toggle("filled");
-    });
+const faqTitle = document.getElementById("faq-title");
+const heartIcons = document.querySelectorAll(".faq-like i");
+
+document.addEventListener("click", (e) => {
+  if (e.target.matches(".faq-like i")) {
+    e.target.classList.toggle("fa-regular");
+    e.target.classList.toggle("fa-solid");
+    e.target.classList.toggle("filled");
+  }
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -144,13 +144,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-
             json.data.forEach((c, index) => {
                 const nombre =
                     c.usuarios && c.usuarios.nombre
                         ? c.usuarios.nombre
                         : "Anónimo";
-                const fecha = c.fecha ? new Date(c.fecha).toLocaleString("es-CO", { timeZone: "America/Bogota" }) : "";
+                const fecha = c.fecha
+                    ? new Date(c.fecha).toLocaleString("es-CO", {
+                          timeZone: "America/Bogota",
+                      })
+                    : "";
 
                 const newComment = document.createElement("div");
                 newComment.className =
@@ -197,7 +200,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     newComment.appendChild(botonesDiv);
                 }
-                lista.innerHTML = "";
                 lista.appendChild(newComment);
             });
         } catch (err) {
