@@ -301,11 +301,9 @@ function generarEjercicios(nivel) {
                 </span>
             </summary>
             <p>${ejercicio.descripcion}</p>
-            <button class="button_two">
-                <a href="interface.html?nivel=${nivel}&ejercicio=${
-            index + 1
+            <a class="button_two" href="interface.html?nivel=${nivel}&ejercicio=${
+                index + 1
         }">Iniciar ahora</a>
-            </button>
         `;
 
         container.appendChild(detailsElement);

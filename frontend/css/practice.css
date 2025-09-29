@@ -504,22 +504,53 @@ details[open] p {
     padding: 10px 20px 20px 20px;
 }
 
-.button_two{
-    border: 1px solid #a5a8b4b4;
-    border-radius: 4px;
-    background-color: transparent;
-    float: right;
-    width: auto;
+.button_two {
+    width: 160px;
     height: auto;
+    display: block;
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid #ffffff61;
+    border-radius: 15px;
+    padding: 10px 25px;
+    font-size: 16px;
     cursor: pointer;
-   
-}
-.button_two a {
+    transition: all 0.3s ease; 
+    position: relative;
     text-decoration: none;
-    padding-left: 8px;
-    padding-right: 8px;
-    font-size: 20px;
+    overflow: hidden;
+    text-align: center;
+    float: right;
+}
 
+.button_two::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transition: 0.6s;
+}
+
+.button_two:hover {
+    border: 1px solid #ffffff;
+    box-shadow: 0px 0px 10px #a5a8b4cc;
+}
+
+.button_two:hover::before {
+    left: 100%;
+}
+
+.button_two:active {
+    transform: translateY(1px);
+    box-shadow: 0px 0px 5px #a5a8b496;
 }
 
 footer {
