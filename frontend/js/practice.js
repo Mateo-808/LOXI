@@ -72,6 +72,7 @@ async function obtenerEjercicios(nivel) {
         console.log("Datos recibidos del backend:", data);
 
         const ejercicios = data.data || [];
+        console.log("Ejercicios sin filtrar:", ejercicios);
 
         // Filtrar por nivel
         const filtrados = ejercicios.filter(
