@@ -69,12 +69,17 @@ async function obtenerEjercicios(nivel) {
         if (!res.ok) throw new Error("Error al obtener ejercicios");
 
         const data = await res.json();
+        console.log("Datos recibidos del backend:", data);
+
         const ejercicios = data.data || [];
 
         // Filtrar por nivel
         const filtrados = ejercicios.filter(
         (ej) => ej.nivel.toLowerCase() === nivel.toLowerCase()
         );
+
+        console.log("Nivel solicitado:", nivel);
+        console.log("Ejercicios filtrados:", filtrados);
 
         return filtrados;
     } catch (err) {
