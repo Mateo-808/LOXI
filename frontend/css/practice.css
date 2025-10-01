@@ -570,6 +570,48 @@ footer p {
     text-align: center;
 }
 
+#ejercicios-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+  padding: 1rem;
+}
+
+.card-ejercicio {
+  background: #1e293b;
+  padding: 1.2rem;
+  border-radius: 12px;
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+  transition: transform 0.2s ease;
+}
+
+.card-ejercicio:hover {
+  transform: translateY(-5px);
+}
+
+.card-ejercicio h3 {
+  margin: 0 0 10px;
+  font-size: 1.3rem;
+}
+
+.card-ejercicio p {
+  font-size: 1rem;
+  color: #cbd5e1;
+}
+
+.card-ejercicio .nivel {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 6px 12px;
+  background: #2563eb;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+
     
 
 
