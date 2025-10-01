@@ -67,14 +67,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function obtenerEjercicios(nivel) {
     try {
-        const res = await fetch(`http://loxi.onrender.com/api/ejercicios`);
+        const res = await fetch(`https://loxi.onrender.com/api/ejercicios`); 
         if (!res.ok) throw new Error("Error al obtener ejercicios");
 
         const data = await res.json();
+        console.log("Datos recibidos del backend:", data);
 
-        return data.data.filter((ej) => ej.nivel === nivel);
+        const ejercicios = Array.isArray(data) ? data : data.data;
+
+        return ejercicios.filter((ej) => ej.nivel === nivel);
     } catch (err) {
-        console.error(err);
+        console.error("Error en obtenerEjercicios:", err);
         return [];
     }
 }
@@ -89,6 +92,11 @@ async function generarEjercicios(nivel) {
     const ejercicios = await obtenerEjercicios(nivel);
 
     container.innerHTML = "";
+
+    if (ejercicios.length === 0) {
+        container.innerHTML = `<p>No hay ejercicios disponibles para este nivel.</p>`;
+        return;
+    }
 
     ejercicios.forEach((ejercicio, index) => {
         const detailsElement = document.createElement("details");
