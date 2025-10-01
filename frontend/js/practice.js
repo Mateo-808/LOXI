@@ -1,3 +1,4 @@
+// --- MENÚ RESPONSIVO ---
 function toggleMobileMenu() {
     const overlay = document.getElementById("mobileMenuOverlay");
     const burgerMenu = document.querySelector(".burger-menu");
@@ -5,11 +6,9 @@ function toggleMobileMenu() {
     overlay.classList.toggle("active");
     burgerMenu.classList.toggle("active");
 
-    if (overlay.classList.contains("active")) {
-        document.body.style.overflow = "hidden";
-    } else {
-        document.body.style.overflow = "auto";
-    }
+    document.body.style.overflow = overlay.classList.contains("active")
+        ? "hidden"
+        : "auto";
 }
 
 function closeMobileMenu() {
@@ -25,7 +24,7 @@ function toggleMenuSection(section) {
     section.classList.toggle("expanded");
 }
 
-document.addEventListener("click", function (event) {
+document.addEventListener("click", (event) => {
     const overlay = document.getElementById("mobileMenuOverlay");
     const burgerMenu = document.querySelector(".burger-menu");
 
@@ -38,7 +37,7 @@ document.addEventListener("click", function (event) {
     }
 });
 
-document.addEventListener("keydown", function (event) {
+document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
         closeMobileMenu();
     }
@@ -47,7 +46,6 @@ document.addEventListener("keydown", function (event) {
 document.addEventListener("DOMContentLoaded", () => {
     const btnSesion = document.getElementById("btnSesion");
     const btnSesionMobile = document.getElementById("btnSesionMobile");
-
     const usuarioGuardado = localStorage.getItem("usuario");
 
     if (usuarioGuardado) {
@@ -67,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function obtenerEjercicios(nivel) {
     try {
-        const res = await fetch(`https://loxi.onrender.com/api/ejercicios`); 
+        const res = await fetch("https://loxi.onrender.com/api/ejercicios"); 
         if (!res.ok) throw new Error("Error al obtener ejercicios");
 
         const data = await res.json();
