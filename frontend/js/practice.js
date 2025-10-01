@@ -112,7 +112,7 @@ async function generarEjercicios(nivel) {
         detailsElement.innerHTML = `
             <summary>
                 <div class="summary-text">
-                    Ejercicio ${index + 1}: ${ejercicio.titulo}
+                    Ejercicio ${index + 1}: ${ejercicio.name}
                 </div>
                 <span class="chevron">
                     <img
