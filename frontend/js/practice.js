@@ -98,12 +98,12 @@ async function generarEjercicios(nivel) {
 
     ejercicios.forEach((ejercicio, index) => {
         const detailsElement = document.createElement("details");
-        detailsElement.setAttribute("name", "ejercicios");
+        detailsElement.setAttribute("titulo", "contenido");
 
         detailsElement.innerHTML = `
             <summary>
                 <div class="summary-text">
-                    Ejercicio ${index + 1}: ${ejercicio.nombre}
+                    Ejercicio ${index + 1}: ${ejercicio.titulo}
                 </div>
                 <span class="chevron">
                     <img
