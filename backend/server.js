@@ -418,7 +418,7 @@ const server = http.createServer(async (req, res) => {
     if (method === "GET" && pathname === "/api/ejercicios") {
         try {
             const ejercicios = await supabaseRequest(
-                "ejercicios?select=*&order=nombre"
+                "ejercicios?select=*&order=titulo"
             );
 
             res.writeHead(200, { "Content-Type": "application/json" });
@@ -430,53 +430,6 @@ const server = http.createServer(async (req, res) => {
             );
         } catch (err) {
             console.error("Error al obtener ejercicios:", err);
-            res.writeHead(500, { "Content-Type": "application/json" });
-            res.end(
-                JSON.stringify({
-                    ok: false,
-                    error: "Error interno del servidor",
-                })
-            );
-        }
-        return;
-    }
-
-    // POST - Crear un nuevo ejercicio
-    if (method === "POST" && pathname === "/api/ejercicios") {
-        try {
-            const { nombre, descripcion, tipo, nivel_dificultad } =
-                await readBody(req);
-
-            if (!nombre || !descripcion) {
-                res.writeHead(400, { "Content-Type": "application/json" });
-                return res.end(
-                    JSON.stringify({
-                        ok: false,
-                        error: "nombre y descripcion son requeridos",
-                    })
-                );
-            }
-
-            const result = await supabaseRequest("ejercicios", {
-                method: "POST",
-                body: JSON.stringify({
-                    nombre: nombre,
-                    descripcion: descripcion,
-                    tipo: tipo,
-                    nivel_dificultad: nivel_dificultad,
-                }),
-            });
-
-            res.writeHead(201, { "Content-Type": "application/json" });
-            res.end(
-                JSON.stringify({
-                    ok: true,
-                    data: result,
-                    message: "Ejercicio creado exitosamente",
-                })
-            );
-        } catch (err) {
-            console.error("Error al crear ejercicio:", err);
             res.writeHead(500, { "Content-Type": "application/json" });
             res.end(
                 JSON.stringify({
