@@ -1,14 +1,19 @@
+
 import http from "http";
 import fetch from "node-fetch";
+import { config } from "dotenv";
 import { registrarUsuario } from "./js/register.js";
 import { loginUsuario } from "./js/login.js";
 import { URL } from "url";
 
-// Configuración de Supabase
-const SUPABASE_URL = "https://bllvqufahggmbhhfqidk.supabase.co";
-const SUPABASE_ANON_KEY =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJsbHZxdWZhaGdnbWJoaGZxaWRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQyMTA1NTgsImV4cCI6MjA1OTc4NjU1OH0.Sucy2GME2XYMxW7cVSbqnxG4cmeTkY2IeqSvWUHSxts";
+// Cargar variables del archivo .env
+config();
 
+// Variables de entorno
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+
+// Leer el cuerpo de la petición
 function readBody(req) {
     return new Promise((resolve, reject) => {
         let body = "";
@@ -23,7 +28,7 @@ function readBody(req) {
     });
 }
 
-// Función para hacer peticiones a Supabas
+// Función para hacer peticiones a Supabase
 async function supabaseRequest(endpoint, options = {}) {
     const url = `${SUPABASE_URL}/rest/v1/${endpoint}`;
     const headers = {
@@ -39,22 +44,16 @@ async function supabaseRequest(endpoint, options = {}) {
         headers,
     });
 
-    if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Supabase error: ${response.status} - ${errorText}`);
-    }
-
-    const data = await response.text();
-    return data ? JSON.parse(data) : null;
+    return response;
 }
 
-const PORT = 3000;
+const PORT = process.env.PORT;
 
 const server = http.createServer(async (req, res) => {
     // CORS headers
     res.setHeader(
         "Access-Control-Allow-Origin",
-        "*",
+        "https://localhost: 3000",
         "https://loxi-one.vercel.app"
     );
     res.setHeader(
@@ -94,7 +93,7 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    // Endpoint de registro (exiPORTstente)
+    // Endpoint de registro (existente)
     if (method === "POST" && pathname === "/api/registro") {
         try {
             const datos = await readBody(req);
