@@ -81,4 +81,21 @@ document.addEventListener("DOMContentLoaded", () => {
     <p><strong>Nivel actual:</strong> ${usuario.nivel || 'No asignado'}</p>
     <p><strong>Puntos:</strong> ${usuario.puntos ?? 0}</p>
   `;
+  
+    const levelButton = document.querySelector(".level-games");
+
+    if (!levelButton) return;
+
+      levelButton.addEventListener("click", () => {
+    if (!usuario || !usuario.nivel) {
+      alert("No se ha encontrado tu nivel actual ");
+      return;
+    }
+
+    const nivel = usuario.nivel.toLowerCase().trim();
+
+    const url = `../pages/interface.html?nivel=${encodeURIComponent(nivel)}`;
+
+    window.location.href = url;
+  });
 });

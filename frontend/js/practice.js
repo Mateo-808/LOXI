@@ -82,7 +82,6 @@ async function obtenerEjercicios(nivel) {
         return [];
     }
 }
-
 function getNivel() {
     const params = new URLSearchParams(window.location.search);
     return params.get("nivel") || "principiante";
