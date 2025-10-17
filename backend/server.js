@@ -53,7 +53,6 @@ const server = http.createServer(async (req, res) => {
     // CORS headers
     res.setHeader(
         "Access-Control-Allow-Origin",
-        "https://localhost: 3000",
         "https://loxi-one.vercel.app"
     );
     res.setHeader(
