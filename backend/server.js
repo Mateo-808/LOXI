@@ -1,18 +1,14 @@
 import http from "http";
 import fetch from "node-fetch";
-import { config } from "dotenv";
 import { registrarUsuario } from "./js/register.js";
 import { loginUsuario } from "./js/login.js";
 import { URL } from "url";
 
-// Cargar variables del archivo .env
-config();
+// Configuración de Supabase
+const SUPABASE_URL = "https://bllvqufahggmbhhfqidk.supabase.co";
+const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJsbHZxdWZhaGdnbWJoaGZxaWRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQyMTA1NTgsImV4cCI6MjA1OTc4NjU1OH0.Sucy2GME2XYMxW7cVSbqnxG4cmeTkY2IeqSvWUHSxts";
 
-// Variables de entorno
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
-
-// Leer el cuerpo de la petición
 function readBody(req) {
     return new Promise((resolve, reject) => {
         let body = "";
@@ -27,7 +23,7 @@ function readBody(req) {
     });
 }
 
-// Función para hacer peticiones a Supabase
+// Función para hacer peticiones a Supabas
 async function supabaseRequest(endpoint, options = {}) {
     const url = `${SUPABASE_URL}/rest/v1/${endpoint}`;
     const headers = {
@@ -55,8 +51,12 @@ async function supabaseRequest(endpoint, options = {}) {
 const PORT = 3000;
 
 const server = http.createServer(async (req, res) => {
-    // Configuración de CORS
-    res.setHeader("Access-Control-Allow-Origin", "*");
+    // CORS headers
+    res.setHeader(
+        "Access-Control-Allow-Origin",
+        "*",
+        "https://loxi-one.vercel.app"
+    );
     res.setHeader(
         "Access-Control-Allow-Headers",
         "Content-Type, Authorization"
@@ -75,32 +75,31 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    // Página principal
+    // Ruta principal con información de endpoints
     if (method === "GET" && pathname === "/") {
         res.writeHead(200, { "Content-Type": "text/html" });
         res.end(`
-        <h1>Bienvenido al servidor LOXI</h1>
-        <p>Endpoints disponibles:</p>
-        <ul>
-          <li><strong>POST</strong> /api/registro - Registrar usuario</li>
-          <li><strong>POST</strong> /api/login - Iniciar sesión</li>
-          <li><strong>POST</strong> /api/verificar-token - Verificar usuario con Supabase</li>
-          <li><strong>POST</strong> /api/progreso - Guardar progreso del ejercicio</li>
-          <li><strong>GET</strong> /api/progreso/:usuario_id - Obtener progreso</li>
-          <li><strong>GET</strong> /api/progreso/estadisticas/:usuario_id - Obtener estadísticas</li>
-          <li><strong>GET</strong> /api/ejercicios - Obtener lista de ejercicios</li>
-          <li><strong>GET</strong> /api/comentarios - Ver comentarios</li>
-          <li><strong>POST</strong> /api/comentarios - Crear comentario</li>
-        </ul>
-      `);
+      <h1>Bienvenido al servidor LOXI</h1>
+      <p>Endpoints disponibles:</p>
+      <ul>
+        <li><strong>POST</strong> /api/registro - Registrar un nuevo usuario</li>
+        <li><strong>POST</strong> /api/login - Iniciar sesión</li>
+        <li><strong>POST</strong> /api/verificar-token - Verificar usuario con Supabase</li>
+        <li><strong>POST</strong> /api/progreso - Guardar progreso del ejercicio</li>
+        <li><strong>GET</strong> /api/progreso/:usuario_id - Obtener progreso de un usuario</li>
+        <li><strong>GET</strong> /api/ejercicios - Obtener lista de ejercicios</li>
+        <li><strong>GET</strong> /api/progreso/estadisticas/:usuario_id - Obtener estadísticas de progreso</li>
+      </ul>
+    `);
         return;
     }
 
-    // --- Registro de usuario ---
+    // Endpoint de registro (exiPORTstente)
     if (method === "POST" && pathname === "/api/registro") {
         try {
             const datos = await readBody(req);
             const resultado = await registrarUsuario(datos);
+
             res.writeHead(200, { "Content-Type": "application/json" });
             res.end(JSON.stringify({ ok: true, data: resultado }));
         } catch (err) {
@@ -110,11 +109,12 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    // --- Login ---
+    // Endpoint de login (existente)
     if (method === "POST" && pathname === "/api/login") {
         try {
             const { nombre, correo, contrasena } = await readBody(req);
             const result = await loginUsuario(nombre, correo, contrasena);
+
             res.writeHead(200, { "Content-Type": "application/json" });
             res.end(JSON.stringify(result));
         } catch (err) {
@@ -124,13 +124,16 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    // --- Verificación de token ---
+    // Endpoint de verificación de token (existente)
     if (method === "POST" && pathname === "/api/verificar-token") {
         try {
             const { token } = await readBody(req);
+
             if (!token) {
                 res.writeHead(400, { "Content-Type": "application/json" });
-                return res.end(JSON.stringify({ error: "Token no proporcionado" }));
+                return res.end(
+                    JSON.stringify({ error: "Token no proporcionado" })
+                );
             }
 
             const response = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
@@ -146,108 +149,322 @@ const server = http.createServer(async (req, res) => {
                 const errorText = await response.text();
                 console.error("Error de Supabase:", response.status, errorText);
                 res.writeHead(401, { "Content-Type": "application/json" });
-                return res.end(JSON.stringify({ error: "Token inválido o expirado" }));
+                return res.end(
+                    JSON.stringify({ error: "Token inválido o expirado" })
+                );
             }
 
             const userData = await response.json();
+            console.log("Datos del usuario:", userData);
+
             res.writeHead(200, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({
-                id: userData.id,
-                name: userData.user_metadata?.full_name || userData.user_metadata?.name || "Usuario",
-                email: userData.email,
-                nivel: userData.user_metadata?.nivel,
-                puntos: userData.user_metadata?.puntos,
-            }));
+            res.end(
+                JSON.stringify({
+                    id: userData.id,
+                    name:
+                        userData.user_metadata?.full_name ||
+                        userData.user_metadata?.name ||
+                        "Usuario",
+                    email: userData.email,
+                    email_confirmed_at: userData.email_confirmed_at,
+                    created_at: userData.created_at,
+                    nivel: userData.user_metadata?.nivel,
+                    puntos: userData.user_metadata?.puntos,
+                })
+            );
         } catch (err) {
             console.error("Error al verificar token:", err);
             res.writeHead(500, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ error: "Error al comunicarse con Supabase" }));
+            res.end(
+                JSON.stringify({ error: "Error al comunicarse con Supabase" })
+            );
         }
         return;
     }
 
-    // --- Guardar progreso ---
+    // POST /api/progreso - Guardar progreso del ejercicio
     if (method === "POST" && pathname === "/api/progreso") {
         try {
-            const { usuario_id, ejercicio_id, completado, puntuacion, nivel, intentos } = await readBody(req);
+            const {
+                usuario_id,
+                ejercicio_id,
+                completado,
+                puntuacion,
+                nivel,
+                intentos,
+            } = await readBody(req);
+
+            // Validar datos requeridos
             if (!usuario_id || !ejercicio_id) {
                 res.writeHead(400, { "Content-Type": "application/json" });
-                return res.end(JSON.stringify({ ok: false, error: "usuario_id y ejercicio_id son requeridos" }));
+                return res.end(
+                    JSON.stringify({
+                        ok: false,
+                        error: "usuario_id y ejercicio_id son requeridos",
+                    })
+                );
             }
 
+            // Validar nivel
+            const nivelesValidos = [
+                "Novato",
+                "Principiante",
+                "Intermedio",
+                "Avanzado",
+            ];
+            if (nivel && !nivelesValidos.includes(nivel)) {
+                res.writeHead(400, { "Content-Type": "application/json" });
+                return res.end(
+                    JSON.stringify({
+                        ok: false,
+                        error:
+                            "nivel debe ser uno de: " +
+                            nivelesValidos.join(", "),
+                    })
+                );
+            }
+
+            // Verificar si ya existe un registro
             const existingRecord = await supabaseRequest(
                 `progreso?usuario_id=eq.${usuario_id}&ejercicio_id=eq.${ejercicio_id}&select=*`
             );
 
             let result;
+
             if (existingRecord && existingRecord.length > 0) {
-                const nuevosIntentos = existingRecord[0].intentos + (intentos || 1);
-                const mejorPuntuacion = Math.max(existingRecord[0].puntuacion || 0, puntuacion || 0);
+                // Actualizar registro existente
+                const nuevosIntentos =
+                    existingRecord[0].intentos + (intentos || 1);
+                const mejorPuntuacion = Math.max(
+                    existingRecord[0].puntuacion || 0,
+                    puntuacion || 0
+                );
 
                 result = await supabaseRequest(
                     `progreso?usuario_id=eq.${usuario_id}&ejercicio_id=eq.${ejercicio_id}`,
                     {
+                        // PATCH para cambiar los datos de usuario si se requiere
                         method: "PATCH",
                         body: JSON.stringify({
-                            completado,
+                            completado: completado,
                             puntuacion: mejorPuntuacion,
-                            nivel,
+                            nivel: nivel,
                             intentos: nuevosIntentos,
                             fecha: new Date().toISOString(),
                         }),
                     }
                 );
             } else {
+                // Crear nuevo registro
                 result = await supabaseRequest("progreso", {
                     method: "POST",
                     body: JSON.stringify({
-                        usuario_id,
-                        ejercicio_id,
+                        usuario_id: usuario_id,
+                        ejercicio_id: ejercicio_id,
                         completado: completado || false,
                         puntuacion: puntuacion || 0,
-                        nivel,
+                        nivel: nivel,
                         intentos: intentos || 1,
                     }),
                 });
             }
 
             res.writeHead(200, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ ok: true, data: result, message: "Progreso guardado exitosamente" }));
+            res.end(
+                JSON.stringify({
+                    ok: true,
+                    data: result,
+                    message: "Progreso guardado exitosamente",
+                })
+            );
         } catch (err) {
             console.error("Error al guardar progreso:", err);
             res.writeHead(500, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ ok: false, error: err.message }));
+            res.end(
+                JSON.stringify({
+                    ok: false,
+                    error: "Error interno del servidor",
+                    details: err.message,
+                })
+            );
         }
         return;
     }
 
-    // --- Obtener ejercicios ---
+    // GET -Obtener progreso de un usuario
+    if (
+        method === "GET" &&
+        pathname.startsWith("/api/progreso/") &&
+        !pathname.includes("/estadisticas/")
+    ) {
+        try {
+            const pathParts = pathname.split("/");
+            const usuario_id = pathParts[3]; // Extraer id del usuario de la URL
+
+            if (!usuario_id) {
+                res.writeHead(400, { "Content-Type": "application/json" });
+                return res.end(
+                    JSON.stringify({
+                        ok: false,
+                        error: "usuario_id es requerido",
+                    })
+                );
+            }
+
+            const progreso = await supabaseRequest(
+                `progreso?usuario_id=eq.${usuario_id}&select=*,ejercicios(nombre,descripcion)&order=fecha.desc`
+            );
+
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(
+                JSON.stringify({
+                    ok: true,
+                    data: progreso || [],
+                })
+            );
+        } catch (err) {
+            console.error("Error al obtener progreso:", err);
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(
+                JSON.stringify({
+                    ok: false,
+                    error: "Error interno del servidor",
+                })
+            );
+        }
+        return;
+    }
+
+    // GET - Obtener estadísticas Ede progreso
+    if (
+        method === "GET" &&
+        pathname.startsWith("/api/progreso/estadisticas/")
+    ) {
+        try {
+            const pathParts = pathname.split("/");
+            const usuario_id = pathParts[4];
+
+            if (!usuario_id) {
+                res.writeHead(400, { "Content-Type": "application/json" });
+                return res.end(
+                    JSON.stringify({
+                        ok: false,
+                        error: "usuario_id es requerido",
+                    })
+                );
+            }
+
+            const progreso = await supabaseRequest(
+                `progreso?usuario_id=eq.${usuario_id}&select=*`
+            );
+
+            // Calcular estadísticas
+            const estadisticas = {
+                total_ejercicios: progreso ? progreso.length : 0,
+                ejercicios_completados: progreso
+                    ? progreso.filter((p) => p.completado).length
+                    : 0,
+                puntuacion_promedio:
+                    progreso && progreso.length > 0
+                        ? progreso
+                              .filter((p) => p.completado)
+                              .reduce(
+                                  (sum, p) => sum + (p.puntuacion || 0),
+                                  0
+                              ) / progreso.filter((p) => p.completado).length ||
+                          0
+                        : 0,
+                total_intentos: progreso
+                    ? progreso.reduce((sum, p) => sum + (p.intentos || 0), 0)
+                    : 0,
+                nivel_novato: progreso
+                    ? progreso.filter((p) => p.nivel === "Novato").length
+                    : 0,
+                nivel_principiante: progreso
+                    ? progreso.filter((p) => p.nivel === "Principiante").length
+                    : 0,
+                nivel_intermedio: progreso
+                    ? progreso.filter((p) => p.nivel === "Intermedio").length
+                    : 0,
+                nivel_avanzado: progreso
+                    ? progreso.filter((p) => p.nivel === "Avanzado").length
+                    : 0,
+            };
+
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(
+                JSON.stringify({
+                    ok: true,
+                    data: estadisticas,
+                })
+            );
+        } catch (err) {
+            console.error("Error al obtener estadísticas:", err);
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(
+                JSON.stringify({
+                    ok: false,
+                    error: "Error interno del servidor",
+                })
+            );
+        }
+        // NO SÉ PORQUE ESTÁ ESE GUARDA AHÍ
+        // PERO FUNCIONA, ASÍ QUENO LO BORREN
+        return;
+        Guarda;
+    }
+
+    // GET - Obtener lista de ejercicios
     if (method === "GET" && pathname === "/api/ejercicios") {
         try {
-            const ejercicios = await supabaseRequest("ejercicios?select=*&order=titulo");
+            const ejercicios = await supabaseRequest(
+                "ejercicios?select=*&order=titulo"
+            );
+
             res.writeHead(200, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ ok: true, data: ejercicios || [] }));
+            res.end(
+                JSON.stringify({
+                    ok: true,
+                    data: ejercicios || [],
+                })
+            );
         } catch (err) {
             console.error("Error al obtener ejercicios:", err);
             res.writeHead(500, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ ok: false, error: err.message }));
+            res.end(
+                JSON.stringify({
+                    ok: false,
+                    error: "Error interno del servidor",
+                })
+            );
         }
         return;
     }
 
-    // --- Comentarios ---
     if (method === "POST" && pathname === "/api/comentarios") {
         try {
             const { usuario_id, mensaje } = await readBody(req);
+
             if (!mensaje || !usuario_id) {
                 res.writeHead(400, { "Content-Type": "application/json" });
-                return res.end(JSON.stringify({ ok: false, error: "usuario_id y mensaje son requeridos" }));
+                res.end(
+                    JSON.stringify({
+                        ok: false,
+                        error: "usuario_id y mensaje son requeridos",
+                    })
+                );
+                return;
             }
 
             const ahora = new Date().toISOString();
+
             const result = await supabaseRequest("comentarios", {
                 method: "POST",
-                body: JSON.stringify({ usuario_id, mensaje, fecha: ahora }),
+                body: JSON.stringify({
+                    usuario_id,
+                    mensaje,
+                    fecha: ahora,
+                }),
             });
 
             res.writeHead(201, { "Content-Type": "application/json" });
@@ -265,6 +482,7 @@ const server = http.createServer(async (req, res) => {
             const comentarios = await supabaseRequest(
                 "comentarios?select=id,mensaje,fecha,usuario_id,usuarios(nombre)&order=fecha.desc"
             );
+
             res.writeHead(200, { "Content-Type": "application/json" });
             res.end(JSON.stringify({ ok: true, data: comentarios || [] }));
         } catch (err) {
@@ -275,19 +493,81 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    // --- Rutas no encontradas ---
+    if (method === "PUT" && pathname.startsWith("/api/comentarios/")) {
+        try {
+            const comentarioId = pathname.split("/").pop();
+            const { mensaje } = await readBody(req);
+
+            if (!mensaje) {
+                res.writeHead(400, { "Content-Type": "application/json" });
+                res.end(
+                    JSON.stringify({
+                        ok: false,
+                        error: "El mensaje es requerido",
+                    })
+                );
+                return;
+            }
+
+            const result = await supabaseRequest(
+                `comentarios?id=eq.${comentarioId}`,
+                {
+                    method: "PATCH",
+                    body: JSON.stringify({ mensaje }),
+                }
+            );
+
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ ok: true, data: result }));
+        } catch (err) {
+            console.error("Error al editar comentario:", err);
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ ok: false, error: err.message }));
+        }
+        return;
+    }
+
+    if (method === "DELETE" && pathname.startsWith("/api/comentarios/")) {
+        try {
+            const comentarioId = pathname.split("/").pop();
+
+            const result = await supabaseRequest(
+                `comentarios?id=eq.${comentarioId}`,
+                {
+                    method: "DELETE",
+                }
+            );
+
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ ok: true, data: result }));
+        } catch (err) {
+            console.error("Error al eliminar comentario:", err);
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ ok: false, error: err.message }));
+        }
+        return;
+    }
+
+    // Ruta no encontrada
     res.writeHead(404, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ ok: false, error: `Ruta ${method} ${pathname} no encontrada` }));
+    res.end(
+        JSON.stringify({
+            ok: false,
+            error: "Ruta no encontrada",
+            message: `La ruta ${method} ${pathname} no existe`,
+        })
+    );
 });
 
-// Iniciar servidor
 server.listen(PORT, () => {
-    console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
-    console.log("Endpoints principales:");
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    console.log("Endpoints disponibles:");
     console.log("  POST /api/registro");
     console.log("  POST /api/login");
     console.log("  POST /api/verificar-token");
     console.log("  POST /api/progreso");
+    console.log("  GET  /api/progreso/:usuario_id");
+    console.log("  GET  /api/progreso/estadisticas/:usuario_id");
     console.log("  GET  /api/ejercicios");
-    console.log("  GET  /api/comentarios");
+    console.log("  POST /api/ejercicios");
 });
