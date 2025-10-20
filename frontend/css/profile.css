@@ -498,7 +498,12 @@ main {
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 100;
+
+    i{
+        font-size: 34px;
+    }
 }
+
 .level-games:hover {
   transform: scale(1.1);
   box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
