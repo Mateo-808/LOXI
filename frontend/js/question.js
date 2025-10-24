@@ -63,8 +63,6 @@ async function guardarProgreso(nivel, puntuacion, completado = true) {
                 ? "http://localhost:3000"
                 : "https://loxi.onrender.com";
 
-        console.log("URL del servidor:", serverUrl);
-
         const datosAEnviar = {
             usuario_id: usuarioId,
             ejercicio_id: ejercicioId,
@@ -73,8 +71,6 @@ async function guardarProgreso(nivel, puntuacion, completado = true) {
             nivel: nivel,
             intentos: 1,
         };
-
-        console.log("Datos a enviar:", datosAEnviar);
 
         const response = await fetch(`${serverUrl}/api/progreso`, {
             method: "POST",
