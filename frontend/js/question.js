@@ -20,13 +20,6 @@ window.addEventListener("DOMContentLoaded", function () {
 
     // Enfocar automáticamente el campo de entrada al cargar
     input.focus();
-
-    // Función de depuración para verificar localStorage (remover en producción)
-    console.log("Contenido actual de localStorage:");
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        console.log(`${key}:`, localStorage.getItem(key));
-    }
 });
 
 // Función para guardar progreso en Supabase
