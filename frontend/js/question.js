@@ -95,8 +95,6 @@ async function guardarProgreso(nivel, puntuacion, completado = true) {
         if (!response.ok) {
             throw new Error(data.error || `Error HTTP: ${response.status}`);
         }
-
-        console.log("Progreso guardado exitosamente:", data);
         return data;
     } catch (error) {
         console.error("=== ERROR AL GUARDAR PROGRESO ===");
