@@ -31,9 +31,6 @@ async function guardarProgreso(nivel, puntuacion, completado = true) {
         const usuarioGuardado = localStorage.getItem("usuario");
         let usuarioId = null;
 
-        console.log("usuarioGuardado:", usuarioGuardado);
-
-        // Extraer el ID del objeto usuario guardado
         if (usuarioGuardado) {
             try {
                 const usuario = JSON.parse(usuarioGuardado);
@@ -41,18 +38,14 @@ async function guardarProgreso(nivel, puntuacion, completado = true) {
                 console.log(
                     "Usuario encontrado:",
                     usuario.nombre,
-                    "ID:",
-                    usuarioId
                 );
             } catch (e) {
                 console.error("Error al parsear usuario guardado:", e);
             }
         } else {
-            // Fallback: buscar IDs directos en localStorage
             usuarioId =
                 localStorage.getItem("user_id") ||
                 localStorage.getItem("usuario_id");
-            console.log("ID encontrado en fallback:", usuarioId);
         }
 
         const ejercicioId = "7c1a8ae1-a72e-4a4f-9efb-5a7be07a8b3a"; // UUID del ejercicio de lógica
@@ -61,7 +54,6 @@ async function guardarProgreso(nivel, puntuacion, completado = true) {
             console.warn(
                 "No se encontró ID de usuario válido. El progreso no se guardará."
             );
-            console.log("Estado del localStorage usuario:", usuarioGuardado);
             return;
         }
 
@@ -92,11 +84,7 @@ async function guardarProgreso(nivel, puntuacion, completado = true) {
             body: JSON.stringify(datosAEnviar),
         });
 
-        console.log("Response status:", response.status);
-        console.log("Response ok:", response.ok);
-
         const responseText = await response.text();
-        console.log("Response text:", responseText);
 
         let data;
         try {
@@ -118,17 +106,6 @@ async function guardarProgreso(nivel, puntuacion, completado = true) {
         console.error("=== ERROR AL GUARDAR PROGRESO ===");
         console.error("Error completo:", error);
         console.error("Stack trace:", error.stack);
-
-        // Eliminar este mensjae cuando se acaben las pruebas para que el usuario no lo vea
-        const chatContainer = document.getElementById("chatContainer");
-        if (chatContainer) {
-            chatContainer.innerHTML += `
-                <div class="bot-msg" style="opacity: 0.7; font-style: italic;">
-                    LOXI: <small>(Progreso no guardado - ${error.message})</small>
-                </div>
-            `;
-            scrollToBottom(result);
-        }
     }
 }
 
