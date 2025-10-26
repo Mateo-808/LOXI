@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Loxi</title>
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="logo-section">
+                <img src="../assets/logo.svg" alt="Loxi Logo">
+                <h2>Panel Admin</h2>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-item active" data-section="dashboard">
+                    <span class="icon">📊</span>
+                    Dashboard
+                </button>
+                <button class="nav-item" data-section="usuarios">
+                    <span class="icon">👥</span>
+                    Usuarios
+                </button>
+                <button class="nav-item" data-section="ejercicios">
+                    <span class="icon">📝</span>
+                    Ejercicios
+                </button>
+                <button class="nav-item" data-section="juegos">
+                    <span class="icon">🎮</span>
+                    Juegos
+                </button>
+                <button class="nav-item" data-section="progreso">
+                    <span class="icon">📈</span>
+                    Progreso
+                </button>
+                <button class="nav-item" data-section="comentarios">
+                    <span class="icon">💬</span>
+                    Comentarios
+                </button>
+            </nav>
+            <button class="logout-btn" id="logoutBtn">
+                <span class="icon">🚪</span>
+                Cerrar Sesión
+            </button>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <h1 id="sectionTitle">Dashboard</h1>
+                <div class="admin-info">
+                    <span id="adminName">Administrador</span>
+                </div>
+            </header>
+
+            <section id="dashboard" class="content-section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-content">
+                            <h3 id="totalUsers">0</h3>
+                            <p>Total Usuarios</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📝</div>
+                        <div class="stat-content">
+                            <h3 id="totalExercises">0</h3>
+                            <p>Total Ejercicios</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🎮</div>
+                        <div class="stat-content">
+                            <h3 id="totalGames">0</h3>
+                            <p>Total Juegos</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💬</div>
+                        <div class="stat-content">
+                            <h3 id="totalComments">0</h3>
+                            <p>Total Comentarios</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="usuarios" class="content-section">
+                <div class="section-header">
+                    <h2>Gestión de Usuarios</h2>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Fecha Registro</th>
+                                <th>Admin</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr>
+                                <td colspan="5" class="loading">Cargando...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="ejercicios" class="content-section">
+                <div class="section-header">
+                    <h2>Gestión de Ejercicios</h2>
+                    <button class="btn-primary" id="addExerciseBtn">+ Nuevo Ejercicio</button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Nivel</th>
+                                <th>Tipo</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="exercisesTableBody">
+                            <tr>
+                                <td colspan="4" class="loading">Cargando...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="juegos" class="content-section">
+                <div class="section-header">
+                    <h2>Gestión de Juegos</h2>
+                    <button class="btn-primary" id="addGameBtn">+ Nuevo Juego</button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Nivel</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="gamesTableBody">
+                            <tr>
+                                <td colspan="3" class="loading">Cargando...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="progreso" class="content-section">
+                <div class="section-header">
+                    <h2>Progreso de Estudiantes</h2>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Usuario</th>
+                                <th>Ejercicio</th>
+                                <th>Puntuación</th>
+                                <th>Intentos</th>
+                                <th>Completado</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody id="progressTableBody">
+                            <tr>
+                                <td colspan="6" class="loading">Cargando...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="comentarios" class="content-section">
+                <div class="section-header">
+                    <h2>Gestión de Comentarios</h2>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Usuario</th>
+                                <th>Mensaje</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="commentsTableBody">
+                            <tr>
+                                <td colspan="4" class="loading">Cargando...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <form id="modalForm"></form>
+        </div>
+    </div>
+
+    <script type="module" src="../js/admin.js"></script>
+</body>
+</html>
