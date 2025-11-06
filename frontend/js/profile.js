@@ -81,6 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <p><strong>Nivel actual:</strong> ${usuario.nivel || 'No asignado'}</p>
     <p><strong>Puntos:</strong> ${usuario.puntos ?? 0}</p>
   `;
+  console.log(usuario.es_admin)
   
   const levelButton = document.querySelector(".level-games");
   if (!levelButton) return;
