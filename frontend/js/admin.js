@@ -1,11 +1,192 @@
 import { supabase } from './supabaseClient.js';
 
+/* ============================================================
+   🧩 SISTEMA DE ALERTAS PERSONALIZADAS
+============================================================ */
+function showCustomAlert(options) {
+    const {
+        title = '¡Atención!',
+        message = '',
+        type = 'error',
+        icon = 'fa-exclamation-triangle',
+        confirmText = 'Entendido',
+        cancelText = null,
+        onConfirm = null,
+        onCancel = null
+    } = options;
+
+    const overlay = document.createElement('div');
+    overlay.className = 'custom-alert-overlay';
+
+    const alertBox = document.createElement('div');
+    alertBox.className = `custom-alert alert-${type}`;
+
+    const iconDiv = document.createElement('div');
+    iconDiv.className = 'alert-icon';
+    iconDiv.innerHTML = `<i class="fas ${icon}"></i>`;
+
+    const content = document.createElement('div');
+    content.className = 'alert-content';
+
+    const titleElement = document.createElement('h3');
+    titleElement.className = 'alert-title';
+    titleElement.textContent = title;
+
+    const messageElement = document.createElement('p');
+    messageElement.className = 'alert-message';
+    messageElement.textContent = message;
+
+    const actions = document.createElement('div');
+    actions.className = 'alert-actions';
+
+    const confirmBtn = document.createElement('button');
+    confirmBtn.className = 'alert-btn alert-btn-primary';
+    confirmBtn.textContent = confirmText;
+    confirmBtn.onclick = () => {
+        removeAlert();
+        if (onConfirm) onConfirm();
+    };
+    actions.appendChild(confirmBtn);
+
+    if (cancelText) {
+        const cancelBtn = document.createElement('button');
+        cancelBtn.className = 'alert-btn alert-btn-secondary';
+        cancelBtn.textContent = cancelText;
+        cancelBtn.onclick = () => {
+            removeAlert();
+            if (onCancel) onCancel();
+        };
+        actions.appendChild(cancelBtn);
+    }
+
+    content.appendChild(titleElement);
+    content.appendChild(messageElement);
+    content.appendChild(actions);
+    alertBox.appendChild(iconDiv);
+    alertBox.appendChild(content);
+    overlay.appendChild(alertBox);
+    document.body.appendChild(overlay);
+
+    function removeAlert() {
+        overlay.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => overlay.remove(), 300);
+    }
+
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            removeAlert();
+            if (onCancel) onCancel();
+        }
+    });
+
+    return { close: removeAlert };
+}
+
+if (!document.getElementById('custom-alert-animations')) {
+    const style = document.createElement('style');
+    style.id = 'custom-alert-animations';
+    style.textContent = `
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+    `;
+    document.head.appendChild(style);
+}
+
+// 🚫 Acceso denegado
+function showAccessDeniedAlert(redirectUrl = './login.html') {
+    showCustomAlert({
+        title: '¡Ops! 🚫',
+        message: 'Estás en el lugar equivocado, regresa a la página de inicio o inicia sesión',
+        type: 'error',
+        icon: 'fa-lock',
+        confirmText: 'Ir a inicio',
+        cancelText: 'Iniciar sesión',
+        onConfirm: () => (window.location.href = './index.html'),
+        onCancel: () => (window.location.href = redirectUrl)
+    });
+}
+
+// ✅ Éxito
+function showSuccessAlert(message, onConfirm = null) {
+    showCustomAlert({
+        title: '¡Éxito!',
+        message,
+        type: 'success',
+        icon: 'fa-check-circle',
+        confirmText: 'Aceptar',
+        onConfirm
+    });
+}
+
+// ❌ Error
+function showErrorAlert(message, onConfirm = null) {
+    showCustomAlert({
+        title: 'Error',
+        message,
+        type: 'error',
+        icon: 'fa-times-circle',
+        confirmText: 'Aceptar',
+        onConfirm
+    });
+}
+
+// ⚠️ Confirmación
+function showConfirmAlert(message, onConfirm, onCancel = null) {
+    showCustomAlert({
+        title: '¿Estás seguro?',
+        message,
+        type: 'warning',
+        icon: 'fa-question-circle',
+        confirmText: 'Confirmar',
+        cancelText: 'Cancelar',
+        onConfirm,
+        onCancel
+    });
+}
+
 let currentUser = null;
 
 async function checkAdminAccess() {
-    currentUser = usuario;
-    document.getElementById('adminName').textContent = usuario.nombre;
-    return true;
+    try {
+        // Verificar si hay una sesión activa
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        
+        if (sessionError || !session) {
+            alert('¡Ops! Estás en el lugar equivocado, regresa a la página de inicio o inicia sesión');
+            window.location.href = './login.html';
+            return false;
+        }
+
+        // Obtener información del usuario desde la base de datos
+        const { data: userData, error: userError } = await supabase
+            .from('usuarios')
+            .select('*')
+            .eq('id', session.user.id)
+            .single();
+
+        if (userError || !userData) {
+            alert('¡Ops! Estás en el lugar equivocado, regresa a la página de inicio o inicia sesión');
+            window.location.href = './login.html';
+            return false;
+        }
+
+        // Verificar si es_admin es true
+        if (!userData.es_admin) {
+            alert('¡Ops! Estás en el lugar equivocado, regresa a la página de inicio o inicia sesión');
+            window.location.href = './index.html';
+            return false;
+        }
+
+        // Usuario válido y es administrador
+        currentUser = userData;
+        document.getElementById('adminName').textContent = userData.nombre;
+        return true;
+
+    } catch (error) {
+        console.error('Error en verificación de acceso:', error);
+        alert('¡Ops! Estás en el lugar equivocado, regresa a la página de inicio o inicia sesión');
+        window.location.href = './login.html';
+        return false;
+    }
 }
 
 function switchSection(sectionName) {
@@ -88,7 +269,6 @@ async function loadUsers() {
         `;
     }).join('');
 }
-
 
 window.toggleAdmin = async function(userId, makeAdmin) {
     if (!confirm(`¿Estás seguro de ${makeAdmin ? 'dar' : 'quitar'} permisos de administrador?`)) {
@@ -435,8 +615,10 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
     window.location.href = './login.html';
 });
 
+// Ejecutar verificación al cargar la página
 checkAdminAccess().then(hasAccess => {
     if (hasAccess) {
         loadDashboardStats();
     }
 });
+
