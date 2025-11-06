@@ -82,20 +82,27 @@ document.addEventListener("DOMContentLoaded", () => {
     <p><strong>Puntos:</strong> ${usuario.puntos ?? 0}</p>
   `;
   
-    const levelButton = document.querySelector(".level-games");
+  const levelButton = document.querySelector(".level-games");
+  if (!levelButton) return;
 
-    if (!levelButton) return;
+  levelButton.addEventListener("click", () => {
+    if (!usuario) {
+      alert("No se ha encontrado tu sesión actual.");
+      return;
+    }
 
-      levelButton.addEventListener("click", () => {
-    if (!usuario || !usuario.nivel) {
-      alert("No se ha encontrado tu nivel actual ");
+    if (usuario.es_admin === true) {
+      window.location.href = "../pages/admin";
+      return;
+    }
+
+    if (!usuario.nivel) {
+      alert("No se ha encontrado tu nivel actual.");
       return;
     }
 
     const nivel = usuario.nivel.toLowerCase().trim();
-
     const url = `../pages/interface.html?nivel=${encodeURIComponent(nivel)}`;
-
     window.location.href = url;
   });
 });
