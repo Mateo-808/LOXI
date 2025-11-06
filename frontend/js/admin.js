@@ -152,7 +152,7 @@ async function checkAdminAccess() {
         
         if (sessionError || !session) {
             alert('¡Ops! Estás en el lugar equivocado, regresa a la página de inicio o inicia sesión');
-            window.location.href = '../index.html';
+            window.location.href = './login';
             return false;
         }
 
@@ -172,7 +172,7 @@ async function checkAdminAccess() {
         // Verificar si es_admin es true
         if (!userData.es_admin) {
             alert('¡Ops! Estás en el lugar equivocado, regresa a la página de inicio o inicia sesión');
-            window.location.href = '../index.html';
+            window.location.href = '../../index.html';
             return false;
         }
 
