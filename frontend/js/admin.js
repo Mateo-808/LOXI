@@ -96,8 +96,8 @@ function showAccessDeniedAlert(redirectUrl = './login.html') {
         icon: 'fa-lock',
         confirmText: 'Ir a inicio',
         cancelText: 'Iniciar sesión',
-        onConfirm: () => (window.location.href = './index.html'),
-        onCancel: () => (window.location.href = redirectUrl)
+        onConfirm: () => (window.location.href = '../../'),
+        onCancel: () => (window.location.href = './login.html')
     });
 }
 
