@@ -23,7 +23,7 @@ function toggleMenuSection(section) {
   section.classList.toggle("expanded");
 }
 
-document.addEventListener("click", function (event) {
+document.addEventListener("click", (event) => {
   const overlay = document.getElementById("mobileMenuOverlay");
   const burgerMenu = document.querySelector(".burger-menu");
 
@@ -36,28 +36,23 @@ document.addEventListener("click", function (event) {
   }
 });
 
-document.addEventListener("keydown", function (event) {
-  if (event.key === "Escape") {
-    closeMobileMenu();
-  }
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") closeMobileMenu();
 });
 
 document.addEventListener("DOMContentLoaded", () => {
   const btnSesion = document.getElementById("btnSesion");
   const btnSesionMobile = document.getElementById("btnSesionMobile");
-
   const usuarioGuardado = localStorage.getItem("usuario");
 
   if (usuarioGuardado) {
     btnSesion.textContent = "Ver perfil";
     btnSesion.href = "../pages/profile.html";
-
     btnSesionMobile.textContent = "Ver perfil";
     btnSesionMobile.href = "../pages/profile.html";
   } else {
     btnSesion.textContent = "Iniciar sesión";
     btnSesion.href = "../pages/login.html";
-
     btnSesionMobile.textContent = "Iniciar sesión";
     btnSesionMobile.href = "../pages/login.html";
   }
@@ -90,16 +85,13 @@ async function cargarEjercicios() {
       .order("titulo", { ascending: true });
 
     if (error) throw error;
-
     ejercicios = data;
     indiceActual = 0;
 
-    if (ejercicios.length > 0) {
-      cargarEjercicioActual();
-    } else {
+    if (ejercicios.length > 0) cargarEjercicioActual();
+    else
       document.querySelector(".contenedor").innerHTML =
         `<p>No hay ejercicios disponibles para el nivel ${nivel}.</p>`;
-    }
   } catch (err) {
     console.error("❌ Error al cargar ejercicios:", err.message);
   }
@@ -107,59 +99,47 @@ async function cargarEjercicios() {
 
 function cargarEjercicioActual() {
   const { titulo } = obtenerParametros();
-  const ejercicio = ejercicios.find(
-    (e) => e.titulo.toLowerCase() === titulo.toLowerCase()
-  ) || ejercicios[0];
+  const ejercicio =
+    ejercicios.find(
+      (e) => e.titulo.toLowerCase() === titulo.toLowerCase()
+    ) || ejercicios[0];
 
   indiceActual = ejercicios.indexOf(ejercicio);
   mostrarEjercicio(ejercicio);
 }
 
 function mostrarEjercicio(ejercicio) {
-  document.querySelectorAll("#sub-header")[0].innerHTML = `
-    <h3>${ejercicio.nivel}: ${ejercicio.titulo}</h3>
-  `;
+  const subHeaders = document.querySelectorAll("#sub-header");
+  const contents = document.querySelectorAll(".content");
 
-  document.querySelectorAll(".content")[0].innerHTML = `
-    <p>${ejercicio.descripcion || "Sin descripción disponible."}</p>
-  `;
+  if (subHeaders.length < 3 || contents.length < 3) return;
 
-  document.querySelectorAll("#sub-header")[1].innerHTML = `
-    <h3>Ejercicio</h3>
-  `;
-  document.querySelectorAll(".content")[1].innerHTML = `
+  subHeaders[0].innerHTML = `<h3>${ejercicio.nivel}: ${ejercicio.titulo}</h3>`;
+  contents[0].innerHTML = `<p>${ejercicio.descripcion || "Sin descripción disponible."}</p>`;
+
+  subHeaders[1].innerHTML = `<h3>Ejercicio</h3>`;
+  contents[1].innerHTML = `
     <p>${ejercicio.descripción_ejercicio || ""}</p>
     <p><strong>${ejercicio.ejercicio || ""}</strong></p>
     <input type="text" id="respuestaUsuario" placeholder="Escribe tu respuesta aquí..." />
   `;
 
-  document.querySelectorAll("#sub-header")[2].innerHTML = `
-    <h3>Explicación</h3>
-  `;
-  document.querySelectorAll(".content")[2].innerHTML = `
-    <p id="explicacion">Aquí aparecerá la explicación o resultado.</p>
-  `;
+  subHeaders[2].innerHTML = `<h3>Explicación</h3>`;
+  contents[2].innerHTML = `<p id="explicacion">Aquí aparecerá la explicación o resultado.</p>`;
 
-  const input = document.getElementById("respuestaUsuario");
-  input.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      validarRespuesta();
-    }
-  });
+  inicializarEventos();
 }
 
 function validarRespuesta() {
   const input = document.getElementById("respuestaUsuario");
   const explicacion = document.getElementById("explicacion");
-
-  if (!input) return;
+  if (!input || !explicacion) return;
 
   const respuestaUsuario = input.value.trim().toLowerCase();
   const respuestaCorrecta =
     ejercicios[indiceActual].respuesta?.trim().toLowerCase() || "";
 
-  if (respuestaUsuario === "") {
+  if (!respuestaUsuario) {
     explicacion.innerHTML = "⚠️ Escribe una respuesta antes de continuar.";
     return;
   }
@@ -175,9 +155,10 @@ function siguienteEjercicio() {
   if (indiceActual < ejercicios.length - 1) {
     indiceActual++;
     const siguiente = ejercicios[indiceActual];
-    const nivel = ejercicios[indiceActual].nivel;
+    const nivel = siguiente.nivel;
     const tituloURL = encodeURIComponent(siguiente.titulo);
 
+    // 🔁 Actualiza la URL sin recargar
     window.history.pushState({}, "", `?nivel=${nivel.toLowerCase()}&ejercicio=${tituloURL}`);
     mostrarEjercicio(siguiente);
   } else {
@@ -185,18 +166,27 @@ function siguienteEjercicio() {
   }
 }
 
+function inicializarEventos() {
+  const btnResultado = document.querySelector("button:nth-of-type(1)");
+  const btnContinuar = document.querySelector("button:nth-of-type(2)");
+  const input = document.getElementById("respuestaUsuario");
+
+  if (btnResultado) {
+    btnResultado.onclick = validarRespuesta;
+  }
+  if (btnContinuar) {
+    btnContinuar.onclick = siguienteEjercicio;
+  }
+  if (input) {
+    input.onkeydown = (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        validarRespuesta();
+      }
+    };
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   cargarEjercicios();
-
-  // Botón "RESULTADO"
-  const btnResultado = document.querySelectorAll("button")[1];
-  if (btnResultado) {
-    btnResultado.addEventListener("click", validarRespuesta);
-  }
-
-  // Botón "CONTINUAR"
-  const btnContinuar = document.querySelectorAll("button")[2];
-  if (btnContinuar) {
-    btnContinuar.addEventListener("click", siguienteEjercicio);
-  }
 });
