@@ -139,6 +139,14 @@ function mostrarEjercicio(ejercicio) {
   document.querySelectorAll(".content")[2].innerHTML = `
     <p id="explicacion">Aquí aparecerá la explicación o resultado.</p>
   `;
+
+  const input = document.getElementById("respuestaUsuario");
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      validarRespuesta();
+    }
+  });
 }
 
 function validarRespuesta() {
@@ -173,7 +181,7 @@ function siguienteEjercicio() {
     window.history.pushState({}, "", `?nivel=${nivel.toLowerCase()}&ejercicio=${tituloURL}`);
     mostrarEjercicio(siguiente);
   } else {
-    alert(" ¡Has completado todos los ejercicios de este nivel!");
+    alert("🎉 ¡Has completado todos los ejercicios de este nivel!");
   }
 }
 
