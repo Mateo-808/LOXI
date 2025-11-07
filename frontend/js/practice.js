@@ -98,32 +98,35 @@ async function generarEjercicios(nivel) {
         return;
     }
 
-    ejercicios.forEach((ejercicio, index) => {
-        const detailsElement = document.createElement("details");
-        detailsElement.setAttribute("name", "ejercicios");
+    ejercicios.forEach((ejercicio) => {
+    const detailsElement = document.createElement("details");
+    detailsElement.setAttribute("name", "ejercicios");
 
-        detailsElement.innerHTML = `
-            <summary>
-                <div class="summary-text">
-                    Ejercicio ${index + 1}: ${ejercicio.titulo}
-                </div>
-                <span class="chevron">
-                    <img
-                        width="24"
-                        height="24"
-                        src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png"
-                        alt="chevron-down"
-                    />
-                </span>
-            </summary>
-            <p>${ejercicio.descripcion}</p>
-            <a class="button_two" href="interface.html?nivel=${nivel}&ejercicio=${index + 1}">
-                Iniciar ahora
-            </a>
-        `;
+    const tituloURL = encodeURIComponent(ejercicio.titulo);
 
-        container.appendChild(detailsElement);
+    detailsElement.innerHTML = `
+        <summary>
+        <div class="summary-text">
+            ${ejercicio.titulo}
+        </div>
+        <span class="chevron">
+            <img
+            width="24"
+            height="24"
+            src="https://img.icons8.com/material-rounded/24/FFFFFF/chevron-down.png"
+            alt="chevron-down"
+            />
+        </span>
+        </summary>
+        <p>${ejercicio.descripcion}</p>
+        <a class="button_two" href="interface.html?nivel=${nivel}&ejercicio=${tituloURL}">
+        Iniciar ahora
+        </a>
+    `;
+
+    container.appendChild(detailsElement);
     });
+
 }
 
 function inicializarPagina() {
