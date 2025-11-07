@@ -5,11 +5,9 @@ function toggleMobileMenu() {
   overlay.classList.toggle("active");
   burgerMenu.classList.toggle("active");
 
-  if (overlay.classList.contains("active")) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
-  }
+  document.body.style.overflow = overlay.classList.contains("active")
+    ? "hidden"
+    : "auto";
 }
 
 function closeMobileMenu() {
@@ -70,23 +68,25 @@ import { supabase } from "./supabaseClient.js";
 let ejercicios = [];
 let indiceActual = 0;
 
-function obtenerNivelDesdeURL() {
+function obtenerParametros() {
   const params = new URLSearchParams(window.location.search);
-  let nivel = params.get("nivel") || "Cargando...";
+  let nivel = params.get("nivel") || "Principiante";
+  let titulo = params.get("ejercicio") || "";
 
   nivel = nivel.charAt(0).toUpperCase() + nivel.slice(1).toLowerCase();
+  titulo = decodeURIComponent(titulo);
 
-  return nivel;
+  return { nivel, titulo };
 }
 
 async function cargarEjercicios() {
-  const nivelActual = obtenerNivelDesdeURL();
+  const { nivel } = obtenerParametros();
 
   try {
     const { data, error } = await supabase
       .from("ejercicios")
       .select("*")
-      .eq("nivel", nivelActual)
+      .eq("nivel", nivel)
       .order("titulo", { ascending: true });
 
     if (error) throw error;
@@ -95,14 +95,24 @@ async function cargarEjercicios() {
     indiceActual = 0;
 
     if (ejercicios.length > 0) {
-      mostrarEjercicio(ejercicios[indiceActual]);
+      cargarEjercicioActual();
     } else {
       document.querySelector(".contenedor").innerHTML =
-        `<p>No hay ejercicios disponibles para el nivel ${nivelActual}.</p>`;
+        `<p>No hay ejercicios disponibles para el nivel ${nivel}.</p>`;
     }
   } catch (err) {
     console.error("❌ Error al cargar ejercicios:", err.message);
   }
+}
+
+function cargarEjercicioActual() {
+  const { titulo } = obtenerParametros();
+  const ejercicio = ejercicios.find(
+    (e) => e.titulo.toLowerCase() === titulo.toLowerCase()
+  ) || ejercicios[0];
+
+  indiceActual = ejercicios.indexOf(ejercicio);
+  mostrarEjercicio(ejercicio);
 }
 
 function mostrarEjercicio(ejercicio) {
@@ -127,7 +137,7 @@ function mostrarEjercicio(ejercicio) {
     <h3>Explicación</h3>
   `;
   document.querySelectorAll(".content")[2].innerHTML = `
-    <p id="explicacion">${ejercicio.respuesta ? "" : "Aquí aparecerá la explicación."}</p>
+    <p id="explicacion">Aquí aparecerá la explicación o resultado.</p>
   `;
 }
 
@@ -142,12 +152,12 @@ function validarRespuesta() {
     ejercicios[indiceActual].respuesta?.trim().toLowerCase() || "";
 
   if (respuestaUsuario === "") {
-    explicacion.innerHTML = "Escribe una respuesta antes de continuar.";
+    explicacion.innerHTML = "⚠️ Escribe una respuesta antes de continuar.";
     return;
   }
 
   if (respuestaUsuario === respuestaCorrecta) {
-    explicacion.innerHTML = "¡Correcto! Has acertado.";
+    explicacion.innerHTML = "🎉 ¡Correcto! Has acertado.";
   } else {
     explicacion.innerHTML = `❌ Incorrecto. La respuesta correcta es: <strong>${ejercicios[indiceActual].respuesta}</strong>`;
   }
@@ -156,9 +166,14 @@ function validarRespuesta() {
 function siguienteEjercicio() {
   if (indiceActual < ejercicios.length - 1) {
     indiceActual++;
-    mostrarEjercicio(ejercicios[indiceActual]);
+    const siguiente = ejercicios[indiceActual];
+    const nivel = ejercicios[indiceActual].nivel;
+    const tituloURL = encodeURIComponent(siguiente.titulo);
+
+    window.history.pushState({}, "", `?nivel=${nivel.toLowerCase()}&ejercicio=${tituloURL}`);
+    mostrarEjercicio(siguiente);
   } else {
-    alert("🎉 ¡Has completado todos los ejercicios de este nivel!");
+    alert(" ¡Has completado todos los ejercicios de este nivel!");
   }
 }
 
