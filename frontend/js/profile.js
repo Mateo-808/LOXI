@@ -119,6 +119,7 @@ async function cargarTienda() {
   try {
     const response = await fetch("../js/data/tienda.json");
     const productos = await response.json();
+    console.log("📦 Productos cargados:", productos);
     const usuario = JSON.parse(localStorage.getItem("usuario")) || {};
     const compras = JSON.parse(localStorage.getItem("compras")) || [];
     contenedor.innerHTML = "";
@@ -139,16 +140,27 @@ async function cargarTienda() {
       contenedor.appendChild(card);
     });
 
+    console.log("🧱 Botones generados:", contenedor.querySelectorAll("button[data-id]").length);
+
     contenedor.addEventListener("click", async (e) => {
+      console.log("🖱️ Click detectado:", e.target);
       const boton = e.target.closest("button[data-id]");
+      console.log("🎯 Botón encontrado:", boton);
       if (!boton || boton.disabled) return;
 
       const id = boton.dataset.id;
+      console.log("🆔 ID del producto:", id);
       const producto = productos.find((p) => String(p.id) === id);
-      if (!producto) return;
+      if (!producto) {
+        console.warn("⚠️ Producto no encontrado para ID:", id);
+        return;
+      }
 
       const usuarioActual = JSON.parse(localStorage.getItem("usuario")) || {};
       const comprasActuales = JSON.parse(localStorage.getItem("compras")) || [];
+
+      console.log("👤 Usuario actual:", usuarioActual);
+      console.log("💰 Puntos actuales:", usuarioActual.puntos, "Precio del producto:", producto.precio);
 
       if (!usuarioActual.puntos || usuarioActual.puntos < producto.precio) {
         alert("No tienes suficientes puntos para esta compra.");
@@ -169,6 +181,8 @@ async function cargarTienda() {
             .select();
           if (error) console.error("Error al actualizar puntuación:", error);
           else console.log("✅ Puntuación actualizada:", data);
+        } else {
+          console.warn("⚠️ No se encontró ID de usuario para actualizar Supabase.");
         }
       } catch (err) {
         console.error("Error en Supabase:", err);
