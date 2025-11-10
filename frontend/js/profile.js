@@ -1,21 +1,16 @@
+import { supabase } from './supabaseClient.js';
+
 function toggleMobileMenu() {
     const overlay = document.getElementById("mobileMenuOverlay");
     const burgerMenu = document.querySelector(".burger-menu");
-
     overlay.classList.toggle("active");
     burgerMenu.classList.toggle("active");
-
-    if (overlay.classList.contains("active")) {
-        document.body.style.overflow = "hidden";
-    } else {
-        document.body.style.overflow = "auto";
-    }
+    document.body.style.overflow = overlay.classList.contains("active") ? "hidden" : "auto";
 }
 
 function closeMobileMenu() {
     const overlay = document.getElementById("mobileMenuOverlay");
     const burgerMenu = document.querySelector(".burger-menu");
-
     overlay.classList.remove("active");
     burgerMenu.classList.remove("active");
     document.body.style.overflow = "auto";
@@ -28,12 +23,7 @@ function toggleMenuSection(section) {
 document.addEventListener("click", function (event) {
     const overlay = document.getElementById("mobileMenuOverlay");
     const burgerMenu = document.querySelector(".burger-menu");
-
-    if (
-        overlay.classList.contains("active") &&
-        !overlay.contains(event.target) &&
-        !burgerMenu.contains(event.target)
-    ) {
+    if (overlay.classList.contains("active") && !overlay.contains(event.target) && !burgerMenu.contains(event.target)) {
         closeMobileMenu();
     }
 });
@@ -45,7 +35,6 @@ document.addEventListener("keydown", function (event) {
     }
 });
 
-// Funciones del Modal de la Tienda
 function openStoreModal() {
     const modal = document.getElementById('storeModal');
     if (modal) {
@@ -68,7 +57,6 @@ function closeModalOnOutside(event) {
     }
 }
 
-// Cerrar Sesión
 const cerrarSesionBtn = document.getElementById('cerrarSesion');
 if (cerrarSesionBtn) {
     cerrarSesionBtn.addEventListener('click', () => {
@@ -77,11 +65,9 @@ if (cerrarSesionBtn) {
     });
 }
 
-// Cargar información del perfil
 document.addEventListener("DOMContentLoaded", () => {
     const usuario = JSON.parse(localStorage.getItem("usuario"));
     const profileInfo = document.querySelector(".profile-info");
-
     if (!usuario || !profileInfo) {
         if (profileInfo) {
             profileInfo.innerHTML = `
@@ -97,7 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const fecha = usuario.fecha || usuario.created_at;
     const fechaFormateada = fecha ? new Date(fecha).toLocaleDateString() : 'No disponible';
-
     profileInfo.innerHTML = `
         <p><strong><i class="fa-solid fa-signature"></i> Nombre:</strong> ${usuario.name || usuario.nombre || 'Sin nombre'}</p>
         <p><strong><i class="fa-solid fa-envelope"></i> Correo:</strong> ${usuario.email || usuario.correo || 'Sin correo'}</p>
@@ -106,9 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
         <p><strong><i class="fa-solid fa-gem"></i> Puntos:</strong> ${usuario.puntos ?? 0}</p>
     `;
 
-    console.log(usuario.es_admin);
-
-    // Botón de nivel/juegos
     const levelButton = document.querySelector(".level-games");
     if (!levelButton) return;
 
@@ -117,37 +99,29 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("No se ha encontrado tu sesión actual.");
             return;
         }
-
         if (usuario.es_admin === true) {
             window.location.href = "../pages/admin";
             return;
         }
-
         if (!usuario.nivel) {
             alert("No se ha encontrado tu nivel actual.");
             return;
         }
-
         const nivel = usuario.nivel.toLowerCase().trim();
         const url = `../pages/interface.html?nivel=${encodeURIComponent(nivel)}`;
         window.location.href = url;
     });
 });
 
-// Cargar productos de la tienda
 async function cargarTienda() {
     const contenedor = document.getElementById("store-container");
     if (!contenedor) return;
-
     try {
         const response = await fetch("../js/data/tienda.json");
         const productos = await response.json();
-
         const usuario = JSON.parse(localStorage.getItem("usuario")) || {};
         const compras = JSON.parse(localStorage.getItem("compras")) || [];
-
         contenedor.innerHTML = "";
-
         productos.forEach((item) => {
             const comprado = compras.includes(item.id);
             const card = document.createElement("div");
@@ -164,33 +138,30 @@ async function cargarTienda() {
             contenedor.appendChild(card);
         });
 
-        // Manejar compras
-        contenedor.addEventListener("click", (e) => {
+        contenedor.addEventListener("click", async (e) => {
             if (e.target.tagName === "BUTTON" && !e.target.disabled) {
                 const id = parseInt(e.target.dataset.id);
                 const producto = productos.find((p) => p.id === id);
                 if (!producto) return;
-
                 const usuarioActual = JSON.parse(localStorage.getItem("usuario")) || {};
                 const comprasActuales = JSON.parse(localStorage.getItem("compras")) || [];
-
                 if (usuarioActual.puntos >= producto.precio) {
                     usuarioActual.puntos -= producto.precio;
                     comprasActuales.push(producto.id);
                     localStorage.setItem("usuario", JSON.stringify(usuarioActual));
                     localStorage.setItem("compras", JSON.stringify(comprasActuales));
-                    
+                    const { error } = await supabase
+                        .from("progreso")
+                        .update({ puntuacion: usuarioActual.puntos })
+                        .eq("usuario_id", usuarioActual.id);
+                    if (error) console.error("Error al actualizar la puntuación:", error);
                     e.target.innerHTML = '<i class="fa-solid fa-check"></i> Comprado';
                     e.target.disabled = true;
-                    
                     alert(`¡Has comprado ${producto.nombre}!`);
-                    
-                    // Actualizar puntos en el perfil
                     const profileInfo = document.querySelector(".profile-info");
                     if (profileInfo) {
                         const fecha = usuarioActual.fecha || usuarioActual.created_at;
                         const fechaFormateada = fecha ? new Date(fecha).toLocaleDateString() : 'No disponible';
-                        
                         profileInfo.innerHTML = `
                             <p><strong><i class="fa-solid fa-signature"></i> Nombre:</strong> ${usuarioActual.name || usuarioActual.nombre || 'Sin nombre'}</p>
                             <p><strong><i class="fa-solid fa-envelope"></i> Correo:</strong> ${usuarioActual.email || usuarioActual.correo || 'Sin correo'}</p>
@@ -211,3 +182,10 @@ async function cargarTienda() {
 }
 
 document.addEventListener("DOMContentLoaded", cargarTienda);
+
+window.toggleMobileMenu = toggleMobileMenu;
+window.closeMobileMenu = closeMobileMenu;
+window.openStoreModal = openStoreModal;
+window.closeStoreModal = closeStoreModal;
+window.toggleMenuSection = toggleMenuSection;
+window.closeModalOnOutside = closeModalOnOutside;
