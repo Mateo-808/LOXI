@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "nombre": "Skin de mago azul",
+    "descripcion": "Un traje mágico con aura azul brillante.",
+    "precio": 100,
+    "imagen": "https://cdn-icons-png.flaticon.com/512/4712/4712105.png"
+  },
+  {
+    "id": 2,
+    "nombre": "Sombrero de sabio",
+    "descripcion": "Aumenta tu sabiduría en lógica matemática.",
+    "precio": 200,
+    "imagen": "https://cdn-icons-png.flaticon.com/512/4712/4712112.png"
+  },
+  {
+    "id": 3,
+    "nombre": "Varita dorada",
+    "descripcion": "Canaliza tus poderes matemáticos con estilo.",
+    "precio": 300,
+    "imagen": "https://cdn-icons-png.flaticon.com/512/4712/4712082.png"
+  }
+]

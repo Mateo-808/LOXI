@@ -12,7 +12,7 @@
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-            integrity="sha512-..."
+            integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
         />
@@ -22,6 +22,7 @@
         <div class="background-layers">
             <div class="grid-overlay"></div>
         </div>
+        
         <header>
             <nav>
                 <div class="logo">
@@ -37,16 +38,19 @@
                         <a href="explanation_services.html">Servicios</a>
                         <ul class="submenu">
                             <li>
-                                <a href="./services.html#level-selector"
-                                    >Niveles</a
-                                >
+                                <a href="./services.html#level-selector">Niveles</a>
                             </li>
-                            <li><a href="./practice.html">Pratica</a></li>
+                            <li><a href="./practice.html">Práctica</a></li>
                         </ul>
                     </li>
                     <li><a href="us.html">Conócenos</a></li>
                     <li><a href="d&s.html">D&S</a></li>
                 </ul>
+
+                <button class="store-button" onclick="openStoreModal()">
+                    <i class="fa-solid fa-store"></i>
+                    <span>Tienda</span>
+                </button>
 
                 <div class="burger-menu" onclick="toggleMobileMenu()">
                     <div class="burger-line"></div>
@@ -67,50 +71,78 @@
                 <div class="mobile-menu-single">
                     <a href="../../index.html">Inicio</a>
                 </div>
-            </div>
 
-            <div class="mobile-menu-section" onclick="toggleMenuSection(this)">
-                <h3>
-                    Servicios
-                    <i class="fa-solid fa-chevron-down"></i>
-                </h3>
-                <ul class="mobile-menu-items">
-                    <li>
-                        <a href="explanation_services.html">Servicios</a>
-                    </li>
-                    <li>
-                        <a href="services.html#level-selector">Niveles</a>
-                    </li>
-                    <li>
-                        <a href="../pages/practice.html">Practica</a>
-                    </li>
-                </ul>
-            </div>
+                <div class="mobile-menu-section" onclick="toggleMenuSection(this)">
+                    <h3>
+                        Servicios
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </h3>
+                    <ul class="mobile-menu-items">
+                        <li>
+                            <a href="explanation_services.html">Servicios</a>
+                        </li>
+                        <li>
+                            <a href="services.html#level-selector">Niveles</a>
+                        </li>
+                        <li>
+                            <a href="../pages/practice.html">Práctica</a>
+                        </li>
+                    </ul>
+                </div>
 
-            <div class="mobile-menu-single">
-                <a href="us.html">Conócenos</a>
-            </div>
+                <div class="mobile-menu-single">
+                    <a href="us.html">Conócenos</a>
+                </div>
 
-            <div class="mobile-menu-single">
-                <a href="d&s.html">D&S</a>
+                <div class="mobile-menu-single">
+                    <a href="d&s.html">D&S</a>
+                </div>
+
+                <div class="mobile-store-button">
+                    <button onclick="openStoreModal(); closeMobileMenu();">
+                        <i class="fa-solid fa-store"></i>
+                        <span>Tienda</span>
+                    </button>
+                </div>
             </div>
         </div>
+
         <main>
             <div class="profile-container">
-                <h2>Perfil</h2>
+                <h2><i class="fa-solid fa-user"></i> Perfil</h2>
                 <div class="profile-info">
-                    <p><strong>Nombre:</strong> Cargando...</p>
-                    <p><strong>Correo:</strong> Cargando...</p>
-                    <p><strong>Fecha de registro:</strong> Cargando...</p>
-                    <p><strong>Nivel actual:</strong> Cargando...</p>
-                    <p><strong>Puntos:</strong> Cargando...</p>
+                    <p><strong><i class="fa-solid fa-signature"></i> Nombre:</strong> Cargando...</p>
+                    <p><strong><i class="fa-solid fa-envelope"></i> Correo:</strong> Cargando...</p>
+                    <p><strong><i class="fa-solid fa-calendar-days"></i> Fecha de registro:</strong> Cargando...</p>
+                    <p><strong><i class="fa-solid fa-ranking-star"></i> Nivel actual:</strong> Cargando...</p>
+                    <p><strong><i class="fa-solid fa-gem"></i> Puntos:</strong> Cargando...</p>
                 </div>
                 <div class="botones">
-                    <button class="boton" id="cerrarSesion">Cerrar sesión</button>
+                    <button class="boton" id="cerrarSesion">
+                        <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+                    </button>
                 </div>
             </div>
         </main>
-        <button class="level-games"><i class="fa-solid fa-gamepad"></i></button>
+
+        <!-- Modal de la Tienda -->
+        <div class="modal-overlay" id="storeModal" onclick="closeModalOnOutside(event)">
+            <div class="modal-content" onclick="event.stopPropagation()">
+                <div class="modal-header">
+                    <h2><i class="fa-solid fa-shop"></i> Tienda de Recompensas</h2>
+                    <button class="close-modal" onclick="closeStoreModal()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div id="store-container" class="store-container">
+                    <!-- Los productos se cargarán dinámicamente aquí -->
+                </div>
+            </div>
+        </div>
+
+        <button class="level-games">
+            <i class="fa-solid fa-gamepad"></i>
+        </button>
 
         <script src="../js/profile.js"></script>
     </body>
