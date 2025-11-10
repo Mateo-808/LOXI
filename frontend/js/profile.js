@@ -33,11 +33,6 @@ window.closeModalOnOutside = function (event) {
 
 document.addEventListener("DOMContentLoaded", async () => {
     const user = JSON.parse(localStorage.getItem("user"));
-    if (!user) {
-        alert("Por favor, inicia sesión.");
-        window.location.href = "../../index.html";
-        return;
-    }
 
     const nombreEl = document.querySelector(".profile-info p:nth-child(1)");
     const correoEl = document.querySelector(".profile-info p:nth-child(2)");
