@@ -798,6 +798,7 @@ main {
     background: radial-gradient(circle, rgba(100, 181, 246, 0.1) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 0.4s ease;
+    pointer-events: none;
 }
 
 .store-item:hover::before {
@@ -866,6 +867,8 @@ main {
     align-items: center;
     justify-content: center;
     gap: 8px;
+    position: relative;
+    z-index: 2;
 }
 
 .store-item button:hover:not(:disabled) {
