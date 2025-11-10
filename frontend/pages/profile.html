@@ -125,13 +125,18 @@
             </div>
         </main>
 
-        <div id="storeModal" class="store-modal" onclick="closeModalOnOutside(event)">
-            <div class="store-modal-content">
-                <button class="close-modal" onclick="closeStoreModal()">
-                <i class="fa-solid fa-xmark"></i>
-                </button>
-                <h2><i class="fa-solid fa-store"></i> Tienda LOXI</h2>
-                <div id="store-container" class="store-container">Cargando productos...</div>
+        <!-- Modal de la Tienda -->
+        <div class="modal-overlay" id="storeModal" onclick="closeModalOnOutside(event)">
+            <div class="modal-content" onclick="event.stopPropagation()">
+                <div class="modal-header">
+                    <h2><i class="fa-solid fa-shop"></i> Tienda de Recompensas</h2>
+                    <button class="close-modal" onclick="closeStoreModal()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div id="store-container" class="store-container">
+                    <!-- Los productos se cargarán dinámicamente aquí -->
+                </div>
             </div>
         </div>
 
