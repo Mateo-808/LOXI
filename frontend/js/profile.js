@@ -1,213 +1,165 @@
-function toggleMobileMenu() {
-    const overlay = document.getElementById("mobileMenuOverlay");
-    const burgerMenu = document.querySelector(".burger-menu");
+import { supabase } from "./supabaseClient.js";
 
-    overlay.classList.toggle("active");
-    burgerMenu.classList.toggle("active");
+const storeModal = document.getElementById("storeModal");
+const storeContainer = document.getElementById("store-container");
+const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
 
-    if (overlay.classList.contains("active")) {
-        document.body.style.overflow = "hidden";
-    } else {
-        document.body.style.overflow = "auto";
-    }
-}
+window.toggleMobileMenu = function () {
+    mobileMenuOverlay.classList.toggle("active");
+};
 
-function closeMobileMenu() {
-    const overlay = document.getElementById("mobileMenuOverlay");
-    const burgerMenu = document.querySelector(".burger-menu");
+window.toggleMenuSection = function (section) {
+    const items = section.querySelector(".mobile-menu-items");
+    section.classList.toggle("open");
+    items.classList.toggle("show");
+};
 
-    overlay.classList.remove("active");
-    burgerMenu.classList.remove("active");
-    document.body.style.overflow = "auto";
-}
+window.closeMobileMenu = function () {
+    mobileMenuOverlay.classList.remove("active");
+};
 
-function toggleMenuSection(section) {
-    section.classList.toggle("expanded");
-}
+window.openStoreModal = function () {
+    storeModal.style.display = "flex";
+    loadStoreProducts();
+};
 
-document.addEventListener("click", function (event) {
-    const overlay = document.getElementById("mobileMenuOverlay");
-    const burgerMenu = document.querySelector(".burger-menu");
+window.closeStoreModal = function () {
+    storeModal.style.display = "none";
+};
 
-    if (
-        overlay.classList.contains("active") &&
-        !overlay.contains(event.target) &&
-        !burgerMenu.contains(event.target)
-    ) {
-        closeMobileMenu();
-    }
-});
+window.closeModalOnOutside = function (event) {
+    if (event.target === storeModal) closeStoreModal();
+};
 
-document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape") {
-        closeMobileMenu();
-        closeStoreModal();
-    }
-});
-
-// Funciones del Modal de la Tienda
-function openStoreModal() {
-    const modal = document.getElementById('storeModal');
-    if (modal) {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-function closeStoreModal() {
-    const modal = document.getElementById('storeModal');
-    if (modal) {
-        modal.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    }
-}
-
-function closeModalOnOutside(event) {
-    if (event.target.id === 'storeModal') {
-        closeStoreModal();
-    }
-}
-
-// Cerrar Sesión
-const cerrarSesionBtn = document.getElementById('cerrarSesion');
-if (cerrarSesionBtn) {
-    cerrarSesionBtn.addEventListener('click', () => {
-        localStorage.removeItem('usuario');
-        window.location.href = '../../index.html';
-    });
-}
-
-// Cargar información del perfil
-document.addEventListener("DOMContentLoaded", () => {
-    const usuario = JSON.parse(localStorage.getItem("usuario"));
-    const profileInfo = document.querySelector(".profile-info");
-
-    if (!usuario || !profileInfo) {
-        if (profileInfo) {
-            profileInfo.innerHTML = `
-                <p><strong><i class="fa-solid fa-signature"></i> Nombre:</strong> No disponible</p>
-                <p><strong><i class="fa-solid fa-envelope"></i> Correo:</strong> No disponible</p>
-                <p><strong><i class="fa-solid fa-calendar-days"></i> Fecha de registro:</strong> No disponible</p>
-                <p><strong><i class="fa-solid fa-ranking-star"></i> Nivel actual:</strong> No disponible</p>
-                <p><strong><i class="fa-solid fa-gem"></i> Puntos:</strong> No disponible</p>
-            `;
-        }
+document.addEventListener("DOMContentLoaded", async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+        alert("Por favor, inicia sesión.");
+        window.location.href = "../../index.html";
         return;
     }
 
-    const fecha = usuario.fecha || usuario.created_at;
-    const fechaFormateada = fecha ? new Date(fecha).toLocaleDateString() : 'No disponible';
+    const nombreEl = document.querySelector(".profile-info p:nth-child(1)");
+    const correoEl = document.querySelector(".profile-info p:nth-child(2)");
+    const fechaEl = document.querySelector(".profile-info p:nth-child(3)");
+    const nivelEl = document.querySelector(".profile-info p:nth-child(4)");
+    const puntosEl = document.querySelector(".profile-info p:nth-child(5)");
 
-    profileInfo.innerHTML = `
-        <p><strong><i class="fa-solid fa-signature"></i> Nombre:</strong> ${usuario.name || usuario.nombre || 'Sin nombre'}</p>
-        <p><strong><i class="fa-solid fa-envelope"></i> Correo:</strong> ${usuario.email || usuario.correo || 'Sin correo'}</p>
-        <p><strong><i class="fa-solid fa-calendar-days"></i> Fecha de registro:</strong> ${fechaFormateada}</p>
-        <p><strong><i class="fa-solid fa-ranking-star"></i> Nivel actual:</strong> ${usuario.nivel || 'No asignado'}</p>
-        <p><strong><i class="fa-solid fa-gem"></i> Puntos:</strong> ${usuario.puntos ?? 0}</p>
-    `;
+    nombreEl.innerHTML = `<strong><i class="fa-solid fa-signature"></i> Nombre:</strong> ${user.nombre}`;
+    correoEl.innerHTML = `<strong><i class="fa-solid fa-envelope"></i> Correo:</strong> ${user.email}`;
+    fechaEl.innerHTML = `<strong><i class="fa-solid fa-calendar-days"></i> Fecha de registro:</strong> ${new Date(user.created_at).toLocaleDateString()}`;
+    nivelEl.innerHTML = `<strong><i class="fa-solid fa-ranking-star"></i> Nivel actual:</strong> Cargando...`;
+    puntosEl.innerHTML = `<strong><i class="fa-solid fa-gem"></i> Puntos:</strong> Cargando...`;
 
-    console.log(usuario.es_admin);
-
-    // Botón de nivel/juegos
-    const levelButton = document.querySelector(".level-games");
-    if (!levelButton) return;
-
-    levelButton.addEventListener("click", () => {
-        if (!usuario) {
-            alert("No se ha encontrado tu sesión actual.");
-            return;
-        }
-
-        if (usuario.es_admin === true) {
-            window.location.href = "../pages/admin";
-            return;
-        }
-
-        if (!usuario.nivel) {
-            alert("No se ha encontrado tu nivel actual.");
-            return;
-        }
-
-        const nivel = usuario.nivel.toLowerCase().trim();
-        const url = `../pages/interface.html?nivel=${encodeURIComponent(nivel)}`;
-        window.location.href = url;
-    });
+    await loadUserProgress(user.id, puntosEl);
 });
 
-// Cargar productos de la tienda
-async function cargarTienda() {
-    const contenedor = document.getElementById("store-container");
-    if (!contenedor) return;
-
+async function loadUserProgress(userId, puntosEl) {
     try {
-        const response = await fetch("../js/data/tienda.json");
-        const productos = await response.json();
+        const { data, error } = await supabase
+            .from("progreso")
+            .select("puntuacion")
+            .eq("usuario_id", userId);
 
-        const usuario = JSON.parse(localStorage.getItem("usuario")) || {};
-        const compras = JSON.parse(localStorage.getItem("compras")) || [];
+        if (error) throw error;
 
-        contenedor.innerHTML = "";
+        const totalPuntos = data.reduce((sum, row) => sum + (row.puntuacion || 0), 0);
 
-        productos.forEach((item) => {
-            const comprado = compras.includes(item.id);
-            const card = document.createElement("div");
-            card.classList.add("store-item");
-            card.innerHTML = `
-                <img src="${item.imagen}" alt="${item.nombre}">
-                <h3>${item.nombre}</h3>
-                <p>${item.descripcion}</p>
-                <p class="price"><i class="fa-solid fa-gem"></i> ${item.precio} puntos</p>
-                <button ${comprado ? "disabled" : ""} data-id="${item.id}">
-                    ${comprado ? '<i class="fa-solid fa-check"></i> Comprado' : '<i class="fa-solid fa-cart-shopping"></i> Comprar'}
-                </button>
-            `;
-            contenedor.appendChild(card);
-        });
-
-        // Manejar compras
-        contenedor.addEventListener("click", (e) => {
-            if (e.target.tagName === "BUTTON" && !e.target.disabled) {
-                const id = parseInt(e.target.dataset.id);
-                const producto = productos.find((p) => p.id === id);
-                if (!producto) return;
-
-                const usuarioActual = JSON.parse(localStorage.getItem("usuario")) || {};
-                const comprasActuales = JSON.parse(localStorage.getItem("compras")) || [];
-
-                if (usuarioActual.puntos >= producto.precio) {
-                    usuarioActual.puntos -= producto.precio;
-                    comprasActuales.push(producto.id);
-                    localStorage.setItem("usuario", JSON.stringify(usuarioActual));
-                    localStorage.setItem("compras", JSON.stringify(comprasActuales));
-                    
-                    e.target.innerHTML = '<i class="fa-solid fa-check"></i> Comprado';
-                    e.target.disabled = true;
-                    
-                    alert(`¡Has comprado ${producto.nombre}!`);
-                    
-                    // Actualizar puntos en el perfil
-                    const profileInfo = document.querySelector(".profile-info");
-                    if (profileInfo) {
-                        const fecha = usuarioActual.fecha || usuarioActual.created_at;
-                        const fechaFormateada = fecha ? new Date(fecha).toLocaleDateString() : 'No disponible';
-                        
-                        profileInfo.innerHTML = `
-                            <p><strong><i class="fa-solid fa-signature"></i> Nombre:</strong> ${usuarioActual.name || usuarioActual.nombre || 'Sin nombre'}</p>
-                            <p><strong><i class="fa-solid fa-envelope"></i> Correo:</strong> ${usuarioActual.email || usuarioActual.correo || 'Sin correo'}</p>
-                            <p><strong><i class="fa-solid fa-calendar-days"></i> Fecha de registro:</strong> ${fechaFormateada}</p>
-                            <p><strong><i class="fa-solid fa-ranking-star"></i> Nivel actual:</strong> ${usuarioActual.nivel || 'No asignado'}</p>
-                            <p><strong><i class="fa-solid fa-gem"></i> Puntos:</strong> ${usuarioActual.puntos ?? 0}</p>
-                        `;
-                    }
-                } else {
-                    alert("No tienes suficientes puntos para esta compra.");
-                }
-            }
-        });
-    } catch (error) {
-        console.error("Error al cargar la tienda:", error);
-        contenedor.innerHTML = "<p style='text-align: center; color: #c9d6ff;'>Error al cargar los productos de la tienda.</p>";
+        localStorage.setItem("userPoints", totalPuntos);
+        puntosEl.innerHTML = `<strong><i class="fa-solid fa-gem"></i> Puntos:</strong> ${totalPuntos}`;
+    } catch (err) {
+        console.error("Error al cargar progreso:", err.message);
+        puntosEl.innerHTML = `<strong><i class="fa-solid fa-gem"></i> Puntos:</strong> Error`;
     }
 }
 
-document.addEventListener("DOMContentLoaded", cargarTienda);
+async function loadStoreProducts() {
+    try {
+        const response = await fetch("../js/data/shop.json");
+        const productos = await response.json();
+        const userPoints = parseInt(localStorage.getItem("userPoints")) || 0;
+
+        storeContainer.innerHTML = productos
+            .map((item) => {
+                const puedeComprar = userPoints >= item.precio;
+                return `
+                <div class="store-item ${puedeComprar ? "" : "disabled"}">
+                    <img src="${item.imagen}" alt="${item.nombre}" />
+                    <h3>${item.nombre}</h3>
+                    <p>${item.descripcion}</p>
+                    <p class="precio"><i class="fa-solid fa-gem"></i> ${item.precio}</p>
+                    <button class="buy-btn" ${!puedeComprar ? "disabled" : ""} onclick="comprarProducto('${item.id}', ${item.precio})">
+                        ${puedeComprar ? "Comprar" : "No tienes suficientes puntos"}
+                    </button>
+                </div>`;
+            })
+            .join("");
+    } catch (err) {
+        console.error("Error al cargar productos:", err);
+        storeContainer.innerHTML = "<p>Error al cargar los productos.</p>";
+    }
+}
+
+window.comprarProducto = async function (id, precio) {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+        alert("Debes iniciar sesión para comprar.");
+        return;
+    }
+
+    let userPoints = parseInt(localStorage.getItem("userPoints")) || 0;
+    if (userPoints < precio) {
+        alert("No tienes suficientes puntos.");
+        return;
+    }
+
+    userPoints -= precio;
+    localStorage.setItem("userPoints", userPoints);
+
+    const puntosEl = document.querySelector(".profile-info p:nth-child(5)");
+    puntosEl.innerHTML = `<strong><i class="fa-solid fa-gem"></i> Puntos:</strong> ${userPoints}`;
+
+    try {
+        const { data: registro, error: selectError } = await supabase
+            .from("progreso")
+            .select("id, puntuacion")
+            .eq("usuario_id", user.id)
+            .is("ejercicio_id", null)
+            .single();
+
+        if (selectError && selectError.code !== "PGRST116") throw selectError;
+
+        if (registro) {
+            const { error: updateError } = await supabase
+                .from("progreso")
+                .update({ puntuacion: userPoints })
+                .eq("id", registro.id);
+
+            if (updateError) throw updateError;
+        } else {
+            const { error: insertError } = await supabase.from("progreso").insert([
+                {
+                    usuario_id: user.id,
+                    ejercicio_id: null,
+                    completado: false,
+                    puntuacion: userPoints,
+                    nivel: "Novato"
+                },
+            ]);
+
+            if (insertError) throw insertError;
+        }
+
+        alert("✅ ¡Has comprado este producto exitosamente!");
+        loadStoreProducts();
+    } catch (error) {
+        console.error("Error al actualizar puntos en Supabase:", error.message);
+        alert("⚠️ Error al actualizar tus puntos en la base de datos.");
+    }
+};
+
+const cerrarSesionBtn = document.getElementById("cerrarSesion");
+cerrarSesionBtn.addEventListener("click", () => {
+    localStorage.clear();
+    window.location.href = "../../index.html";
+});
