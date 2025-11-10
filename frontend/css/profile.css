@@ -118,14 +118,14 @@ nav {
 
 .logo i {
     font-size: 24px;
-    color: #64b5f6;
+    color: #fff;
 }
 
 .logo h1 {
     font-size: 24px;
     font-weight: bold;
     letter-spacing: 1px;
-    background: linear-gradient(135deg, #fff, #64b5f6);
+    background: #fff;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
