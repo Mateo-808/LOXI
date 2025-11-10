@@ -164,14 +164,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnSesion = document.getElementById('btnSesion');
   const btnSesionMobile = document.getElementById('btnSesionMobile');
 
-  const usuarioGuardado = localStorage.getItem('usuario');
+  const usuarioGuardado = JSON.parse(localStorage.getItem('usuario'));
 
   if (usuarioGuardado) {
-    btnSesion.textContent = 'Ver perfil';
-    btnSesion.href = 'frontend/pages/profile.html';
+    if (usuarioGuardado.es_admin === true) {
+        btnSesion.textContent = 'Ir al Panel';
+        btnSesion.href = 'frontend/pages/admin.html';
 
-    btnSesionMobile.textContent = 'Ver perfil';
-    btnSesionMobile.href = 'frontend/pages/profile.html';
+        btnSesionMobile.textContent = 'Ir al Panel';
+        btnSesionMobile.href = 'frontend/pages/admin.html';
+    } else {
+        btnSesion.textContent = 'Ver perfil';
+        btnSesion.href = 'frontend/pages/profile.html';
+    
+        btnSesionMobile.textContent = 'Ver perfil';
+        btnSesionMobile.href = 'frontend/pages/profile.html';
+    }
   } else {
     btnSesion.textContent = 'Iniciar sesión';
     btnSesion.href = 'frontend/pages/login.html';
@@ -180,3 +188,5 @@ document.addEventListener('DOMContentLoaded', () => {
     btnSesionMobile.href = 'frontend/pages/login.html';
   }
 });
+
+console.log(localStorage.getItem('usuario'));
