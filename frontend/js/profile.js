@@ -102,10 +102,6 @@ async function loadStoreProducts() {
 
 window.comprarProducto = async function (id, precio) {
     const user = JSON.parse(localStorage.getItem("user"));
-    if (!user) {
-        alert("Debes iniciar sesión para comprar.");
-        return;
-    }
 
     let userPoints = parseInt(localStorage.getItem("userPoints")) || 0;
     if (userPoints < precio) {
