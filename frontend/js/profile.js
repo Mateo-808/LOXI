@@ -176,7 +176,7 @@ async function cargarTienda() {
       console.log("💰 Puntos actuales:", usuarioActual.puntos, "Precio del producto:", producto.precio);
 
       if (!usuarioActual.puntos || usuarioActual.puntos < producto.precio) {
-        alert("No tienes suficientes puntos para esta compra.");
+        showAlert("No tienes suficientes puntos para esta compra.", "error");
         return;
       }
 
@@ -203,7 +203,7 @@ async function cargarTienda() {
 
       boton.innerHTML = '<i class="fa-solid fa-check"></i> Comprado';
       boton.disabled = true;
-      alert(`¡Has comprado ${producto.nombre}!`);
+      showAlert(`¡Has comprado ${producto.nombre}!`, "success");
 
       const profileInfo = document.querySelector(".profile-info");
       if (profileInfo) {
