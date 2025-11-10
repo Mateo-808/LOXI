@@ -1,5 +1,3 @@
-import { supabase } from "./supabaseClient.js";
-
 function toggleMobileMenu() {
     const overlay = document.getElementById("mobileMenuOverlay");
     const burgerMenu = document.querySelector(".burger-menu");
@@ -7,12 +5,19 @@ function toggleMobileMenu() {
     overlay.classList.toggle("active");
     burgerMenu.classList.toggle("active");
 
-    document.body.style.overflow = overlay.classList.contains("active") ? "hidden" : "auto";
+    if (overlay.classList.contains("active")) {
+        document.body.style.overflow = "hidden";
+    } else {
+        document.body.style.overflow = "auto";
+    }
 }
 
 function closeMobileMenu() {
-    document.getElementById("mobileMenuOverlay")?.classList.remove("active");
-    document.querySelector(".burger-menu")?.classList.remove("active");
+    const overlay = document.getElementById("mobileMenuOverlay");
+    const burgerMenu = document.querySelector(".burger-menu");
+
+    overlay.classList.remove("active");
+    burgerMenu.classList.remove("active");
     document.body.style.overflow = "auto";
 }
 
@@ -20,11 +25,12 @@ function toggleMenuSection(section) {
     section.classList.toggle("expanded");
 }
 
-document.addEventListener("click", (event) => {
+document.addEventListener("click", function (event) {
     const overlay = document.getElementById("mobileMenuOverlay");
     const burgerMenu = document.querySelector(".burger-menu");
+
     if (
-        overlay?.classList.contains("active") &&
+        overlay.classList.contains("active") &&
         !overlay.contains(event.target) &&
         !burgerMenu.contains(event.target)
     ) {
@@ -32,43 +38,46 @@ document.addEventListener("click", (event) => {
     }
 });
 
-document.addEventListener("keydown", (event) => {
+document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
         closeMobileMenu();
         closeStoreModal();
     }
 });
 
+// Funciones del Modal de la Tienda
 function openStoreModal() {
-    const modal = document.getElementById("storeModal");
+    const modal = document.getElementById('storeModal');
     if (modal) {
-        modal.classList.add("active");
-        document.body.style.overflow = "hidden";
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
     }
 }
 
 function closeStoreModal() {
-    const modal = document.getElementById("storeModal");
+    const modal = document.getElementById('storeModal');
     if (modal) {
-        modal.classList.remove("active");
-        document.body.style.overflow = "auto";
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
     }
 }
 
 function closeModalOnOutside(event) {
-    if (event.target.id === "storeModal") {
+    if (event.target.id === 'storeModal') {
         closeStoreModal();
     }
 }
 
-const cerrarSesionBtn = document.getElementById("cerrarSesion");
+// Cerrar Sesión
+const cerrarSesionBtn = document.getElementById('cerrarSesion');
 if (cerrarSesionBtn) {
-    cerrarSesionBtn.addEventListener("click", () => {
-        localStorage.removeItem("usuario");
-        window.location.href = "../../index.html";
+    cerrarSesionBtn.addEventListener('click', () => {
+        localStorage.removeItem('usuario');
+        window.location.href = '../../index.html';
     });
 }
 
+// Cargar información del perfil
 document.addEventListener("DOMContentLoaded", () => {
     const usuario = JSON.parse(localStorage.getItem("usuario"));
     const profileInfo = document.querySelector(".profile-info");
@@ -76,51 +85,56 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!usuario || !profileInfo) {
         if (profileInfo) {
             profileInfo.innerHTML = `
-                <p><strong>Nombre:</strong> No disponible</p>
-                <p><strong>Correo:</strong> No disponible</p>
-                <p><strong>Fecha de registro:</strong> No disponible</p>
-                <p><strong>Nivel actual:</strong> No disponible</p>
-                <p><strong>Puntos:</strong> No disponible</p>
+                <p><strong><i class="fa-solid fa-signature"></i> Nombre:</strong> No disponible</p>
+                <p><strong><i class="fa-solid fa-envelope"></i> Correo:</strong> No disponible</p>
+                <p><strong><i class="fa-solid fa-calendar-days"></i> Fecha de registro:</strong> No disponible</p>
+                <p><strong><i class="fa-solid fa-ranking-star"></i> Nivel actual:</strong> No disponible</p>
+                <p><strong><i class="fa-solid fa-gem"></i> Puntos:</strong> No disponible</p>
             `;
         }
         return;
     }
 
     const fecha = usuario.fecha || usuario.created_at;
-    const fechaFormateada = fecha ? new Date(fecha).toLocaleDateString() : "No disponible";
+    const fechaFormateada = fecha ? new Date(fecha).toLocaleDateString() : 'No disponible';
 
     profileInfo.innerHTML = `
-        <p><strong>Nombre:</strong> ${usuario.name || usuario.nombre || "Sin nombre"}</p>
-        <p><strong>Correo:</strong> ${usuario.email || usuario.correo || "Sin correo"}</p>
-        <p><strong>Fecha de registro:</strong> ${fechaFormateada}</p>
-        <p><strong>Nivel actual:</strong> ${usuario.nivel || "No asignado"}</p>
-        <p><strong>Puntos:</strong> ${usuario.puntos ?? 0}</p>
+        <p><strong><i class="fa-solid fa-signature"></i> Nombre:</strong> ${usuario.name || usuario.nombre || 'Sin nombre'}</p>
+        <p><strong><i class="fa-solid fa-envelope"></i> Correo:</strong> ${usuario.email || usuario.correo || 'Sin correo'}</p>
+        <p><strong><i class="fa-solid fa-calendar-days"></i> Fecha de registro:</strong> ${fechaFormateada}</p>
+        <p><strong><i class="fa-solid fa-ranking-star"></i> Nivel actual:</strong> ${usuario.nivel || 'No asignado'}</p>
+        <p><strong><i class="fa-solid fa-gem"></i> Puntos:</strong> ${usuario.puntos ?? 0}</p>
     `;
 
+    console.log(usuario.es_admin);
+
+    // Botón de nivel/juegos
     const levelButton = document.querySelector(".level-games");
-    if (levelButton) {
-        levelButton.addEventListener("click", () => {
-            if (!usuario) {
-                alert("No se ha encontrado tu sesión actual.");
-                return;
-            }
+    if (!levelButton) return;
 
-            if (usuario.es_admin === true) {
-                window.location.href = "../pages/admin";
-                return;
-            }
+    levelButton.addEventListener("click", () => {
+        if (!usuario) {
+            alert("No se ha encontrado tu sesión actual.");
+            return;
+        }
 
-            if (!usuario.nivel) {
-                alert("No se ha encontrado tu nivel actual.");
-                return;
-            }
+        if (usuario.es_admin === true) {
+            window.location.href = "../pages/admin";
+            return;
+        }
 
-            const nivel = usuario.nivel.toLowerCase().trim();
-            window.location.href = `../pages/interface.html?nivel=${encodeURIComponent(nivel)}`;
-        });
-    }
+        if (!usuario.nivel) {
+            alert("No se ha encontrado tu nivel actual.");
+            return;
+        }
+
+        const nivel = usuario.nivel.toLowerCase().trim();
+        const url = `../pages/interface.html?nivel=${encodeURIComponent(nivel)}`;
+        window.location.href = url;
+    });
 });
 
+// Cargar productos de la tienda
 async function cargarTienda() {
     const contenedor = document.getElementById("store-container");
     if (!contenedor) return;
@@ -150,8 +164,8 @@ async function cargarTienda() {
             contenedor.appendChild(card);
         });
 
-        // lo que hacemos con esta sección es manejar las comprar
-        contenedor.addEventListener("click", async (e) => {
+        // Manejar compras
+        contenedor.addEventListener("click", (e) => {
             if (e.target.tagName === "BUTTON" && !e.target.disabled) {
                 const id = parseInt(e.target.dataset.id);
                 const producto = productos.find((p) => p.id === id);
@@ -165,52 +179,24 @@ async function cargarTienda() {
                     comprasActuales.push(producto.id);
                     localStorage.setItem("usuario", JSON.stringify(usuarioActual));
                     localStorage.setItem("compras", JSON.stringify(comprasActuales));
-
-                    //  Actualizar puntos en la tabla progreso
-                    try {
-                        const { data: progresoData, error: fetchError } = await supabase
-                            .from("progreso")
-                            .select("id, puntuacion")
-                            .eq("usuario_id", usuarioActual.id)
-                            .is("ejercicio_id", null)
-                            .single();
-
-                        if (fetchError) {
-                            console.error("Error al obtener progreso:", fetchError.message);
-                            alert("No se pudo conectar con el servidor para actualizar tus puntos.");
-                        } else {
-                            const nuevosPuntos = progresoData.puntuacion - producto.precio;
-
-                            const { error: updateError } = await supabase
-                                .from("progreso")
-                                .update({ puntuacion: nuevosPuntos })
-                                .eq("id", progresoData.id);
-
-                            if (updateError) {
-                                console.error("Error al actualizar puntos:", updateError.message);
-                            } else {
-                                console.log("✅ Puntos actualizados correctamente en Supabase");
-                            }
-                        }
-                    } catch (err) {
-                        console.error("Error inesperado:", err);
-                    }
-
-                    // 💎 Actualizar interfaz
+                    
                     e.target.innerHTML = '<i class="fa-solid fa-check"></i> Comprado';
                     e.target.disabled = true;
+                    
                     alert(`¡Has comprado ${producto.nombre}!`);
-
+                    
+                    // Actualizar puntos en el perfil
                     const profileInfo = document.querySelector(".profile-info");
                     if (profileInfo) {
                         const fecha = usuarioActual.fecha || usuarioActual.created_at;
-                        const fechaFormateada = fecha ? new Date(fecha).toLocaleDateString() : "No disponible";
+                        const fechaFormateada = fecha ? new Date(fecha).toLocaleDateString() : 'No disponible';
+                        
                         profileInfo.innerHTML = `
-                            <p><strong>Nombre:</strong> ${usuarioActual.name || usuarioActual.nombre || "Sin nombre"}</p>
-                            <p><strong>Correo:</strong> ${usuarioActual.email || usuarioActual.correo || "Sin correo"}</p>
-                            <p><strong>Fecha de registro:</strong> ${fechaFormateada}</p>
-                            <p><strong>Nivel actual:</strong> ${usuarioActual.nivel || "No asignado"}</p>
-                            <p><strong>Puntos:</strong> ${usuarioActual.puntos ?? 0}</p>
+                            <p><strong><i class="fa-solid fa-signature"></i> Nombre:</strong> ${usuarioActual.name || usuarioActual.nombre || 'Sin nombre'}</p>
+                            <p><strong><i class="fa-solid fa-envelope"></i> Correo:</strong> ${usuarioActual.email || usuarioActual.correo || 'Sin correo'}</p>
+                            <p><strong><i class="fa-solid fa-calendar-days"></i> Fecha de registro:</strong> ${fechaFormateada}</p>
+                            <p><strong><i class="fa-solid fa-ranking-star"></i> Nivel actual:</strong> ${usuarioActual.nivel || 'No asignado'}</p>
+                            <p><strong><i class="fa-solid fa-gem"></i> Puntos:</strong> ${usuarioActual.puntos ?? 0}</p>
                         `;
                     }
                 } else {
