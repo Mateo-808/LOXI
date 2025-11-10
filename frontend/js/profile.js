@@ -140,52 +140,55 @@ async function cargarTienda() {
     });
 
     contenedor.addEventListener("click", async (e) => {
-      if (e.target.tagName === "BUTTON" && !e.target.disabled) {
-        const id = e.target.dataset.id;
-        const producto = productos.find((p) => String(p.id) === id);
-        if (!producto) return;
+      const boton = e.target.closest("button[data-id]");
+      if (!boton || boton.disabled) return;
 
-        const usuarioActual = JSON.parse(localStorage.getItem("usuario")) || {};
-        const comprasActuales = JSON.parse(localStorage.getItem("compras")) || [];
+      const id = boton.dataset.id;
+      const producto = productos.find((p) => String(p.id) === id);
+      if (!producto) return;
 
-        if (!usuarioActual.puntos || usuarioActual.puntos < producto.precio) {
-          alert("No tienes suficientes puntos para esta compra.");
-          return;
+      const usuarioActual = JSON.parse(localStorage.getItem("usuario")) || {};
+      const comprasActuales = JSON.parse(localStorage.getItem("compras")) || [];
+
+      if (!usuarioActual.puntos || usuarioActual.puntos < producto.precio) {
+        alert("No tienes suficientes puntos para esta compra.");
+        return;
+      }
+
+      usuarioActual.puntos -= producto.precio;
+      comprasActuales.push(String(producto.id));
+      localStorage.setItem("usuario", JSON.stringify(usuarioActual));
+      localStorage.setItem("compras", JSON.stringify(comprasActuales));
+
+      try {
+        if (usuarioActual.id) {
+          const { data, error } = await supabase
+            .from("progreso")
+            .update({ puntuacion: usuarioActual.puntos })
+            .eq("usuario_id", usuarioActual.id)
+            .select();
+          if (error) console.error("Error al actualizar puntuación:", error);
+          else console.log("✅ Puntuación actualizada:", data);
         }
+      } catch (err) {
+        console.error("Error en Supabase:", err);
+      }
 
-        usuarioActual.puntos -= producto.precio;
-        comprasActuales.push(String(producto.id));
-        localStorage.setItem("usuario", JSON.stringify(usuarioActual));
-        localStorage.setItem("compras", JSON.stringify(comprasActuales));
+      boton.innerHTML = '<i class="fa-solid fa-check"></i> Comprado';
+      boton.disabled = true;
+      alert(`¡Has comprado ${producto.nombre}!`);
 
-        try {
-          if (usuarioActual.id) {
-            const { error } = await supabase
-              .from("progreso")
-              .update({ puntuacion: usuarioActual.puntos })
-              .eq("usuario_id", usuarioActual.id);
-            if (error) console.error("Error al actualizar la puntuación:", error);
-          }
-        } catch (err) {
-          console.error("Error en Supabase:", err);
-        }
-
-        e.target.innerHTML = '<i class="fa-solid fa-check"></i> Comprado';
-        e.target.disabled = true;
-        alert(`¡Has comprado ${producto.nombre}!`);
-
-        const profileInfo = document.querySelector(".profile-info");
-        if (profileInfo) {
-          const fecha = usuarioActual.fecha || usuarioActual.created_at;
-          const fechaFormateada = fecha ? new Date(fecha).toLocaleDateString() : "No disponible";
-          profileInfo.innerHTML = `
-            <p><strong><i class="fa-solid fa-signature"></i> Nombre:</strong> ${usuarioActual.name || usuarioActual.nombre || "Sin nombre"}</p>
-            <p><strong><i class="fa-solid fa-envelope"></i> Correo:</strong> ${usuarioActual.email || usuarioActual.correo || "Sin correo"}</p>
-            <p><strong><i class="fa-solid fa-calendar-days"></i> Fecha de registro:</strong> ${fechaFormateada}</p>
-            <p><strong><i class="fa-solid fa-ranking-star"></i> Nivel actual:</strong> ${usuarioActual.nivel || "No asignado"}</p>
-            <p><strong><i class="fa-solid fa-gem"></i> Puntos:</strong> ${usuarioActual.puntos ?? 0}</p>
-          `;
-        }
+      const profileInfo = document.querySelector(".profile-info");
+      if (profileInfo) {
+        const fecha = usuarioActual.fecha || usuarioActual.created_at;
+        const fechaFormateada = fecha ? new Date(fecha).toLocaleDateString() : "No disponible";
+        profileInfo.innerHTML = `
+          <p><strong><i class="fa-solid fa-signature"></i> Nombre:</strong> ${usuarioActual.name || usuarioActual.nombre || "Sin nombre"}</p>
+          <p><strong><i class="fa-solid fa-envelope"></i> Correo:</strong> ${usuarioActual.email || usuarioActual.correo || "Sin correo"}</p>
+          <p><strong><i class="fa-solid fa-calendar-days"></i> Fecha de registro:</strong> ${fechaFormateada}</p>
+          <p><strong><i class="fa-solid fa-ranking-star"></i> Nivel actual:</strong> ${usuarioActual.nivel || "No asignado"}</p>
+          <p><strong><i class="fa-solid fa-gem"></i> Puntos:</strong> ${usuarioActual.puntos ?? 0}</p>
+        `;
       }
     });
   } catch (error) {
