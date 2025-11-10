@@ -22,9 +22,6 @@ function toggleMenuSection(section) {
 window.toggleMobileMenu = toggleMobileMenu;
 window.toggleMenuSection = toggleMenuSection;
 
-/* ============================================================
-   🔹 PERFIL DEL USUARIO
-============================================================ */
 const nombreEl = document.querySelector(".profile-info p:nth-child(1)");
 const correoEl = document.querySelector(".profile-info p:nth-child(2)");
 const fechaEl = document.querySelector(".profile-info p:nth-child(3)");
@@ -32,7 +29,6 @@ const nivelEl = document.querySelector(".profile-info p:nth-child(4)");
 const puntosEl = document.querySelector(".profile-info p:nth-child(5)");
 const cerrarSesionBtn = document.getElementById("cerrarSesion");
 
-// Simula obtener usuario autenticado desde Supabase
 async function obtenerUsuario() {
   const { data, error } = await supabase.auth.getUser();
   if (error || !data.user) {
@@ -42,7 +38,6 @@ async function obtenerUsuario() {
   return data.user;
 }
 
-// Obtiene puntos desde la tabla progreso
 async function obtenerPuntos(usuarioId) {
   const { data, error } = await supabase
     .from("progreso")
@@ -79,9 +74,6 @@ cerrarSesionBtn.addEventListener("click", async () => {
 
 cargarPerfil();
 
-/* ============================================================
-   🔹 TIENDA
-============================================================ */
 const tiendaBtn = document.createElement("button");
 tiendaBtn.classList.add("open-store");
 tiendaBtn.innerHTML = `<i class="fa-solid fa-store"></i>`;
@@ -101,14 +93,12 @@ modal.innerHTML = `
 `;
 document.body.appendChild(modal);
 
-// Abrir / cerrar modal
 tiendaBtn.addEventListener("click", () => modal.classList.add("active"));
 modal.querySelector(".close-store").addEventListener("click", () => modal.classList.remove("active"));
 
-// Cargar productos desde JSON
 async function cargarTienda() {
   try {
-    const response = await fetch("../data/tienda.json");
+    const response = await fetch("../js/data/tienda.json");
     const productos = await response.json();
     const contenedor = document.getElementById("storeItems");
 
@@ -149,9 +139,6 @@ async function comprarItem(item) {
 
 cargarTienda();
 
-/* ============================================================
-   🔹 ESTILOS DINÁMICOS DE LA TIENDA
-============================================================ */
 const style = document.createElement("style");
 style.textContent = `
 .store-modal {
