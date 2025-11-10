@@ -143,22 +143,26 @@ async function cargarTienda() {
     console.log("🧱 Botones generados:", contenedor.querySelectorAll("button[data-id]").length);
 
     contenedor.addEventListener("click", async (e) => {
-      console.log("🖱️ Click detectado:", e.target);
-      let boton = null;
-      if (e.target.matches("button[data-id]")) {
-        boton = e.target;
-      } else if (e.target.closest("button[data-id]")) {
-        boton = e.target.closest("button[data-id]");
-      } else {
-        const botones = Array.from(contenedor.querySelectorAll("button[data-id]"));
-        boton = botones.find(btn => btn.contains(e.target));
-      }
-      console.log("🎯 Botón encontrado (revisado):", boton);
-      if (!boton || boton.disabled) return;
+      console.log("🖱️ Click detectado:", e.target.tagName, e.target);
+      let boton = e.target.matches("button[data-id]")
+        ? e.target
+        : e.target.closest("button[data-id]");
 
+      if (!boton) {
+        const posible = Array.from(document.querySelectorAll("button[data-id]")).find(btn => btn.contains(e.target));
+        boton = posible || undefined;
+      }
+
+      console.log("🎯 Botón encontrado:", boton);
+
+      if (!boton || boton.disabled) {
+        console.warn("⚠️ No se detectó ningún botón clickeado válido.");
+        return;
+      }
 
       const id = boton.dataset.id;
       console.log("🆔 ID del producto:", id);
+
       const producto = productos.find((p) => String(p.id) === id);
       if (!producto) {
         console.warn("⚠️ Producto no encontrado para ID:", id);
