@@ -226,6 +226,26 @@ async function cargarTienda() {
 
 document.addEventListener("DOMContentLoaded", cargarTienda);
 
+function showAlert(message, type = "info") {
+  const alert = document.createElement("div");
+  alert.className = `custom-alert ${type}`;
+  const icon =
+    type === "success"
+      ? "fa-check-circle"
+      : type === "error"
+      ? "fa-times-circle"
+      : "fa-info-circle";
+  alert.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${message}</span>`;
+  document.body.appendChild(alert);
+
+  setTimeout(() => {
+    alert.style.animation = "fadeSlideOut 0.4s ease forwards";
+    setTimeout(() => alert.remove(), 400);
+  }, 3000);
+}
+window.showAlert = showAlert;
+
+
 window.toggleMobileMenu = toggleMobileMenu;
 window.closeMobileMenu = closeMobileMenu;
 window.openStoreModal = openStoreModal;
