@@ -170,6 +170,7 @@ const server = http.createServer(async (req, res) => {
                     created_at: userData.created_at,
                     nivel: userData.user_metadata?.nivel,
                     puntos: userData.user_metadata?.puntos,
+                    es_admin: userData.es_admin
                 })
             );
         } catch (err) {
@@ -265,6 +266,7 @@ const server = http.createServer(async (req, res) => {
                         puntuacion: puntuacion || 0,
                         nivel: nivel,
                         intentos: intentos || 1,
+                        es_admin: es_admin || false
                     }),
                 });
             }
