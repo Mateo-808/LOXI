@@ -22,7 +22,6 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       localStorage.setItem('usuario', JSON.stringify(usuario));
       console.log("Usuario guardado en localStorage:", usuario);
 
-      // Esto para esperar a que se guarde bien antes de redirigir
       await new Promise(resolve => setTimeout(resolve, 500));
       window.location.href = "../pages/question.html"; 
     } else {
