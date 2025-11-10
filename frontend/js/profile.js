@@ -122,8 +122,9 @@ async function cargarTienda() {
     const usuario = JSON.parse(localStorage.getItem("usuario")) || {};
     const compras = JSON.parse(localStorage.getItem("compras")) || [];
     contenedor.innerHTML = "";
+
     productos.forEach((item) => {
-      const comprado = compras.includes(item.id);
+      const comprado = compras.includes(String(item.id));
       const card = document.createElement("div");
       card.classList.add("store-item");
       card.innerHTML = `
@@ -140,38 +141,50 @@ async function cargarTienda() {
 
     contenedor.addEventListener("click", async (e) => {
       if (e.target.tagName === "BUTTON" && !e.target.disabled) {
-        const id = parseInt(e.target.dataset.id);
-        const producto = productos.find((p) => p.id === id);
+        const id = e.target.dataset.id;
+        const producto = productos.find((p) => String(p.id) === id);
         if (!producto) return;
+
         const usuarioActual = JSON.parse(localStorage.getItem("usuario")) || {};
         const comprasActuales = JSON.parse(localStorage.getItem("compras")) || [];
-        if (usuarioActual.puntos >= producto.precio) {
-          usuarioActual.puntos -= producto.precio;
-          comprasActuales.push(producto.id);
-          localStorage.setItem("usuario", JSON.stringify(usuarioActual));
-          localStorage.setItem("compras", JSON.stringify(comprasActuales));
-          const { error } = await supabase
-            .from("progreso")
-            .update({ puntuacion: usuarioActual.puntos })
-            .eq("usuario_id", usuarioActual.id);
-          if (error) console.error("Error al actualizar la puntuación:", error);
-          e.target.innerHTML = '<i class="fa-solid fa-check"></i> Comprado';
-          e.target.disabled = true;
-          alert(`¡Has comprado ${producto.nombre}!`);
-          const profileInfo = document.querySelector(".profile-info");
-          if (profileInfo) {
-            const fecha = usuarioActual.fecha || usuarioActual.created_at;
-            const fechaFormateada = fecha ? new Date(fecha).toLocaleDateString() : "No disponible";
-            profileInfo.innerHTML = `
-              <p><strong><i class="fa-solid fa-signature"></i> Nombre:</strong> ${usuarioActual.name || usuarioActual.nombre || "Sin nombre"}</p>
-              <p><strong><i class="fa-solid fa-envelope"></i> Correo:</strong> ${usuarioActual.email || usuarioActual.correo || "Sin correo"}</p>
-              <p><strong><i class="fa-solid fa-calendar-days"></i> Fecha de registro:</strong> ${fechaFormateada}</p>
-              <p><strong><i class="fa-solid fa-ranking-star"></i> Nivel actual:</strong> ${usuarioActual.nivel || "No asignado"}</p>
-              <p><strong><i class="fa-solid fa-gem"></i> Puntos:</strong> ${usuarioActual.puntos ?? 0}</p>
-            `;
-          }
-        } else {
+
+        if (!usuarioActual.puntos || usuarioActual.puntos < producto.precio) {
           alert("No tienes suficientes puntos para esta compra.");
+          return;
+        }
+
+        usuarioActual.puntos -= producto.precio;
+        comprasActuales.push(String(producto.id));
+        localStorage.setItem("usuario", JSON.stringify(usuarioActual));
+        localStorage.setItem("compras", JSON.stringify(comprasActuales));
+
+        try {
+          if (usuarioActual.id) {
+            const { error } = await supabase
+              .from("progreso")
+              .update({ puntuacion: usuarioActual.puntos })
+              .eq("usuario_id", usuarioActual.id);
+            if (error) console.error("Error al actualizar la puntuación:", error);
+          }
+        } catch (err) {
+          console.error("Error en Supabase:", err);
+        }
+
+        e.target.innerHTML = '<i class="fa-solid fa-check"></i> Comprado';
+        e.target.disabled = true;
+        alert(`¡Has comprado ${producto.nombre}!`);
+
+        const profileInfo = document.querySelector(".profile-info");
+        if (profileInfo) {
+          const fecha = usuarioActual.fecha || usuarioActual.created_at;
+          const fechaFormateada = fecha ? new Date(fecha).toLocaleDateString() : "No disponible";
+          profileInfo.innerHTML = `
+            <p><strong><i class="fa-solid fa-signature"></i> Nombre:</strong> ${usuarioActual.name || usuarioActual.nombre || "Sin nombre"}</p>
+            <p><strong><i class="fa-solid fa-envelope"></i> Correo:</strong> ${usuarioActual.email || usuarioActual.correo || "Sin correo"}</p>
+            <p><strong><i class="fa-solid fa-calendar-days"></i> Fecha de registro:</strong> ${fechaFormateada}</p>
+            <p><strong><i class="fa-solid fa-ranking-star"></i> Nivel actual:</strong> ${usuarioActual.nivel || "No asignado"}</p>
+            <p><strong><i class="fa-solid fa-gem"></i> Puntos:</strong> ${usuarioActual.puntos ?? 0}</p>
+          `;
         }
       }
     });
