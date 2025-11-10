@@ -144,9 +144,18 @@ async function cargarTienda() {
 
     contenedor.addEventListener("click", async (e) => {
       console.log("🖱️ Click detectado:", e.target);
-      const boton = e.target.closest("button[data-id]");
-      console.log("🎯 Botón encontrado:", boton);
+      let boton = null;
+      if (e.target.matches("button[data-id]")) {
+        boton = e.target;
+      } else if (e.target.closest("button[data-id]")) {
+        boton = e.target.closest("button[data-id]");
+      } else {
+        const botones = Array.from(contenedor.querySelectorAll("button[data-id]"));
+        boton = botones.find(btn => btn.contains(e.target));
+      }
+      console.log("🎯 Botón encontrado (revisado):", boton);
       if (!boton || boton.disabled) return;
+
 
       const id = boton.dataset.id;
       console.log("🆔 ID del producto:", id);
