@@ -3,10 +3,9 @@ import bcrypt from 'bcryptjs';
 
 export async function loginUsuario(nombre, correo, contrasena) {
   try {
-    // Buscar al usuario por correo
     const { data: usuario, error: errorUsuario } = await supabase
       .from('usuarios')
-      .select('id, nombre, correo, contrasena')
+      .select('id, nombre, correo, contrasena, es_admin')
       .eq('correo', correo)
       .single();
 
@@ -31,20 +30,18 @@ export async function loginUsuario(nombre, correo, contrasena) {
     const puntos = progreso?.puntos ?? 0;
     const fecha = progreso?.fecha ?? null;
 
-
-    // Guardar en localStorage
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('usuario', JSON.stringify({
         id: usuario.id,
         nombre: usuario.nombre,
         correo: usuario.correo,
+        es_admin: usuario.es_admin || false,
         nivel,
         puntos,
         fecha 
       }));
     }
 
-    // Llamar al backend para guardar progreso con upsert
     const serverUrl = typeof window !== 'undefined' && window.location.hostname === 'localhost'
       ? 'http://localhost:3000'
       : 'https://loxi.onrender.com';

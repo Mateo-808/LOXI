@@ -167,11 +167,30 @@ document.addEventListener('DOMContentLoaded', () => {
   const usuarioGuardado = localStorage.getItem('usuario');
 
   if (usuarioGuardado) {
-    btnSesion.textContent = 'Ver perfil';
-    btnSesion.href = 'frontend/pages/profile.html';
+    try {
+      const usuario = JSON.parse(usuarioGuardado);
+      
+      if (usuario.es_admin === true) {
+        btnSesion.textContent = 'Ir al Panel';
+        btnSesion.href = 'frontend/pages/admin.html';
 
-    btnSesionMobile.textContent = 'Ver perfil';
-    btnSesionMobile.href = 'frontend/pages/profile.html';
+        btnSesionMobile.textContent = 'Ir al Panel';
+        btnSesionMobile.href = 'frontend/pages/admin.html';
+      } else {
+        btnSesion.textContent = 'Ver perfil';
+        btnSesion.href = 'frontend/pages/profile.html';
+
+        btnSesionMobile.textContent = 'Ver perfil';
+        btnSesionMobile.href = 'frontend/pages/profile.html';
+      }
+    } catch (error) {
+      console.error('Error al parsear usuario de localStorage:', error);
+      btnSesion.textContent = 'Iniciar sesión';
+      btnSesion.href = 'frontend/pages/login.html';
+
+      btnSesionMobile.textContent = 'Iniciar sesión';
+      btnSesionMobile.href = 'frontend/pages/login.html';
+    }
   } else {
     btnSesion.textContent = 'Iniciar sesión';
     btnSesion.href = 'frontend/pages/login.html';
