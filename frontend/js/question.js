@@ -304,31 +304,42 @@ document.addEventListener("keydown", function (event) {
 });
 
 // Manejo de sesión de usuario
-document.addEventListener("DOMContentLoaded", () => {
-    const btnSesion = document.getElementById("btnSesion");
-    const btnSesionMobile = document.getElementById("btnSesionMobile");
+document.addEventListener('DOMContentLoaded', () => {
+  const btnSesion = document.getElementById('btnSesion');
+  const btnSesionMobile = document.getElementById('btnSesionMobile');
 
-    const usuarioGuardado = localStorage.getItem("usuario");
+  const usuarioGuardado = localStorage.getItem('usuario');
 
-    if (usuarioGuardado) {
-        if (btnSesion) {
-            btnSesion.textContent = "Ver perfil";
-            btnSesion.href = "../pages/profile.html";
-        }
+  if (usuarioGuardado) {
+    try {
+      const usuario = JSON.parse(usuarioGuardado);
+      
+      if (usuario.es_admin === true) {
+        btnSesion.textContent = 'Ir al Panel';
+        btnSesion.href = 'frontend/pages/admin.html';
 
-        if (btnSesionMobile) {
-            btnSesionMobile.textContent = "Ver perfil";
-            btnSesionMobile.href = "../pages/profile.html";
-        }
-    } else {
-        if (btnSesion) {
-            btnSesion.textContent = "Iniciar sesión";
-            btnSesion.href = "../pages/login.html";
-        }
+        btnSesionMobile.textContent = 'Ir al Panel';
+        btnSesionMobile.href = 'frontend/pages/admin.html';
+      } else {
+        btnSesion.textContent = 'Ver perfil';
+        btnSesion.href = 'frontend/pages/profile.html';
 
-        if (btnSesionMobile) {
-            btnSesionMobile.textContent = "Iniciar sesión";
-            btnSesionMobile.href = "../pages/login.html";
-        }
+        btnSesionMobile.textContent = 'Ver perfil';
+        btnSesionMobile.href = 'frontend/pages/profile.html';
+      }
+    } catch (error) {
+      console.error('Error al parsear usuario de localStorage:', error);
+      btnSesion.textContent = 'Iniciar sesión';
+      btnSesion.href = 'frontend/pages/login.html';
+
+      btnSesionMobile.textContent = 'Iniciar sesión';
+      btnSesionMobile.href = 'frontend/pages/login.html';
     }
+  } else {
+    btnSesion.textContent = 'Iniciar sesión';
+    btnSesion.href = 'frontend/pages/login.html';
+
+    btnSesionMobile.textContent = 'Iniciar sesión';
+    btnSesionMobile.href = 'frontend/pages/login.html';
+  }
 });
