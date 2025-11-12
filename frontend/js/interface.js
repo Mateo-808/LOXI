@@ -211,9 +211,9 @@ async function agregarPuntosUsuario(puntosGanados) {
 
     if (updateError) throw updateError;
 
-    console.log(`✅ Puntos actualizados: ${nuevosPuntos}`);
+    console.log(`Puntos actualizados: ${nuevosPuntos}`);
   } catch (err) {
-    console.error("❌ Error al actualizar puntos:", err.message);
+    console.error("Error al actualizar puntos:", err.message);
   }
 }
 
