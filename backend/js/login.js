@@ -71,11 +71,7 @@ export async function loginUsuario(nombre, correo, contrasena) {
         ...usuarioSinContrasena,
         nivel,
         puntos,
-<<<<<<< HEAD
-        fecha
-=======
         fecha,
->>>>>>> 3d756f9 (no sé, me quiero matar)
       }
     };
 
