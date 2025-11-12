@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             input.value = "";
-            mostrarAlerta("Tu comentario ha sido enviado personita 😊. Lo responderemos pronto ✨", "success");
+            mostrarAlerta("Tu comentario ha sido enviado personita :). Lo responderemos pronto ✨", "success");
         } catch (err) {
             console.error("Error de conexión al enviar comentario:", err);
             mostrarAlerta("No se pudo enviar el comentario ❌", "error");
