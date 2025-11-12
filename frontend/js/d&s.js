@@ -100,22 +100,15 @@ document.addEventListener("click", (e) => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("form-comentario");
-    const input = document.getElementById("input-comentario");
+    const form = document.getElementById("formComentario");
+    const input = document.getElementById("write");
     const lista = document.getElementById("lista-comentarios");
 
-    // ✅ Cargar usuario actual del LocalStorage
-    const usuarioActual = JSON.parse(localStorage.getItem("usuarioActual"));
+    const usuarioStr = localStorage.getItem("usuario");
+    const usuarioActual = usuarioStr ? JSON.parse(usuarioStr) : null;
 
-    // ✅ Cargar comentarios guardados localmente
-    let comentariosLocales = JSON.parse(localStorage.getItem("comentarios")) || [];
+    if (!form || !input || !lista) return;
 
-    // Renderizar los comentarios guardados localmente
-    renderComentarios(comentariosLocales);
-
-    // =====================================================
-    // 📨 Enviar nuevo comentario
-    // =====================================================
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
@@ -131,93 +124,165 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const res = await fetch("https://loxi.onrender.com/api/comentarios", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    usuario_id: usuarioActual.id,
-                    mensaje,
-                }),
-            });
+            const res = await fetch(
+                "https://loxi.onrender.com/api/comentarios",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        usuario_id: usuarioActual.id,
+                        mensaje,
+                    }),
+                }
+            );
 
             const data = await res.json();
 
             if (!res.ok || !data.ok) {
                 console.error("Error enviando comentario:", data);
-                alert("× No se pudo enviar el comentario. Intenta de nuevo más tarde.");
+                alert("× No se pudo enviar el comentario");
                 return;
             }
 
-            // ✅ Guardar el comentario localmente sin mostrarlo en pantalla
-            const nuevoComentario = {
-                usuario: usuarioActual.nombre || "Usuario",
-                mensaje: mensaje,
-                fecha: new Date().toLocaleString(),
-            };
-
-            comentariosLocales.push(nuevoComentario);
-            localStorage.setItem("comentarios", JSON.stringify(comentariosLocales));
-
-            // ✅ Mostrar mensaje de confirmación
-            mostrarMensajeConfirmacion("✅ Tu comentario ha sido enviado. Será respondido lo más pronto posible.");
-
-            // Limpiar input
             input.value = "";
-
+            cargarComentarios();
         } catch (err) {
             console.error("Error de conexión al enviar comentario:", err);
-            alert("× No se pudo enviar el comentario. Revisa tu conexión.");
+            alert("× No se pudo enviar el comentario");
         }
     });
 
-    // =====================================================
-    // 🧾 Función para renderizar los comentarios locales
-    // =====================================================
-    function renderComentarios(comentarios) {
-        lista.innerHTML = "";
-        comentarios.forEach((comentario) => {
-            const item = document.createElement("li");
-            item.classList.add("comentario-item");
-            item.innerHTML = `
-                <strong>${comentario.usuario}:</strong>
-                <p>${comentario.mensaje}</p>
-                <small>${comentario.fecha}</small>
-            `;
-            lista.appendChild(item);
-        });
+    async function cargarComentarios() {
+        try {
+            const res = await fetch(
+                "https://loxi.onrender.com/api/comentarios"
+            );
+            const json = await res.json();
+            if (!res.ok || !json.ok) {
+                console.error("Error al cargar comentarios:", json);
+                return;
+            }
+
+            json.data.forEach((c, index) => {
+                const nombre =
+                    c.usuarios && c.usuarios.nombre
+                        ? c.usuarios.nombre
+                        : "Anónimo";
+                const fecha = c.fecha
+                    ? new Date(c.fecha).toLocaleString("es-CO", {
+                          timeZone: "America/Bogota",
+                      })
+                    : "";
+
+                const newComment = document.createElement("div");
+                newComment.className =
+                    index % 2 === 0 ? "faq-card-small" : "faq-card";
+                newComment.innerHTML = `
+          <div class="faq-question">${escapeHtml(c.mensaje)}</div>
+
+          <div class="faq-admin">
+            ADMIN <i class="fa-solid fa-code"></i>
+          </div>
+          
+          <div class="faq-answer">
+            Al terminar el programa puedes ingresar a la sección
+            de prácticas y buscar en la sección de "Mi progreso"
+          </div>
+
+          <div class="faq-user">
+            <div class="user-avatar"></div>
+            <div class="user-name">${escapeHtml(nombre)}</div>
+          </div>
+
+          <div class="faq-date">${fecha}</div>
+
+          <div class="faq-like">
+            <i class="fa-regular fa-heart"></i>
+          </div>
+        `;
+
+                if (usuarioActual && c.usuario_id === usuarioActual.id) {
+                    const btnEditar = document.createElement("button");
+                    btnEditar.textContent = "Editar";
+                    btnEditar.className = "btn-editar";
+                    btnEditar.onclick = () => editarComentario(c);
+
+                    const btnEliminar = document.createElement("button");
+                    btnEliminar.textContent = "Eliminar";
+                    btnEliminar.className = "btn-eliminar";
+                    btnEliminar.onclick = () => eliminarComentario(c.id);
+
+                    const botonesDiv = document.createElement("div");
+                    botonesDiv.className = "comentario-actions";
+                    botonesDiv.appendChild(btnEditar);
+                    botonesDiv.appendChild(btnEliminar);
+
+                    newComment.appendChild(botonesDiv);
+                }
+                lista.innerHTML = "";
+                lista.appendChild(newComment);
+            });
+        } catch (err) {
+            console.error("Error al cargar comentarios (fetch):", err);
+        }
     }
 
-    // =====================================================
-    // 💬 Función para mostrar un mensaje bonito de confirmación
-    // =====================================================
-    function mostrarMensajeConfirmacion(texto) {
-        const mensajeDiv = document.createElement("div");
-        mensajeDiv.textContent = texto;
-        mensajeDiv.classList.add("mensaje-confirmacion");
+    async function editarComentario(comentario) {
+        const nuevoMensaje = prompt(
+            "Editar tu comentario:",
+            comentario.mensaje
+        );
+        if (!nuevoMensaje) return;
 
-        // Estilo del mensaje (puedes modificarlo a tu gusto)
-        Object.assign(mensajeDiv.style, {
-            position: "fixed",
-            bottom: "20px",
-            right: "20px",
-            background: "#27ae60",
-            color: "white",
-            padding: "12px 18px",
-            borderRadius: "8px",
-            boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
-            fontSize: "14px",
-            zIndex: "9999",
-            opacity: "0",
-            transition: "opacity 0.4s ease",
-        });
+        try {
+            const res = await fetch(
+                `https://loxi.onrender.com/api/comentarios/${comentario.id}`,
+                {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ mensaje: nuevoMensaje }),
+                }
+            );
 
-        document.body.appendChild(mensajeDiv);
-        setTimeout(() => (mensajeDiv.style.opacity = "1"), 50);
-
-        // Desaparecer después de 3 segundos
-        setTimeout(() => {
-            mensajeDiv.style.opacity = "0";
-            setTimeout(() => mensajeDiv.remove(), 400);
-        }, 3000);
+            const data = await res.json();
+            if (res.ok && data.ok) {
+                alert("Comentario actualizado");
+                cargarComentarios();
+            } else {
+                alert("Error al editar comentario");
+            }
+        } catch (err) {
+            console.error("Error al editar comentario:", err);
+        }
     }
+
+    async function eliminarComentario(id) {
+        if (!confirm("¿Seguro que quieres eliminar este comentario?")) return;
+
+        try {
+            const res = await fetch(
+                `https://loxi.onrender.com/api/comentarios/${id}`,
+                { method: "DELETE" }
+            );
+            const data = await res.json();
+
+            if (res.ok && data.ok) {
+                alert("Comentario eliminado");
+                cargarComentarios();
+            } else {
+                alert("Error al eliminar comentario");
+            }
+        } catch (err) {
+            console.error("Error al eliminar comentario:", err);
+        }
+    }
+
+    function escapeHtml(text) {
+        return text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+    }
+
+    cargarComentarios();
 });
