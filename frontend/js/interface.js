@@ -190,7 +190,7 @@ async function agregarPuntosUsuario(puntosGanados) {
     const usuario = JSON.parse(usuarioGuardado);
     const idUsuario = usuario.id;
 
-    // 1️⃣ Buscar si el usuario ya tiene un registro de progreso
+    // 1️⃣ Buscar si ya tiene un registro de progreso
     const { data, error } = await supabase
       .from("progreso")
       .select("id, puntuacion")
@@ -202,8 +202,8 @@ async function agregarPuntosUsuario(puntosGanados) {
     const puntosActuales = data?.puntuacion || 0;
     const nuevosPuntos = puntosActuales + puntosGanados;
 
+    // 2️⃣ Actualizar o insertar según el caso
     if (data) {
-      // 2️⃣ Si ya existe → actualizar
       const { error: updateError } = await supabase
         .from("progreso")
         .update({ puntuacion: nuevosPuntos, fecha: new Date() })
@@ -211,7 +211,6 @@ async function agregarPuntosUsuario(puntosGanados) {
 
       if (updateError) throw updateError;
     } else {
-      // 3️⃣ Si no existe → insertar
       const { error: insertError } = await supabase
         .from("progreso")
         .insert([{ usuario_id: idUsuario, puntuacion: nuevosPuntos, fecha: new Date() }]);
@@ -219,11 +218,26 @@ async function agregarPuntosUsuario(puntosGanados) {
       if (insertError) throw insertError;
     }
 
-    console.log(` Puntuación actualizada: ${nuevosPuntos}`);
+    // 3️⃣ Actualizar localStorage con los nuevos puntos
+    const usuarioActualizado = {
+      ...usuario,
+      puntuacion: nuevosPuntos,
+    };
+
+    localStorage.setItem("usuario", JSON.stringify(usuarioActualizado));
+
+    // 4️⃣ (Opcional) Mostrar los puntos actualizados en pantalla
+    const puntosElemento = document.getElementById("puntosUsuario");
+    if (puntosElemento) {
+      puntosElemento.textContent = nuevosPuntos;
+    }
+
+    console.log(`✅ Puntuación actualizada: ${nuevosPuntos}`);
   } catch (err) {
     console.error("❌ Error al actualizar puntuación:", err.message);
   }
 }
+
 
 
 function siguienteEjercicio() {
