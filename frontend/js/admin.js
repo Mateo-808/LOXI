@@ -268,20 +268,42 @@ async function loadUsers() {
 }
 
 window.deleteUser = async function(userId) {
-    showConfirmAlert('¿Estás seguro de eliminar este usuario? Esta acción no se puede deshacer.', async () => {
+    showConfirmAlert('¿Estás seguro de eliminar este usuario? Esto también eliminará todo su progreso y comentarios. Esta acción no se puede deshacer.', async () => {
         try {
-            const { error } = await supabase
+            const { error: progresoError } = await supabase
+                .from('progreso')
+                .delete()
+                .eq('usuario_id', userId);
+
+            if (progresoError) {
+                console.error('Error al eliminar progreso:', progresoError);
+                showErrorAlert('Error al eliminar el progreso del usuario: ' + progresoError.message);
+                return;
+            }
+
+            const { error: comentariosError } = await supabase
+                .from('comentarios')
+                .delete()
+                .eq('usuario_id', userId);
+
+            if (comentariosError) {
+                console.error('Error al eliminar comentarios:', comentariosError);
+                showErrorAlert('Error al eliminar los comentarios del usuario: ' + comentariosError.message);
+                return;
+            }
+
+            const { error: usuarioError } = await supabase
                 .from('usuarios')
                 .delete()
                 .eq('id', userId);
 
-            if (error) {
-                console.error('Error al eliminar usuario:', error);
-                showErrorAlert('Error al eliminar usuario: ' + error.message);
+            if (usuarioError) {
+                console.error('Error al eliminar usuario:', usuarioError);
+                showErrorAlert('Error al eliminar usuario: ' + usuarioError.message);
                 return;
             }
 
-            showSuccessAlert('Usuario eliminado correctamente');
+            showSuccessAlert('Usuario y todos sus datos eliminados correctamente');
             await loadUsers();
         } catch (error) {
             console.error('Error inesperado:', error);
