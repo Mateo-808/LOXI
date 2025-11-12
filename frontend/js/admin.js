@@ -140,31 +140,44 @@ let currentUser = null;
 
 async function checkAdminAccess() {
     try {
-        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        const usuarioGuardado = localStorage.getItem('usuario');
         
-        if (sessionError || !session) {
+        if (!usuarioGuardado) {
+            console.log('No hay usuario en localStorage');
             showAccessDeniedAlert('./login.html');
+            return false;
+        }
+
+        const usuario = JSON.parse(usuarioGuardado);
+        console.log('Usuario desde localStorage:', usuario);
+
+        if (!usuario.es_admin || usuario.es_admin !== true) {
+            console.log('Usuario no es administrador:', usuario.es_admin);
+            showAccessDeniedAlert('../../index.html');
             return false;
         }
 
         const { data: userData, error: userError } = await supabase
             .from('usuarios')
             .select('*')
-            .eq('id', session.user.id)
+            .eq('id', usuario.id)
             .single();
 
         if (userError || !userData) {
+            console.error('Error al verificar usuario en BD:', userError);
             showAccessDeniedAlert('./login.html');
             return false;
         }
 
         if (!userData.es_admin) {
-            showAccessDeniedAlert('../../index');
+            console.log('Usuario no es admin según BD');
+            showAccessDeniedAlert('../../index.html');
             return false;
         }
 
         currentUser = userData;
-        document.getElementById('adminName').textContent = userData.nombre;
+        document.getElementById('adminName').textContent = userData.nombre || 'Administrador';
+        console.log('Acceso concedido a:', userData.nombre);
         return true;
 
     } catch (error) {
@@ -188,7 +201,7 @@ function switchSection(sectionName) {
     const titles = {
         dashboard: 'Dashboard',
         usuarios: 'Gestión de Usuarios',
-        juegos: 'Gestión de Juegos',
+        ejercicios: 'Gestión de Ejercicios',
         progreso: 'Progreso de Estudiantes',
         comentarios: 'Gestión de Comentarios'
     };
@@ -197,7 +210,6 @@ function switchSection(sectionName) {
     if (sectionName === 'dashboard') loadDashboardStats();
     else if (sectionName === 'usuarios') loadUsers();
     else if (sectionName === 'ejercicios') loadExercises();
-    else if (sectionName === 'juegos') loadGames();
     else if (sectionName === 'progreso') loadProgress();
     else if (sectionName === 'comentarios') loadComments();
 }
@@ -248,7 +260,7 @@ async function loadUsers() {
                 <td>${user.correo}</td>
                 <td>${new Date(user.fecha_registro).toLocaleDateString()}</td>
                 <td>
-                    ${isCurrentUser ? '' : `<button class="action-btn btn-delete" onclick="deleteUser('${user.id}')">Eliminar</button>`}
+                    ${isCurrentUser ? '<span class="badge badge-info">Tú</span>' : `<button class="action-btn btn-delete" onclick="deleteUser('${user.id}')">Eliminar</button>`}
                 </td>
             </tr>
         `;
@@ -256,19 +268,25 @@ async function loadUsers() {
 }
 
 window.deleteUser = async function(userId) {
-    showConfirmAlert('¿Estás seguro de eliminar este usuario?', async () => {
-        const { error } = await supabase
-            .from('usuarios')
-            .delete()
-            .eq('id', userId);
+    showConfirmAlert('¿Estás seguro de eliminar este usuario? Esta acción no se puede deshacer.', async () => {
+        try {
+            const { error } = await supabase
+                .from('usuarios')
+                .delete()
+                .eq('id', userId);
 
-        if (error) {
-            showErrorAlert('Error al eliminar usuario');
-            return;
+            if (error) {
+                console.error('Error al eliminar usuario:', error);
+                showErrorAlert('Error al eliminar usuario: ' + error.message);
+                return;
+            }
+
+            showSuccessAlert('Usuario eliminado correctamente');
+            await loadUsers();
+        } catch (error) {
+            console.error('Error inesperado:', error);
+            showErrorAlert('Error inesperado al eliminar usuario');
         }
-
-        showSuccessAlert('Usuario eliminado correctamente');
-        loadUsers();
     });
 };
 
@@ -320,6 +338,37 @@ window.deleteExercise = async function(exerciseId) {
         loadExercises();
     });
 };
+
+async function loadProgress() {
+    const tbody = document.getElementById('progressTableBody');
+    tbody.innerHTML = '<tr><td colspan="6">Cargando...</td></tr>';
+
+    const { data: progress, error } = await supabase
+        .from('progreso')
+        .select(`*, usuarios(nombre), ejercicios(titulo)`)
+        .order('fecha', { ascending: false });
+
+    if (error) {
+        tbody.innerHTML = '<tr><td colspan="6">Error al cargar progreso</td></tr>';
+        return;
+    }
+
+    if (!progress || progress.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6">No hay datos de progreso</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = progress.map(p => `
+        <tr>
+            <td>${p.usuarios?.nombre || 'N/A'}</td>
+            <td>${p.ejercicios?.titulo || 'N/A'}</td>
+            <td>${p.puntuacion || 0}</td>
+            <td>${p.intentos || 0}</td>
+            <td><span class="badge ${p.completado ? 'badge-success' : 'badge-warning'}">${p.completado ? 'Sí' : 'No'}</span></td>
+            <td>${new Date(p.fecha).toLocaleDateString()}</td>
+        </tr>
+    `).join('');
+}
 
 async function loadComments() {
     const tbody = document.getElementById('commentsTableBody');
