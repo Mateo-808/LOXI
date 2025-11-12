@@ -188,17 +188,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 .alerta-success {
                     background: white;
-                    color: black;
+                    color: #000000;
                 }
 
                 .alerta-warning {
                     background: white;
-                    color: black;
+                    color: #000000;
                 }
 
                 .alerta-error {
                     background: white;
-                    color: black;
+                    color: #000000;
                 }
 
                 .alerta-contenido {
