@@ -190,27 +190,36 @@ async function agregarPuntosUsuario(puntosGanados) {
     const usuario = JSON.parse(usuarioGuardado);
     const idUsuario = usuario.id;
 
-    // 🔹 Buscar progreso por usuario
+    // 1️⃣ Buscar si el usuario ya tiene un registro de progreso
     const { data, error } = await supabase
       .from("progreso")
-      .select("puntuacion")
+      .select("id, puntuacion")
       .eq("usuario_id", idUsuario)
       .single();
 
-    if (error && error.code !== "PGRST116") throw error; // ignoramos a las personas q les de por no registrarse
+    if (error && error.code !== "PGRST116") throw error;
 
     const puntosActuales = data?.puntuacion || 0;
     const nuevosPuntos = puntosActuales + puntosGanados;
 
-    const { error: updateError } = await supabase
-      .from("progreso")
-      .upsert([
-        { usuario_id: idUsuario, puntuacion: nuevosPuntos, fecha: new Date() }
-      ], { onConflict: "usuario_id" });
+    if (data) {
+      // 2️⃣ Si ya existe → actualizar
+      const { error: updateError } = await supabase
+        .from("progreso")
+        .update({ puntuacion: nuevosPuntos, fecha: new Date() })
+        .eq("usuario_id", idUsuario);
 
-    if (updateError) throw updateError;
+      if (updateError) throw updateError;
+    } else {
+      // 3️⃣ Si no existe → insertar
+      const { error: insertError } = await supabase
+        .from("progreso")
+        .insert([{ usuario_id: idUsuario, puntuacion: nuevosPuntos, fecha: new Date() }]);
 
-    console.log(`✅ Puntuación actualizada: ${nuevosPuntos}`);
+      if (insertError) throw insertError;
+    }
+
+    console.log(` Puntuación actualizada: ${nuevosPuntos}`);
   } catch (err) {
     console.error("❌ Error al actualizar puntuación:", err.message);
   }
