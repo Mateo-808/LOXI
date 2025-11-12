@@ -150,7 +150,6 @@ function mostrarEjercicio(ejercicio) {
   contents[2].innerHTML = `
     <p id="explicacion">Aquí aparecerá la explicación o resultado.</p>
     <div class="botones">
-      <button id="btnResultado" class="btn">Ver resultado</button>
       <button id="btnContinuar" class="btn">Continuar</button>
     </div>
   `;
