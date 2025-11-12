@@ -85,6 +85,7 @@ import { supabase } from "./supabaseClient.js";
 let ejercicios = [];
 let indiceActual = 0;
 
+// 🧩 OBTENER PARÁMETROS DE LA URL
 function obtenerParametros() {
   const params = new URLSearchParams(window.location.search);
   let nivel = params.get("nivel") || "Principiante";
@@ -96,6 +97,7 @@ function obtenerParametros() {
   return { nivel, titulo };
 }
 
+// ⚙️ CARGAR EJERCICIOS DESDE SUPABASE
 async function cargarEjercicios() {
   const { nivel } = obtenerParametros();
 
@@ -119,6 +121,7 @@ async function cargarEjercicios() {
   }
 }
 
+// 🧮 CARGAR EL EJERCICIO ACTUAL
 function cargarEjercicioActual() {
   const { titulo } = obtenerParametros();
   const ejercicio =
@@ -130,6 +133,7 @@ function cargarEjercicioActual() {
   mostrarEjercicio(ejercicio);
 }
 
+// 📖 MOSTRAR DATOS EN PANTALLA
 function mostrarEjercicio(ejercicio) {
   const subHeaders = document.querySelectorAll("#sub-header");
   const contents = document.querySelectorAll(".content");
@@ -152,14 +156,15 @@ function mostrarEjercicio(ejercicio) {
   inicializarEventos();
 }
 
-function validarRespuesta() {
+// ✅ VALIDAR RESPUESTA Y ACTUALIZAR PUNTOS
+async function validarRespuesta() {
   const input = document.getElementById("respuestaUsuario");
   const explicacion = document.getElementById("explicacion");
   if (!input || !explicacion) return;
 
   const respuestaUsuario = input.value.trim().toLowerCase();
-  const respuestaCorrecta =
-    ejercicios[indiceActual].respuesta?.trim().toLowerCase() || "";
+  const ejercicio = ejercicios[indiceActual];
+  const respuestaCorrecta = ejercicio.respuesta?.trim().toLowerCase() || "";
 
   if (!respuestaUsuario) {
     explicacion.innerHTML = "⚠️ Escribe una respuesta antes de continuar.";
@@ -167,12 +172,52 @@ function validarRespuesta() {
   }
 
   if (respuestaUsuario === respuestaCorrecta) {
-    explicacion.innerHTML = "🎉 ¡Correcto! Has acertado.";
+    explicacion.innerHTML = `🎉 ¡Correcto! Has acertado y ganas <strong>${ejercicio.puntos}</strong> puntos.`;
+    await agregarPuntosUsuario(ejercicio.puntos);
   } else {
-    explicacion.innerHTML = `❌ Incorrecto. La respuesta correcta es: <strong>${ejercicios[indiceActual].respuesta}</strong>`;
+    explicacion.innerHTML = `❌ Incorrecto. La respuesta correcta es: <strong>${ejercicio.respuesta}</strong>`;
   }
 }
 
+// 🪙 FUNCIÓN PARA SUMAR PUNTOS EN SUPABASE
+async function agregarPuntosUsuario(puntosGanados) {
+  const usuarioGuardado = localStorage.getItem("usuario");
+  if (!usuarioGuardado) {
+    alert("⚠️ Debes iniciar sesión para ganar puntos.");
+    return;
+  }
+
+  try {
+    const usuario = JSON.parse(usuarioGuardado);
+    const idUsuario = usuario.id;
+
+    // 🔹 OBTENER PUNTOS ACTUALES
+    const { data, error } = await supabase
+      .from("usuarios")
+      .select("puntos")
+      .eq("id", idUsuario)
+      .single();
+
+    if (error) throw error;
+
+    const puntosActuales = data?.puntos || 0;
+    const nuevosPuntos = puntosActuales + puntosGanados;
+
+    // 🔹 ACTUALIZAR EN BASE DE DATOS
+    const { error: updateError } = await supabase
+      .from("usuarios")
+      .update({ puntos: nuevosPuntos })
+      .eq("id", idUsuario);
+
+    if (updateError) throw updateError;
+
+    console.log(`✅ Puntos actualizados: ${nuevosPuntos}`);
+  } catch (err) {
+    console.error("❌ Error al actualizar puntos:", err.message);
+  }
+}
+
+// ⏭️ PASAR AL SIGUIENTE EJERCICIO
 function siguienteEjercicio() {
   if (indiceActual < ejercicios.length - 1) {
     indiceActual++;
@@ -180,7 +225,6 @@ function siguienteEjercicio() {
     const nivel = siguiente.nivel;
     const tituloURL = encodeURIComponent(siguiente.titulo);
 
-    // 🔁 Actualiza la URL sin recargar
     window.history.pushState({}, "", `?nivel=${nivel.toLowerCase()}&ejercicio=${tituloURL}`);
     mostrarEjercicio(siguiente);
   } else {
@@ -188,17 +232,15 @@ function siguienteEjercicio() {
   }
 }
 
+// 🎮 EVENTOS
 function inicializarEventos() {
   const btnResultado = document.querySelector("button:nth-of-type(1)");
   const btnContinuar = document.querySelector("button:nth-of-type(2)");
   const input = document.getElementById("respuestaUsuario");
 
-  if (btnResultado) {
-    btnResultado.onclick = validarRespuesta;
-  }
-  if (btnContinuar) {
-    btnContinuar.onclick = siguienteEjercicio;
-  }
+  if (btnResultado) btnResultado.onclick = validarRespuesta;
+  if (btnContinuar) btnContinuar.onclick = siguienteEjercicio;
+
   if (input) {
     input.onkeydown = (e) => {
       if (e.key === "Enter") {
@@ -209,6 +251,7 @@ function inicializarEventos() {
   }
 }
 
+// 🚀 INICIO
 document.addEventListener("DOMContentLoaded", () => {
   cargarEjercicios();
 });
