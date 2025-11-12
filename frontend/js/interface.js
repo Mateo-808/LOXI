@@ -202,9 +202,9 @@ async function agregarPuntosUsuario(puntosGanados) {
     const nuevosPuntos = puntosActuales + puntosGanados;
 
     const { error: updateError } = await supabase
-      .from("progresos")
+      .from("progreso")
       .update({ puntos: nuevosPuntos })
-      .eq("id", idUsuario);
+      .eq("id_usuario", idUsuario);
 
     if (updateError) throw updateError;
 
