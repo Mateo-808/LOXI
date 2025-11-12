@@ -85,7 +85,6 @@ import { supabase } from "./supabaseClient.js";
 let ejercicios = [];
 let indiceActual = 0;
 
-// 🧩 OBTENER PARÁMETROS DE LA URL
 function obtenerParametros() {
   const params = new URLSearchParams(window.location.search);
   let nivel = params.get("nivel") || "Principiante";
@@ -97,7 +96,6 @@ function obtenerParametros() {
   return { nivel, titulo };
 }
 
-// ⚙️ CARGAR EJERCICIOS DESDE SUPABASE
 async function cargarEjercicios() {
   const { nivel } = obtenerParametros();
 
@@ -121,7 +119,6 @@ async function cargarEjercicios() {
   }
 }
 
-// 🧮 CARGAR EL EJERCICIO ACTUAL
 function cargarEjercicioActual() {
   const { titulo } = obtenerParametros();
   const ejercicio =
@@ -133,7 +130,6 @@ function cargarEjercicioActual() {
   mostrarEjercicio(ejercicio);
 }
 
-// 📖 MOSTRAR DATOS EN PANTALLA
 function mostrarEjercicio(ejercicio) {
   const subHeaders = document.querySelectorAll("#sub-header");
   const contents = document.querySelectorAll(".content");
@@ -151,12 +147,17 @@ function mostrarEjercicio(ejercicio) {
   `;
 
   subHeaders[2].innerHTML = `<h3>Explicación</h3>`;
-  contents[2].innerHTML = `<p id="explicacion">Aquí aparecerá la explicación o resultado.</p>`;
+  contents[2].innerHTML = `
+    <p id="explicacion">Aquí aparecerá la explicación o resultado.</p>
+    <div class="botones">
+      <button id="btnResultado" class="btn">Ver resultado</button>
+      <button id="btnContinuar" class="btn">Continuar</button>
+    </div>
+  `;
 
   inicializarEventos();
 }
 
-// ✅ VALIDAR RESPUESTA Y ACTUALIZAR PUNTOS
 async function validarRespuesta() {
   const input = document.getElementById("respuestaUsuario");
   const explicacion = document.getElementById("explicacion");
@@ -179,7 +180,6 @@ async function validarRespuesta() {
   }
 }
 
-// 🪙 FUNCIÓN PARA SUMAR PUNTOS EN SUPABASE
 async function agregarPuntosUsuario(puntosGanados) {
   const usuarioGuardado = localStorage.getItem("usuario");
   if (!usuarioGuardado) {
@@ -191,7 +191,6 @@ async function agregarPuntosUsuario(puntosGanados) {
     const usuario = JSON.parse(usuarioGuardado);
     const idUsuario = usuario.id;
 
-    // 🔹 OBTENER PUNTOS ACTUALES
     const { data, error } = await supabase
       .from("usuarios")
       .select("puntos")
@@ -203,7 +202,6 @@ async function agregarPuntosUsuario(puntosGanados) {
     const puntosActuales = data?.puntos || 0;
     const nuevosPuntos = puntosActuales + puntosGanados;
 
-    // 🔹 ACTUALIZAR EN BASE DE DATOS
     const { error: updateError } = await supabase
       .from("usuarios")
       .update({ puntos: nuevosPuntos })
@@ -211,13 +209,12 @@ async function agregarPuntosUsuario(puntosGanados) {
 
     if (updateError) throw updateError;
 
-    console.log(`Puntos actualizados: ${nuevosPuntos}`);
+    console.log(`✅ Puntos actualizados: ${nuevosPuntos}`);
   } catch (err) {
     console.error("Error al actualizar puntos:", err.message);
   }
 }
 
-// ⏭️ PASAR AL SIGUIENTE EJERCICIO
 function siguienteEjercicio() {
   if (indiceActual < ejercicios.length - 1) {
     indiceActual++;
@@ -225,17 +222,21 @@ function siguienteEjercicio() {
     const nivel = siguiente.nivel;
     const tituloURL = encodeURIComponent(siguiente.titulo);
 
-    window.history.pushState({}, "", `?nivel=${nivel.toLowerCase()}&ejercicio=${tituloURL}`);
-    mostrarEjercicio(siguiente);
+    // 🔄 Transición suave antes de cargar el siguiente
+    document.querySelector(".contenedor").style.opacity = "0";
+    setTimeout(() => {
+      window.history.pushState({}, "", `?nivel=${nivel.toLowerCase()}&ejercicio=${tituloURL}`);
+      mostrarEjercicio(siguiente);
+      document.querySelector(".contenedor").style.opacity = "1";
+    }, 300);
   } else {
     alert("🎉 ¡Has completado todos los ejercicios de este nivel!");
   }
 }
 
-// 🎮 EVENTOS
 function inicializarEventos() {
-  const btnResultado = document.querySelector("button:nth-of-type(1)");
-  const btnContinuar = document.querySelector("button:nth-of-type(2)");
+  const btnResultado = document.getElementById("btnResultado");
+  const btnContinuar = document.getElementById("btnContinuar");
   const input = document.getElementById("respuestaUsuario");
 
   if (btnResultado) btnResultado.onclick = validarRespuesta;
@@ -251,7 +252,6 @@ function inicializarEventos() {
   }
 }
 
-// 🚀 INICIO
 document.addEventListener("DOMContentLoaded", () => {
   cargarEjercicios();
 });
