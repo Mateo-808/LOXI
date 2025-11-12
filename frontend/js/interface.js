@@ -190,29 +190,32 @@ async function agregarPuntosUsuario(puntosGanados) {
     const usuario = JSON.parse(usuarioGuardado);
     const idUsuario = usuario.id;
 
+    // 🔹 Buscar progreso por usuario
     const { data, error } = await supabase
       .from("progreso")
-      .select("puntos")
-      .eq("id", idUsuario)
+      .select("puntuacion")
+      .eq("usuario_id", idUsuario)
       .single();
 
-    if (error) throw error;
+    if (error && error.code !== "PGRST116") throw error; // ignoramos a las personas q les de por no registrarse
 
-    const puntosActuales = data?.puntos || 0;
+    const puntosActuales = data?.puntuacion || 0;
     const nuevosPuntos = puntosActuales + puntosGanados;
 
     const { error: updateError } = await supabase
       .from("progreso")
-      .update({ puntos: nuevosPuntos })
-      .eq("id_usuario", idUsuario);
+      .upsert([
+        { usuario_id: idUsuario, puntuacion: nuevosPuntos, fecha: new Date() }
+      ], { onConflict: "usuario_id" });
 
     if (updateError) throw updateError;
 
-    console.log(`✅ Puntos actualizados: ${nuevosPuntos}`);
+    console.log(`✅ Puntuación actualizada: ${nuevosPuntos}`);
   } catch (err) {
-    console.error("Error al actualizar puntos:", err.message);
+    console.error("❌ Error al actualizar puntuación:", err.message);
   }
 }
+
 
 function siguienteEjercicio() {
   if (indiceActual < ejercicios.length - 1) {
