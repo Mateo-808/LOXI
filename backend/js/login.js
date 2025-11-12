@@ -71,7 +71,8 @@ export async function loginUsuario(nombre, correo, contrasena) {
         ...usuarioSinContrasena,
         nivel,
         puntos,
-        fecha
+        fecha,
+        es_admin
       }
     };
 
