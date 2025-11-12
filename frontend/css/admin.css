@@ -216,7 +216,7 @@ body {
     color: #fff;
 }
 
-.btn-primary {
+.btn-primary, .btn-secondary {
     padding: 0.75rem 1.5rem;
     background-color: transparent;
     color: #fafafa;
@@ -232,7 +232,7 @@ body {
     font-size: 1rem;
 }
 
-.btn-primary::before {
+.btn-primary::before, .btn-secondary::before {
     content: '';
     position: absolute;
     top: 0;
@@ -248,16 +248,16 @@ body {
     transition: 0.6s;
 }
 
-.btn-primary:hover {
+.btn-primary:hover, .btn-secondary:hover {
     border: 1px solid #ffffff;
     box-shadow: 0px 0px 10px #a5a8b448;
 }
 
-.btn-primary:hover::before {
+.btn-primary:hover::before, .btn-secondary:hover::before {
     left: 100%;
 }
 
-.btn-primary:active {
+.btn-primary:active, .btn-secondary:active {
     transform: translateY(1px);
     box-shadow: 0px 0px 5px #a5a8b446;
 }
@@ -390,7 +390,7 @@ body {
 }
 
 .modal-content {
-    background: white;
+    background: #010101;
     padding: 2rem;
     border-radius: 12px;
     max-width: 500px;
@@ -414,7 +414,7 @@ body {
 
 .modal-content h2 {
     margin-bottom: 1.5rem;
-    color: #2c3e50;
+    color: #eee;
 }
 
 .form-group {
@@ -443,7 +443,7 @@ body {
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #012e40;
 }
 
 .form-group textarea {
@@ -455,22 +455,6 @@ body {
     display: flex;
     gap: 1rem;
     margin-top: 2rem;
-}
-
-.btn-secondary {
-    background: #95a5a6;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.btn-secondary:hover {
-    background: #7f8c8d;
 }
 
 @keyframes fadeIn {
@@ -594,13 +578,11 @@ body {
     background: #333;
 }
 
-/* 💡 Colores por tipo */
 .alert-success .alert-icon { color: #16a34a; }
 .alert-error .alert-icon { color: #ef4444; }
 .alert-warning .alert-icon { color: #f59e0b; }
 .alert-info .alert-icon { color: #3b82f6; }
 
-/* Animaciones */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -608,4 +590,75 @@ body {
 @keyframes slideUp {
     from { transform: translateY(50px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #ddd;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.3s;
+    background-color: #111;
+    color: #fff;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #fff;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: linear-gradient(180deg, #011c26 0%, #00080d 100%);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #012e40;
+    border-radius: 10px;
+    border: 2px solid #00080d;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #01475f;
+}
+
+* {
+    scrollbar-color: #012e40 #00080d;
 }

@@ -476,6 +476,234 @@ if (logoutBtn) {
   });
 }
 
+// AGREGAR ESTAS FUNCIONES AL FINAL DE TU admin.js (antes de checkAdminAccess)
+
+// Agregar nuevo ejercicio
+document.getElementById('addExerciseBtn')?.addEventListener('click', () => {
+    showModal('Nuevo Ejercicio', `
+        <div class="form-group">
+            <label>Título *</label>
+            <input type="text" id="exerciseTitle" required>
+        </div>
+        <div class="form-group">
+            <label>Descripción *</label>
+            <textarea id="exerciseDescription" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label>Nivel *</label>
+            <select id="exerciseLevel" required>
+                <option value="">Seleccionar...</option>
+                <option value="Novato">Novato</option>
+                <option value="Principiante">Principiante</option>
+                <option value="Intermedio">Intermedio</option>
+                <option value="Avanzado">Avanzado</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Tipo *</label>
+            <select id="exerciseType" required>
+                <option value="">Seleccionar...</option>
+                <option value="texto">Texto</option>
+                <option value="codigo">Código</option>
+                <option value="opcion_multiple">Opción Múltiple</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Descripción del Ejercicio *</label>
+            <textarea id="exerciseDescripcion" rows="4" required></textarea>
+        </div>
+        <div class="form-group">
+            <label>Ejercicio (Enunciado) *</label>
+            <textarea id="exerciseEjercicio" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label>Respuesta Correcta *</label>
+            <input type="text" id="exerciseRespuesta" required>
+        </div>
+        <div class="form-group">
+            <label>Puntos *</label>
+            <input type="number" id="exercisePuntos" value="100" required>
+        </div>
+        <div class="form-group">
+            <label>Pista (Opcional)</label>
+            <input type="text" id="exercisePista">
+        </div>
+        <div class="form-actions">
+            <button type="button" class="btn-secondary" onclick="closeModal()">Cancelar</button>
+            <button type="button" class="btn-primary" onclick="saveNewExercise()">Guardar</button>
+        </div>
+    `);
+});
+
+// Guardar nuevo ejercicio
+window.saveNewExercise = async function() {
+    const titulo = document.getElementById('exerciseTitle').value.trim();
+    const descripcion = document.getElementById('exerciseDescription').value.trim();
+    const nivel = document.getElementById('exerciseLevel').value;
+    const tipo = document.getElementById('exerciseType').value;
+    const descripcion_ejercicio = document.getElementById('exerciseDescripcion').value.trim();
+    const ejercicio = document.getElementById('exerciseEjercicio').value.trim();
+    const respuesta = document.getElementById('exerciseRespuesta').value.trim();
+    const puntos = parseInt(document.getElementById('exercisePuntos').value);
+    const pista = document.getElementById('exercisePista').value.trim();
+
+    // Validación
+    if (!titulo || !descripcion || !nivel || !tipo || !descripcion_ejercicio || !ejercicio || !respuesta || !puntos) {
+        showErrorAlert('Por favor completa todos los campos obligatorios');
+        return;
+    }
+
+    try {
+        const { data, error } = await supabase
+            .from('ejercicios')
+            .insert([{
+                titulo,
+                descripcion,
+                nivel,
+                tipo,
+                descripción_ejercicio: descripcion_ejercicio,
+                ejercicio,
+                respuesta,
+                puntos,
+                pista: pista || null
+            }]);
+
+        if (error) {
+            console.error('Error al crear ejercicio:', error);
+            showErrorAlert('Error al crear el ejercicio: ' + error.message);
+            return;
+        }
+
+        closeModal();
+        showSuccessAlert('Ejercicio creado correctamente');
+        loadExercises();
+    } catch (error) {
+        console.error('Error inesperado:', error);
+        showErrorAlert('Error inesperado al crear ejercicio');
+    }
+};
+
+// Editar ejercicio
+window.editExercise = async function(exerciseId) {
+    try {
+        // Obtener los datos del ejercicio
+        const { data: exercise, error } = await supabase
+            .from('ejercicios')
+            .select('*')
+            .eq('id', exerciseId)
+            .single();
+
+        if (error || !exercise) {
+            showErrorAlert('Error al cargar el ejercicio');
+            return;
+        }
+
+        showModal('Editar Ejercicio', `
+            <div class="form-group">
+                <label>Título *</label>
+                <input type="text" id="editExerciseTitle" value="${exercise.titulo || ''}" required>
+            </div>
+            <div class="form-group">
+                <label>Descripción *</label>
+                <textarea id="editExerciseDescription" rows="3" required>${exercise.descripcion || ''}</textarea>
+            </div>
+            <div class="form-group">
+                <label>Nivel *</label>
+                <select id="editExerciseLevel" required>
+                    <option value="Novato" ${exercise.nivel === 'Novato' ? 'selected' : ''}>Novato</option>
+                    <option value="Principiante" ${exercise.nivel === 'Principiante' ? 'selected' : ''}>Principiante</option>
+                    <option value="Intermedio" ${exercise.nivel === 'Intermedio' ? 'selected' : ''}>Intermedio</option>
+                    <option value="Avanzado" ${exercise.nivel === 'Avanzado' ? 'selected' : ''}>Avanzado</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Tipo *</label>
+                <select id="editExerciseType" required>
+                    <option value="texto" ${exercise.tipo === 'texto' ? 'selected' : ''}>Texto</option>
+                    <option value="codigo" ${exercise.tipo === 'codigo' ? 'selected' : ''}>Código</option>
+                    <option value="opcion_multiple" ${exercise.tipo === 'opcion_multiple' ? 'selected' : ''}>Opción Múltiple</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Descripción del Ejercicio *</label>
+                <textarea id="editExerciseDescripcion" rows="4" required>${exercise.descripción_ejercicio || ''}</textarea>
+            </div>
+            <div class="form-group">
+                <label>Ejercicio (Enunciado) *</label>
+                <textarea id="editExerciseEjercicio" rows="3" required>${exercise.ejercicio || ''}</textarea>
+            </div>
+            <div class="form-group">
+                <label>Respuesta Correcta *</label>
+                <input type="text" id="editExerciseRespuesta" value="${exercise.respuesta || ''}" required>
+            </div>
+            <div class="form-group">
+                <label>Puntos *</label>
+                <input type="number" id="editExercisePuntos" value="${exercise.puntos || 100}" required>
+            </div>
+            <div class="form-group">
+                <label>Pista (Opcional)</label>
+                <input type="text" id="editExercisePista" value="${exercise.pista || ''}">
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn-secondary" onclick="closeModal()">Cancelar</button>
+                <button type="button" class="btn-primary" onclick="updateExercise('${exerciseId}')">Actualizar</button>
+            </div>
+        `);
+    } catch (error) {
+        console.error('Error:', error);
+        showErrorAlert('Error al cargar el ejercicio');
+    }
+};
+
+// Actualizar ejercicio
+window.updateExercise = async function(exerciseId) {
+    const titulo = document.getElementById('editExerciseTitle').value.trim();
+    const descripcion = document.getElementById('editExerciseDescription').value.trim();
+    const nivel = document.getElementById('editExerciseLevel').value;
+    const tipo = document.getElementById('editExerciseType').value;
+    const descripcion_ejercicio = document.getElementById('editExerciseDescripcion').value.trim();
+    const ejercicio = document.getElementById('editExerciseEjercicio').value.trim();
+    const respuesta = document.getElementById('editExerciseRespuesta').value.trim();
+    const puntos = parseInt(document.getElementById('editExercisePuntos').value);
+    const pista = document.getElementById('editExercisePista').value.trim();
+
+    // Validación
+    if (!titulo || !descripcion || !nivel || !tipo || !descripcion_ejercicio || !ejercicio || !respuesta || !puntos) {
+        showErrorAlert('Por favor completa todos los campos obligatorios');
+        return;
+    }
+
+    try {
+        const { data, error } = await supabase
+            .from('ejercicios')
+            .update({
+                titulo,
+                descripcion,
+                nivel,
+                tipo,
+                descripción_ejercicio: descripcion_ejercicio,
+                ejercicio,
+                respuesta,
+                puntos,
+                pista: pista || null
+            })
+            .eq('id', exerciseId);
+
+        if (error) {
+            console.error('Error al actualizar ejercicio:', error);
+            showErrorAlert('Error al actualizar el ejercicio: ' + error.message);
+            return;
+        }
+
+        closeModal();
+        showSuccessAlert('Ejercicio actualizado correctamente');
+        loadExercises();
+    } catch (error) {
+        console.error('Error inesperado:', error);
+        showErrorAlert('Error inesperado al actualizar ejercicio');
+    }
+};
+
 checkAdminAccess().then(hasAccess => {
     if (hasAccess) {
         loadDashboardStats();
