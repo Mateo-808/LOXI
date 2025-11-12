@@ -177,49 +177,69 @@ document.addEventListener("DOMContentLoaded", () => {
                     position: fixed;
                     top: 20px;
                     right: 20px;
-                    padding: 16px 24px;
-                    border-radius: 12px;
-                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                    padding: 1.5rem 2rem;
+                    border-radius: 16px;
+                    box-shadow: 0px 0px 20px rgba(0, 255, 255, 0.15);
                     z-index: 10000;
                     animation: slideIn 0.3s ease-out;
-                    max-width: 400px;
-                    font-family: system-ui, -apple-system, sans-serif;
+                    max-width: 420px;
+                    font-family: 'Poppins', sans-serif;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    backdrop-filter: blur(10px);
                 }
 
                 .alerta-success {
-                    background: white;
-                    color: #000000;
+                    background: linear-gradient(135deg, rgba(17, 17, 17, 0.95) 0%, rgba(34, 34, 34, 0.95) 100%);
+                    color: white;
+                    border-left: 4px solid #16a34a;
                 }
 
                 .alerta-warning {
-                    background: white;
-                    color: #000000;
+                    background: linear-gradient(135deg, rgba(17, 17, 17, 0.95) 0%, rgba(34, 34, 34, 0.95) 100%);
+                    color: white;
+                    border-left: 4px solid #f59e0b;
                 }
 
                 .alerta-error {
-                    background: white;
-                    color: #000000;
+                    background: linear-gradient(135deg, rgba(17, 17, 17, 0.95) 0%, rgba(34, 34, 34, 0.95) 100%);
+                    color: white;
+                    border-left: 4px solid #ef4444;
                 }
 
                 .alerta-contenido {
                     display: flex;
                     align-items: center;
-                    gap: 12px;
+                    gap: 1rem;
                 }
 
                 .alerta-icono {
-                    font-size: 24px;
+                    font-size: 2rem;
                     font-weight: bold;
+                    min-width: 40px;
+                    text-align: center;
+                }
+
+                .alerta-success .alerta-icono {
+                    color: #16a34a;
+                }
+
+                .alerta-warning .alerta-icono {
+                    color: #f59e0b;
+                }
+
+                .alerta-error .alerta-icono {
+                    color: #ef4444;
                 }
 
                 .alerta-texto {
-                    font-size: 15px;
-                    line-height: 1.4;
+                    font-size: 0.95rem;
+                    line-height: 1.5;
+                    color: #ddd;
                 }
 
                 @keyframes slideIn {
                     from {
-                        transform: translateX(400px);
+                        transform: translateX(450px);
                         opacity: 0;
                     }
                     to {
@@ -234,7 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         opacity: 1;
                     }
                     to {
-                        transform: translateX(400px);
+                        transform: translateX(450px);
                         opacity: 0;
                     }
                 }
@@ -245,6 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         right: 10px;
                         left: 10px;
                         max-width: none;
+                        padding: 1.25rem 1.5rem;
                     }
                 }
             `;
