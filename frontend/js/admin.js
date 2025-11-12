@@ -395,12 +395,15 @@ document.querySelectorAll('.nav-item').forEach(item => {
     });
 });
 
-document.getElementById('logoutBtn').addEventListener('click', async () => {
-    await supabase.auth.signOut();
+const logoutBtn = document.getElementById("logoutBtn");
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem("usuario");
     showSuccessAlert('Sesión cerrada correctamente', () => {
-        window.location.href = './login.html';
-    });
-});
+        window.location.href = "../../index.html";
+    })
+  });
+}
 
 checkAdminAccess().then(hasAccess => {
     if (hasAccess) {
