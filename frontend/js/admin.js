@@ -524,10 +524,6 @@ document.getElementById('addExerciseBtn')?.addEventListener('click', () => {
             <label>Puntos *</label>
             <input type="number" id="exercisePuntos" value="100" required>
         </div>
-        <div class="form-group">
-            <label>Pista (Opcional)</label>
-            <input type="text" id="exercisePista">
-        </div>
         <div class="form-actions">
             <button type="button" class="btn-secondary" onclick="closeModal()">Cancelar</button>
             <button type="button" class="btn-primary" onclick="saveNewExercise()">Guardar</button>
@@ -545,7 +541,6 @@ window.saveNewExercise = async function() {
     const ejercicio = document.getElementById('exerciseEjercicio').value.trim();
     const respuesta = document.getElementById('exerciseRespuesta').value.trim();
     const puntos = parseInt(document.getElementById('exercisePuntos').value);
-    const pista = document.getElementById('exercisePista').value.trim();
 
     // Validación
     if (!titulo || !descripcion || !nivel || !tipo || !descripcion_ejercicio || !ejercicio || !respuesta || !puntos) {
@@ -565,7 +560,6 @@ window.saveNewExercise = async function() {
                 ejercicio,
                 respuesta,
                 puntos,
-                pista: pista || null
             }]);
 
         if (error) {
@@ -640,10 +634,6 @@ window.editExercise = async function(exerciseId) {
                 <label>Puntos *</label>
                 <input type="number" id="editExercisePuntos" value="${exercise.puntos || 100}" required>
             </div>
-            <div class="form-group">
-                <label>Pista (Opcional)</label>
-                <input type="text" id="editExercisePista" value="${exercise.pista || ''}">
-            </div>
             <div class="form-actions">
                 <button type="button" class="btn-secondary" onclick="closeModal()">Cancelar</button>
                 <button type="button" class="btn-primary" onclick="updateExercise('${exerciseId}')">Actualizar</button>
@@ -665,7 +655,6 @@ window.updateExercise = async function(exerciseId) {
     const ejercicio = document.getElementById('editExerciseEjercicio').value.trim();
     const respuesta = document.getElementById('editExerciseRespuesta').value.trim();
     const puntos = parseInt(document.getElementById('editExercisePuntos').value);
-    const pista = document.getElementById('editExercisePista').value.trim();
 
     // Validación
     if (!titulo || !descripcion || !nivel || !tipo || !descripcion_ejercicio || !ejercicio || !respuesta || !puntos) {
@@ -685,7 +674,6 @@ window.updateExercise = async function(exerciseId) {
                 ejercicio,
                 respuesta,
                 puntos,
-                pista: pista || null
             })
             .eq('id', exerciseId);
 
