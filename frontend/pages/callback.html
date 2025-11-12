@@ -641,7 +641,7 @@ class AuthLoader {
       // ✅ Redirección según rol
       setTimeout(() => {
         if (esAdmin) {
-          window.location.replace('./admin/dashboard.html');
+          window.location.replace('./dashboard.html');
         } else if (nivel && nivel.toLowerCase() !== 'no asignado') {
           window.location.replace('./question.html');
         } else {
