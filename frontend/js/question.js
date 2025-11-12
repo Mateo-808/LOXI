@@ -303,7 +303,6 @@ document.addEventListener("keydown", function (event) {
     }
 });
 
-// Manejo de sesión de usuario
 document.addEventListener('DOMContentLoaded', () => {
   const btnSesion = document.getElementById('btnSesion');
   const btnSesionMobile = document.getElementById('btnSesionMobile');

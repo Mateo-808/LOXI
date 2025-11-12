@@ -150,7 +150,6 @@ function mostrarEjercicio(ejercicio) {
   contents[2].innerHTML = `
     <p id="explicacion">Aquí aparecerá la explicación o resultado.</p>
     <div class="botones">
-      <button id="btnResultado" class="btn">Ver resultado</button>
       <button id="btnContinuar" class="btn">Continuar</button>
     </div>
   `;
@@ -176,7 +175,7 @@ async function validarRespuesta() {
     explicacion.innerHTML = `🎉 ¡Correcto! Has acertado y ganas <strong>${ejercicio.puntos}</strong> puntos.`;
     await agregarPuntosUsuario(ejercicio.puntos);
   } else {
-    explicacion.innerHTML = `❌ Incorrecto. La respuesta correcta es: <strong>${ejercicio.respuesta}</strong>`;
+    explicacion.innerHTML = ` Incorrecto. Intentalo una vez más ¡Tú puedes!`;
   }
 }
 
@@ -191,29 +190,54 @@ async function agregarPuntosUsuario(puntosGanados) {
     const usuario = JSON.parse(usuarioGuardado);
     const idUsuario = usuario.id;
 
+    // 1️⃣ Buscar si ya tiene un registro de progreso
     const { data, error } = await supabase
       .from("progreso")
-      .select("puntos")
-      .eq("id", idUsuario)
+      .select("id, puntuacion")
+      .eq("usuario_id", idUsuario)
       .single();
 
-    if (error) throw error;
+    if (error && error.code !== "PGRST116") throw error;
 
-    const puntosActuales = data?.puntos || 0;
+    const puntosActuales = data?.puntuacion || 0;
     const nuevosPuntos = puntosActuales + puntosGanados;
 
-    const { error: updateError } = await supabase
-      .from("progresos")
-      .update({ puntos: nuevosPuntos })
-      .eq("id", idUsuario);
+    // 2️⃣ Actualizar o insertar según el caso
+    if (data) {
+      const { error: updateError } = await supabase
+        .from("progreso")
+        .update({ puntuacion: nuevosPuntos, fecha: new Date() })
+        .eq("usuario_id", idUsuario);
 
-    if (updateError) throw updateError;
+      if (updateError) throw updateError;
+    } else {
+      const { error: insertError } = await supabase
+        .from("progreso")
+        .insert([{ usuario_id: idUsuario, puntuacion: nuevosPuntos, fecha: new Date() }]);
 
-    console.log(`✅ Puntos actualizados: ${nuevosPuntos}`);
+      if (insertError) throw insertError;
+    }
+
+    // 3️⃣ Actualizar localStorage con los nuevos puntos
+    const usuarioActualizado = {
+      ...usuario,
+      puntos: nuevosPuntos,
+    };
+
+    localStorage.setItem("usuario", JSON.stringify(usuarioActualizado));
+
+    const puntosElemento = document.getElementById("puntosUsuario");
+    if (puntosElemento) {
+      puntosElemento.textContent = nuevosPuntos;
+    }
+
+    console.log(`✅ Puntuación actualizada: ${nuevosPuntos}`);
   } catch (err) {
-    console.error("Error al actualizar puntos:", err.message);
+    console.error("❌ Error al actualizar puntuación:", err.message);
   }
 }
+
+
 
 function siguienteEjercicio() {
   if (indiceActual < ejercicios.length - 1) {
