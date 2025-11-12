@@ -221,12 +221,11 @@ async function agregarPuntosUsuario(puntosGanados) {
     // 3️⃣ Actualizar localStorage con los nuevos puntos
     const usuarioActualizado = {
       ...usuario,
-      puntuacion: nuevosPuntos,
+      puntos: nuevosPuntos,
     };
 
     localStorage.setItem("usuario", JSON.stringify(usuarioActualizado));
 
-    // 4️⃣ (Opcional) Mostrar los puntos actualizados en pantalla
     const puntosElemento = document.getElementById("puntosUsuario");
     if (puntosElemento) {
       puntosElemento.textContent = nuevosPuntos;
