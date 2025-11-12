@@ -175,7 +175,7 @@ async function validarRespuesta() {
     explicacion.innerHTML = `🎉 ¡Correcto! Has acertado y ganas <strong>${ejercicio.puntos}</strong> puntos.`;
     await agregarPuntosUsuario(ejercicio.puntos);
   } else {
-    explicacion.innerHTML = `❌ Incorrecto. La respuesta correcta es: <strong>${ejercicio.respuesta}</strong>`;
+    explicacion.innerHTML = ` Incorrecto. Intentalo una vez más ¡Tú puedes!`;
   }
 }
 
