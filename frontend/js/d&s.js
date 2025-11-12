@@ -187,18 +187,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
                 .alerta-success {
-                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                    color: white;
+                    background: white;
+                    color: black;
                 }
 
                 .alerta-warning {
-                    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-                    color: white;
+                    background: white;
+                    color: black;
                 }
 
                 .alerta-error {
-                    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-                    color: white;
+                    background: white;
+                    color: black;
                 }
 
                 .alerta-contenido {
