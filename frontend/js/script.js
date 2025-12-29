@@ -60,7 +60,7 @@ const comandos = {
 
     // RECORDATORIO: cambiar cuando tengamos la base de datos
     whoami: function () {
-        addOutputLine("loxi-user");
+        addOutputLine("loxi-username");
     },
 };
 
