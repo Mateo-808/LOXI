@@ -60,7 +60,7 @@ const comandos = {
     
     // RECORDATORIO: cambiar cuando tengamos la base de datos
     whoami: function () {
-        addOutputLine("loxi-username: (the loxi user name just if the user have login)");
+        addOutputLine("loxi-username: (you have not username)");
     },
 };
 
