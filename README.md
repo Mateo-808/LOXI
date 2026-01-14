@@ -34,10 +34,7 @@ Este proyecto está licenciado bajo la [MIT License](LICENSE).
 
 ## 👥 Autores
 
-- **Mateo** – Desarrollador FullStack  
-- **Andrés** – Desarrollador FullStack  
-- **Lina** – Desarrolladora Frontend  
-- **Santiago** – Desarrollador Frontend  
+- **Mateo** – Desarrollador FullStack
 
 ---
 

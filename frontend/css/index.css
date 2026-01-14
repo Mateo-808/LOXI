@@ -744,18 +744,6 @@ desktop-menu li .submenu li a:hover {
     background-position: center;
 }
 
-.circle1 {
-    background-image: url("../assets/lina.jpeg");
-}
-
-.circle2 {
-    background-image: url("../assets/santiago.jpeg");
-}
-
-.circle3 {
-    background-image: url("../assets/andres.jpeg");
-}
-
 .circle4 {
     background-image: url("../assets/mateo.jpeg");
 }
